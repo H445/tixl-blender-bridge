@@ -6,15 +6,25 @@ This repository contains the Blender add-on and three reusable TiXL operators: *
 
 ## Set up once (Windows)
 
-You need Blender 4.3 or newer (tested with 5.2), a built TiXL Editor, a TiXL C# operator project, and the .NET SDK. Create the operator project once in TiXL so it has valid release metadata. You can then close TiXL; **the debug server is not needed**.
+You need Blender 4.3 or newer (tested with 5.2), a TiXL Editor build, a TiXL C# operator project, and the .NET SDK. Create the operator project once in TiXL so it has valid release metadata. You can then close TiXL; **the debug server is optional**.
 
 1. Download or clone this repository. In Blender, open **Edit → Preferences → Add-ons → Install from Disk**, choose **`tixl_blender_bridge.zip`**, and enable **Prismal Labs Blender → TiXL Bridge**. (In Blender versions that call it **Get Extensions**, use **Install from Disk** there.)
-2. Open the add-on preferences and set **TiXL operator project** to the folder containing your TiXL `.csproj` and `Symbols` folder. Set **TiXL Editor folder** to the build folder containing `TiXL.exe`.
+2. Open the add-on preferences and set **TiXL operator project** to the folder containing your TiXL `.csproj` and `Symbols` folder. Set **TiXL Editor folder** to the build folder containing `TiXL.exe`. Leave **TiXL connection** on **Auto** unless you want to force a mode.
 3. Open any Blender project with an active camera. In **Scene Properties → TiXL Bridge**, turn on **Sync after save**. Save the `.blend`.
 
-The first save can take a while. Watch `<blend folder>/.tixl_cache/<blend name>/sync_logs/latest.log`. The bridge installs the operators, creates a TiXL project for this `.blend` from your TiXL-created project scaffold, and builds it. TiXL starts without a debug server; **select the generated project once in TiXL**. It is created beside the operator project, and its exact path is recorded in `.tixl_cache/<blend name>/tixl_project.json`. Later Blender saves rebuild changed content automatically. TiXL may restart to load new files, so save any open TiXL work first. The **Sync saved .blend to TiXL** button runs the same process on demand.
+The first save can take a while. Watch `<blend folder>/.tixl_cache/<blend name>/sync_logs/latest.log`. The bridge installs the operators, creates a TiXL project for this `.blend` from your TiXL-created project scaffold, and builds it. The project is created beside the operator project; its exact path is recorded in `.tixl_cache/<blend name>/tixl_project.json`. In offline mode, **select the generated project once in TiXL**. In debug mode, the bridge opens it for you. Later Blender saves rebuild changed content automatically. TiXL may restart to load new files, so save any open TiXL work first. The **Sync saved .blend to TiXL** button runs the same process on demand.
 
 **Daily use:** work in Blender and save. You do not need to export or import binary files by hand. A failed rebuild keeps the previous validated cache.
+
+## TiXL connection modes
+
+| Mode | Best for | What happens after a save |
+| --- | --- | --- |
+| **Auto** (default) | Most users, including release builds | Uses the debug bridge if one answers on the configured local port; otherwise builds offline. |
+| **Offline** | Release builds without a debug server, or users who do not want a control socket | Writes and builds the project directly. TiXL restarts when files change; select a new project once. |
+| **Debug bridge** | Live development | Reloads the loaded TiXL projects and opens the generated graph without restarting on routine saves. It requires an editor build with the opt-in debug protocol. |
+
+To use live mode, start TiXL with `--debug-server 9042`, or select **Debug bridge** in the add-on preferences and let the bridge launch TiXL on the first build. The port is configurable there. The debug server listens on your own computer; it is not required to export a release-build project. If a particular TiXL release has no debug protocol, **Auto** uses offline mode.
 
 ## What comes across
 
@@ -48,9 +58,9 @@ The Blender add-on runs `tixl_blender_bridge/source/blend_sync.py` using Blender
 python tixl_blender_bridge/source/blend_sync.py sync --blend C:\path\scene.blend --no-install
 ```
 
-`status --blend ...` checks whether the cache matches the saved file. `--force` rebuilds even when the source hash matches. A full command-line TiXL installation also needs `TIXL_BRIDGE_OPERATOR_PROJECT` and `TIXL_BRIDGE_EDITOR` set to the same folders used in the add-on preferences. Set `TIXL_BRIDGE_LAUNCH_EDITOR=0` if you want the bridge to build files without starting TiXL.
+`status --blend ...` checks whether the cache matches the saved file. `--force` rebuilds even when the source hash matches. A full command-line TiXL installation also needs `TIXL_BRIDGE_OPERATOR_PROJECT` and `TIXL_BRIDGE_EDITOR` set to the same folders used in the add-on preferences. `TIXL_BRIDGE_MODE` selects `auto`, `offline`, or `debug`; `TIXL_BRIDGE_PORT` changes the local port. Set `TIXL_BRIDGE_LAUNCH_EDITOR=0` if you want the bridge to build files without starting TiXL.
 
-If a save does not appear in TiXL, check `sync_logs/latest.log` first. Missing cameras, missing collections, and a project without release metadata are reported there. Newly created projects require a one-time selection in TiXL; the bridge does not remotely control the editor.
+If a save does not appear in TiXL, check `sync_logs/latest.log` first. Missing cameras, missing collections, and a project without release metadata are reported there. In offline mode, newly created projects require a one-time selection in TiXL.
 
 ## Package layout
 

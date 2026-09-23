@@ -3,7 +3,7 @@
 bl_info = {
     "name": "Prismal Labs Blender → TiXL Bridge",
     "author": "Prismal Labs",
-    "version": (1, 0, 0),
+    "version": (1, 1, 0),
     "blender": (4, 3, 0),
     "location": "Scene Properties > TiXL Bridge",
     "description": "Build TiXL geometry, animation, camera and graph from a saved .blend",
@@ -16,7 +16,7 @@ from pathlib import Path
 
 import bpy
 from bpy.app.handlers import persistent
-from bpy.props import BoolProperty, StringProperty
+from bpy.props import BoolProperty, EnumProperty, IntProperty, StringProperty
 
 ROOT = Path(__file__).resolve().parent
 SYNC = ROOT / "source" / "blend_sync.py"
@@ -50,7 +50,9 @@ def queue_sync():
     output = (logdir / "latest.log").open("a", encoding="utf-8")
     env = dict(os.environ)
     env.update(TIXL_BRIDGE_OPERATOR_PROJECT=str(project), TIXL_BRIDGE_EDITOR=str(editor),
-               TIXL_BRIDGE_BLENDER=bpy.app.binary_path)
+               TIXL_BRIDGE_BLENDER=bpy.app.binary_path,
+               TIXL_BRIDGE_MODE=prefs.connection_mode.lower(),
+               TIXL_BRIDGE_PORT=str(prefs.debug_port))
     try:
         subprocess.Popen([str(python), str(SYNC), "sync", "--blend", str(blend)],
                          cwd=str(ROOT), env=env, stdout=output, stderr=subprocess.STDOUT,
@@ -69,6 +71,11 @@ def on_save(_):
 
 class TIXLBRIDGE_preferences(bpy.types.AddonPreferences):
     bl_idname = __package__
+    connection_mode: EnumProperty(name="TiXL connection", default="AUTO", items=(
+        ("AUTO", "Auto", "Use live reload when a debug bridge is available; otherwise build offline"),
+        ("OFFLINE", "Offline", "Build without a debug bridge; works with release builds"),
+        ("DEBUG", "Debug bridge", "Use live reload; launch TiXL with its debug server when needed")))
+    debug_port: IntProperty(name="Debug port", default=9042, min=1, max=65535)
     operator_project: StringProperty(name="TiXL operator project", subtype="DIR_PATH",
         description="TiXL project folder containing a .csproj and Symbols directory")
     editor_directory: StringProperty(name="TiXL Editor folder", subtype="DIR_PATH",
@@ -78,6 +85,9 @@ class TIXLBRIDGE_preferences(bpy.types.AddonPreferences):
         layout = self.layout
         layout.prop(self, "operator_project")
         layout.prop(self, "editor_directory")
+        layout.prop(self, "connection_mode")
+        if self.connection_mode != "OFFLINE":
+            layout.prop(self, "debug_port")
         layout.label(text="Set these once; each .blend gets its own generated TiXL project.")
 
 

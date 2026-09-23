@@ -37,7 +37,8 @@ def create_scaffold(project: Path, name: str, template: Path, blend: Path) -> No
     csproj.write_text(text, encoding="utf-8")
 
 
-def populate(project: Path, graph_files: list[Path], backup_root: Path, editor: Path) -> None:
+def populate(project: Path, graph_files: list[Path], backup_root: Path, editor: Path,
+             build: bool = True) -> None:
     project = project.resolve()
     csproj = next(project.glob("*.csproj"), None)
     if csproj is None:
@@ -84,5 +85,6 @@ public sealed class ShareDefinition : IShareResources
     (symbols / f"{name}.cs").write_text(source, encoding="utf-8")
     (symbols / f"{name}.t3").write_text(json.dumps(graph, indent=2), encoding="utf-8")
     (symbols / f"{name}.t3ui").write_text(json.dumps(ui, indent=2), encoding="utf-8")
-    subprocess.run(["dotnet", "build", str(csproj),
-                    f"-p:T3_ASSEMBLY_PATH={editor}", "--nologo"], check=True)
+    if build:
+        subprocess.run(["dotnet", "build", str(csproj),
+                        f"-p:T3_ASSEMBLY_PATH={editor}", "--nologo"], check=True)

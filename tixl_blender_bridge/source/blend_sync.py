@@ -25,6 +25,10 @@ ROOT = Path(__file__).resolve().parents[1]
 BLENDER = Path(os.environ.get("TIXL_BRIDGE_BLENDER", shutil.which("blender") or "blender"))
 TIXL_PROJECT = Path(os.environ.get("TIXL_BRIDGE_OPERATOR_PROJECT", ""))
 TIXL_EDITOR = Path(os.environ.get("TIXL_BRIDGE_EDITOR", ""))
+MODE = os.environ.get("TIXL_BRIDGE_MODE", "auto").lower()
+BRIDGE_PORT = int(os.environ.get("TIXL_BRIDGE_PORT", "9042"))
+if MODE not in {"auto", "offline", "debug"}:
+    raise ValueError(f"Unknown TiXL bridge mode: {MODE}")
 
 
 def digest(path: Path) -> str:
@@ -181,11 +185,42 @@ def stop_editor() -> bool:
     return True
 
 
-def start_editor() -> None:
+def start_editor(debug: bool = False) -> bool:
     if os.environ.get("TIXL_BRIDGE_LAUNCH_EDITOR", "1") == "0":
-        return
-    subprocess.Popen([str(TIXL_EDITOR / "TiXL.exe"), "--window", "1600x900", "--no-splash"],
+        return False
+    command = [str(TIXL_EDITOR / "TiXL.exe"), "--window", "1600x900", "--no-splash"]
+    if debug:
+        command += ["--debug-server", str(BRIDGE_PORT)]
+    subprocess.Popen(command,
                      cwd=str(TIXL_EDITOR), creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+    return True
+
+
+def bridge_call(method: str, timeout: float = 120, **params):
+    from tixl_bridge import call
+    return call(method, BRIDGE_PORT, timeout=timeout, **params)
+
+
+def bridge_available() -> bool:
+    try:
+        result = bridge_call("getVersion", timeout=5)
+        return isinstance(result, dict) and result.get("protocolVersion") == 1
+    except TimeoutError as error:
+        raise RuntimeError("TiXL's debug bridge is busy; retry the save after the editor responds") from error
+    except (OSError, ValueError, RuntimeError):
+        return False
+
+
+def open_project_when_ready(name: str) -> None:
+    last_error = None
+    for _ in range(45):
+        try:
+            bridge_call("openProject", name=name)
+            return
+        except (OSError, ValueError, RuntimeError) as error:
+            last_error = error
+            time.sleep(1)
+    raise RuntimeError(f"TiXL started but could not open generated project {name}: {last_error}")
 
 
 def generic_finish(blend: Path, cache: Path, manifest: dict, install: bool, refresh_runtime: bool = False) -> None:
@@ -212,7 +247,11 @@ def generic_finish(blend: Path, cache: Path, manifest: dict, install: bool, refr
     project_state = json.loads(marker.read_text(encoding="utf-8")) if marker.is_file() else {}
     needs_project = (project_state.get("graph_sha256") != graph_sha
                      or not Path(project_state.get("path", "")).is_dir())
+    live = MODE != "offline" and bridge_available()
+    wants_debug = MODE == "debug" or live
     if not needs_copy and not needs_project and not refresh_runtime:
+        if live and project_state.get("name"):
+            bridge_call("openProject", name=project_state["name"])
         return
     # Probe the destination before interrupting an open TiXL session. In a
     # restricted caller the cache can still be built, but installation waits.
@@ -221,6 +260,15 @@ def generic_finish(blend: Path, cache: Path, manifest: dict, install: bool, refr
         probe.write_text("probe", encoding="utf-8")
     finally:
         probe.unlink(missing_ok=True)
+    if live and project_state.get("name") and Path(project_state.get("path", "")).is_dir():
+        if needs_copy:
+            for file in install_files:
+                shutil.copy2(file, target / file.name)
+            bridge_call("reload", project=csproj.stem)
+        ensure_generic_project(blend, cache, files, build=False)
+        bridge_call("reload", project=project_state["name"])
+        bridge_call("openProject", name=project_state["name"])
+        return
     was_running = stop_editor()
     success = False
     try:
@@ -232,11 +280,14 @@ def generic_finish(blend: Path, cache: Path, manifest: dict, install: bool, refr
         ensure_generic_project(blend, cache, files)
         success = True
     finally:
-        if was_running or (success and needs_project):
-            start_editor()
+        if was_running or (success and needs_project) or (success and wants_debug):
+            started = start_editor(debug=wants_debug)
+            if started and success and wants_debug:
+                project = json.loads((cache / "tixl_project.json").read_text(encoding="utf-8"))
+                open_project_when_ready(project["name"])
 
 
-def ensure_generic_project(blend: Path, cache: Path, files: list[Path]) -> None:
+def ensure_generic_project(blend: Path, cache: Path, files: list[Path], build: bool = True) -> None:
     from blend_sync_project import create_scaffold, populate
     marker = cache / "tixl_project.json"
     graph_sha = hashlib.sha256("|".join(digest(file) for file in files).encode()).hexdigest()
@@ -257,7 +308,7 @@ def ensure_generic_project(blend: Path, cache: Path, files: list[Path]) -> None:
         probe.write_text("probe", encoding="utf-8")
     finally:
         probe.unlink(missing_ok=True)
-    populate(path, files, cache / "project_backups", TIXL_EDITOR)
+    populate(path, files, cache / "project_backups", TIXL_EDITOR, build=build)
     marker.write_text(json.dumps({"name": name, "path": str(path), "source_blend": str(blend),
                                   "graph_sha256": graph_sha}, indent=2), encoding="utf-8")
 
