@@ -102,3 +102,7 @@ If a save does not appear in TiXL, check `sync_logs/latest.log` first. Missing c
 - `install_blender_addon.py` — copies, enables, and verifies this checkout in local Blender.
 
 The add-on currently targets Windows TiXL builds. Its background exporter does not run during TiXL render frames.
+
+## Example of what's possible
+- This would take my machine ~2 hours to render at 540p in blender. But realtime playback in TiXL: https://www.youtube.com/watch?v=vMnAAbqIr74
+- All animation is done in blender and exported to TiXL.
