@@ -50,7 +50,11 @@ In Blender, open the **Scene Properties → TiXL Bridge** panel and run **Sync s
 
 ![Blender scene with the TiXL Bridge controls](docs/screenshots/blender-bridge.png)
 
-*Blender: the saved source scene and the bridge controls used to sync it.*
+*Blender: the saved scene and the controls used to sync it to TiXL.*
+
+![Blender add-on preferences for the TiXL Bridge](docs/screenshots/blender-preferences.png)
+
+*Blender preferences: select the TiXL operator project and editor folder, then choose Auto, Offline, or Debug bridge mode.*
 
 ![TiXL graph generated from the Blender scene](docs/screenshots/tixl-generated-graph.png)
 
