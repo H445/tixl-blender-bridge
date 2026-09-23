@@ -16,7 +16,6 @@ import os
 import shutil
 import struct
 import subprocess
-import sys
 import time
 import uuid
 from contextlib import contextmanager
@@ -26,7 +25,6 @@ ROOT = Path(__file__).resolve().parents[1]
 BLENDER = Path(os.environ.get("TIXL_BRIDGE_BLENDER", shutil.which("blender") or "blender"))
 TIXL_PROJECT = Path(os.environ.get("TIXL_BRIDGE_OPERATOR_PROJECT", ""))
 TIXL_EDITOR = Path(os.environ.get("TIXL_BRIDGE_EDITOR", ""))
-BRIDGE_PORT = os.environ.get("TIXL_BRIDGE_PORT", "9042")
 
 
 def digest(path: Path) -> str:
@@ -167,7 +165,30 @@ def publish(stage: Path, cache: Path, manifest: dict, profile: str) -> None:
     }, indent=2), encoding="utf-8")
 
 
-def generic_finish(blend: Path, cache: Path, manifest: dict, install: bool) -> None:
+def editor_running() -> bool:
+    result = subprocess.run(["powershell", "-NoProfile", "-Command",
+                             "[bool](Get-Process TiXL -ErrorAction SilentlyContinue)"],
+                            capture_output=True, text=True, check=True)
+    return result.stdout.strip().lower() == "true"
+
+
+def stop_editor() -> bool:
+    if not editor_running():
+        return False
+    subprocess.run(["powershell", "-NoProfile", "-Command",
+                    "Get-Process TiXL -ErrorAction SilentlyContinue | ForEach-Object { $_.CloseMainWindow() | Out-Null }; "
+                    "Start-Sleep -Seconds 2; Get-Process TiXL -ErrorAction SilentlyContinue | Stop-Process -Force"], check=True)
+    return True
+
+
+def start_editor() -> None:
+    if os.environ.get("TIXL_BRIDGE_LAUNCH_EDITOR", "1") == "0":
+        return
+    subprocess.Popen([str(TIXL_EDITOR / "TiXL.exe"), "--window", "1600x900", "--no-splash"],
+                     cwd=str(TIXL_EDITOR), creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+
+
+def generic_finish(blend: Path, cache: Path, manifest: dict, install: bool, refresh_runtime: bool = False) -> None:
     from blend_sync_graph import generate
     files = generate(blend, cache, manifest)
     if not install:
@@ -183,9 +204,15 @@ def generic_finish(blend: Path, cache: Path, manifest: dict, install: bool) -> N
     operator_files = sorted((ROOT / "operators").glob("Blender*.*"))
     if len(operator_files) != 9:
         raise FileNotFoundError("The three reusable TiXL operators are missing from this package")
-    install_files = operator_files + files
-    if all((target / file.name).is_file() and digest(target / file.name) == digest(file) for file in install_files):
-        ensure_generic_project(blend, cache, files)
+    install_files = operator_files
+    needs_copy = any(not (target / file.name).is_file() or digest(target / file.name) != digest(file)
+                     for file in install_files)
+    marker = cache / "tixl_project.json"
+    graph_sha = hashlib.sha256("|".join(digest(file) for file in files).encode()).hexdigest()
+    project_state = json.loads(marker.read_text(encoding="utf-8")) if marker.is_file() else {}
+    needs_project = (project_state.get("graph_sha256") != graph_sha
+                     or not Path(project_state.get("path", "")).is_dir())
+    if not needs_copy and not needs_project and not refresh_runtime:
         return
     # Probe the destination before interrupting an open TiXL session. In a
     # restricted caller the cache can still be built, but installation waits.
@@ -194,42 +221,23 @@ def generic_finish(blend: Path, cache: Path, manifest: dict, install: bool) -> N
         probe.write_text("probe", encoding="utf-8")
     finally:
         probe.unlink(missing_ok=True)
-    was_running = bool(subprocess.run(["powershell", "-NoProfile", "-Command",
-        "[bool](Get-Process TiXL -ErrorAction SilentlyContinue)"], capture_output=True, text=True).stdout.strip().lower() == "true")
-    if was_running:
-        subprocess.run(["powershell", "-NoProfile", "-Command",
-                        "Stop-Process -Name TiXL -Force -ErrorAction SilentlyContinue"], check=True)
+    was_running = stop_editor()
+    success = False
     try:
-        for file in install_files:
-            shutil.copy2(file, target / file.name)
-        subprocess.run(["dotnet", "build", str(csproj), "--no-restore",
-                        f"-p:T3_ASSEMBLY_PATH={TIXL_EDITOR}", "--nologo"], check=True)
+        if needs_copy:
+            for file in install_files:
+                shutil.copy2(file, target / file.name)
+            subprocess.run(["dotnet", "build", str(csproj),
+                            f"-p:T3_ASSEMBLY_PATH={TIXL_EDITOR}", "--nologo"], check=True)
+        ensure_generic_project(blend, cache, files)
+        success = True
     finally:
-        if was_running:
-            subprocess.Popen([str(TIXL_EDITOR / "TiXL.exe"), "--debug-server", BRIDGE_PORT, "--window", "1600x900", "--no-splash"],
-                             cwd=str(TIXL_EDITOR), creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
-    ensure_generic_project(blend, cache, files)
-
-
-def bridge(method: str, **params):
-    from tixl_bridge import call
-    last_error = None
-    for _ in range(30):
-        try:
-            return call(method, **params)
-        except (ConnectionError, ConnectionRefusedError, OSError, TimeoutError) as error:
-            last_error = error
-            time.sleep(1)
-        except RuntimeError as error:
-            if "NO_GRAPH_WINDOW" not in str(error):
-                raise
-            last_error = error
-            time.sleep(1)
-    raise RuntimeError(f"TiXL debug bridge did not start: {last_error}")
+        if was_running or (success and needs_project):
+            start_editor()
 
 
 def ensure_generic_project(blend: Path, cache: Path, files: list[Path]) -> None:
-    from blend_sync_project import populate
+    from blend_sync_project import create_scaffold, populate
     marker = cache / "tixl_project.json"
     graph_sha = hashlib.sha256("|".join(digest(file) for file in files).encode()).hexdigest()
     existing = None
@@ -243,21 +251,13 @@ def ensure_generic_project(blend: Path, cache: Path, files: list[Path]) -> None:
     suffix = uuid.uuid5(uuid.NAMESPACE_URL, str(blend.resolve()).lower()).hex[:8]
     name = existing["name"] if existing else f"Blend{label}{suffix}"
     path = Path(existing["path"]) if existing else TIXL_PROJECT.parent / name
-    if not (path / f"{name}.csproj").is_file():
-        bridge("newProject", name=f"PrismalLabs.{name}")
+    create_scaffold(path, name, TIXL_PROJECT, blend)
     probe = path / "Symbols" / (".blend_sync_probe_" + uuid.uuid4().hex)
     try:
         probe.write_text("probe", encoding="utf-8")
     finally:
         probe.unlink(missing_ok=True)
-    subprocess.run(["powershell", "-NoProfile", "-Command",
-                    "Stop-Process -Name TiXL -Force -ErrorAction SilentlyContinue"], check=True)
-    try:
-        populate(path, files, cache / "project_backups", TIXL_EDITOR)
-    finally:
-        subprocess.Popen([str(TIXL_EDITOR / "TiXL.exe"), "--debug-server", BRIDGE_PORT, "--window", "1600x900", "--no-splash"],
-                         cwd=str(TIXL_EDITOR), creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
-    bridge("openProject", name=name)
+    populate(path, files, cache / "project_backups", TIXL_EDITOR)
     marker.write_text(json.dumps({"name": name, "path": str(path), "source_blend": str(blend),
                                   "graph_sha256": graph_sha}, indent=2), encoding="utf-8")
 
@@ -297,11 +297,7 @@ def sync(blend: Path, requested_profile: str, requested_cache: Path | None,
             raise RuntimeError(f"Blender export failed; prior cache retained. See {log}")
         manifest = validate_stage(stage, sha)
         publish(stage, cache, manifest, profile)
-        generic_finish(blend, cache, manifest, install)
-        if install:
-            project = json.loads((cache / "tixl_project.json").read_text(encoding="utf-8"))
-            bridge("reload", project=project["name"])
-            bridge("openProject", name=project["name"])
+        generic_finish(blend, cache, manifest, install, refresh_runtime=True)
         return {"status": "rebuilt", "blend": str(blend), "cache": str(cache),
                 "profile": profile, "worlds": len(manifest["worlds"]), "log": str(log)}
 
