@@ -1,0 +1,5 @@
+__pycache__/
+*.pyc
+.tixl_cache/
+*.blend1
+*.blend2

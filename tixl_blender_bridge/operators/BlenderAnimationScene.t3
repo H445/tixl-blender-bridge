@@ -1,0 +1,28 @@
+{
+  "FormatVersion": 3,
+  "Id": "8cc13ea4-9e0d-4b61-9b1f-b72f6c470a7a",
+  "Inputs": [
+    {
+      "Id": "f5cd6fc8-54bd-4cf0-885f-2b244d9c1902",
+      "DefaultValue": {
+        "SceneSetup": {
+          "NodeSettings": []
+        }
+      }
+    },
+    {
+      "Id": "ca02f7a3-a03a-4db0-a05d-3a66b0c9ab11",
+      "DefaultValue": ""
+    },
+    {
+      "Id": "ee2eaef9-6e5a-48b3-9df0-91b2f9ab7dc7",
+      "DefaultValue": 0.0
+    },
+    {
+      "Id": "3a4c36f9-e8c1-4ab7-b370-0f548b054933",
+      "DefaultValue": ""
+    }
+  ],
+  "Children": [],
+  "Connections": []
+}

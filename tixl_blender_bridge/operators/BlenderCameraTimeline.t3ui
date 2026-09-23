@@ -1,0 +1,12 @@
+{
+  "FormatVersion": 3,
+  "Id": "18e0cf0e-af1a-531c-a999-1c10e053b797",
+  "Description": "Reads the compact camera_60hz.bin rail written by the Blender export tools. Outputs interpolated position, target, up vector, vertical field of view, clip planes, and source time. An optional JSON time_map retimes camera, geometry, materials and lights together. OverrideTime/UseOverride select output time for deterministic previews. ActiveWorld is a host-controlled integer scene index, so any Blender export can supply its own routing.",
+  "InputUis": [
+    {"InputId":"0713a026-3b7b-5ddf-ac49-e585d8248fa6","GroupTitle":"Blender export","Description":"Path to the camera_60hz.bin file exported from Blender."},
+    {"InputId":"df42be73-5639-53e6-82f4-f72a9b15aba6","GroupTitle":"Playback","Description":"Explicit time in seconds when UseOverride is enabled."},
+    {"InputId":"8e21625b-2c15-5b6c-8b42-78aa3500bf8b","GroupTitle":"Playback","Description":"Use OverrideTime instead of the host timeline clock."},
+    {"InputId":"9aaf2997-d503-5100-97db-9e3f19bd0e50","GroupTitle":"Scene routing","Description":"Optional zero-based active scene index. Connect a host curve for cuts."},
+    {"InputId":"70bceb8e-15a0-592f-a01b-ff73dfac2a59","GroupTitle":"Scene routing","Description":"Optional JSON sidecar with source-time shots/passages and output-to-source time_map points. Leave empty for a plain camera rail."}
+  ]
+}

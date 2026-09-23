@@ -1,0 +1,3146 @@
+{
+  "FormatVersion": 3,
+  "Id": "70ab4ed6-a217-42ba-9396-e1cd1128312f",
+  "Inputs": [
+    {
+      "Id": "c84919d5-4b2e-51fc-9155-a1708e66acb7",
+      "DefaultValue": {
+        "X": 960,
+        "Y": 540
+      }
+    }
+  ],
+  "Children": [
+    {
+      "Id": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SymbolId": "18e0cf0e-af1a-531c-a999-1c10e053b797",
+      "SymbolName": "PrismalLabs.BlenderExport.BlenderCameraTimeline",
+      "Name": "Bridge Template / 120 BPM / 300 seconds",
+      "InputValues": [
+        {
+          "Id": "0713a026-3b7b-5ddf-ac49-e585d8248fa6",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "70bceb8e-15a0-592f-a01b-ff73dfac2a59",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "9aaf2997-d503-5100-97db-9e3f19bd0e50",
+          "Type": "System.Int32",
+          "Value": 0
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "574e20fe-39d7-5619-9821-5e6578718561",
+      "SymbolId": "00618c91-f39a-44ea-b9d8-175c996460dc",
+      "SymbolName": "Lib.render.scene.LoadGltfScene",
+      "Name": "Laboratory / opaque geometry",
+      "InputValues": [
+        {
+          "Id": "292e80cf-ba31-4a50-9bf4-83712430f811",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "49237499-9b1e-4371-afac-4e3394868370",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "d7ae3173-c490-47cf-8d4b-4c25102f6904",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "57f129ae-0b2e-465d-8c0e-f6259fdd37ce",
+          "Type": "System.Boolean",
+          "Value": false
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "d405f933-fcf5-52d2-add0-0a761f578882",
+      "SymbolId": "8cc13ea4-9e0d-4b61-9b1f-b72f6c470a7a",
+      "SymbolName": "PrismalLabs.BlenderExport.BlenderAnimationScene",
+      "Name": "Laboratory / opaque motion",
+      "InputValues": [
+        {
+          "Id": "ca02f7a3-a03a-4db0-a05d-3a66b0c9ab11",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "3a4c36f9-e8c1-4ab7-b370-0f548b054933",
+          "Type": "System.String",
+          "Value": ""
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "f3259196-582a-5932-8abb-038989e66932",
+      "SymbolId": "2fcdea21-18f1-4006-a2fe-aab40893fed8",
+      "SymbolName": "Lib.render.scene.DrawScene",
+      "Name": "Laboratory / opaque PBR",
+      "InputValues": [
+        {
+          "Id": "d517b62c-0f11-4d76-a945-4dabb7d84d74",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "121f0f29-36f3-4ef7-9ebf-d14ad65b16a2",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "69151dfb-59cf-4618-8642-c9dc88260786",
+          "Type": "System.Int32",
+          "Value": 4
+        },
+        {
+          "Id": "42e7cc49-5102-4e74-8bea-c7698cb4abca",
+          "Type": "SharpDX.Direct3D11.CullMode",
+          "Value": "Back"
+        },
+        {
+          "Id": "5f63b525-5da3-44a3-8875-11a82c37b0a5",
+          "Type": "System.Boolean",
+          "Value": true
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "2cbbb768-3d6b-546e-8707-a43efd555c26",
+      "SymbolId": "00618c91-f39a-44ea-b9d8-175c996460dc",
+      "SymbolName": "Lib.render.scene.LoadGltfScene",
+      "Name": "Laboratory / glass geometry",
+      "InputValues": [
+        {
+          "Id": "292e80cf-ba31-4a50-9bf4-83712430f811",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "49237499-9b1e-4371-afac-4e3394868370",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "d7ae3173-c490-47cf-8d4b-4c25102f6904",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "57f129ae-0b2e-465d-8c0e-f6259fdd37ce",
+          "Type": "System.Boolean",
+          "Value": false
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "61d32e13-0ce7-5726-bf43-2b3f7dc832fa",
+      "SymbolId": "8cc13ea4-9e0d-4b61-9b1f-b72f6c470a7a",
+      "SymbolName": "PrismalLabs.BlenderExport.BlenderAnimationScene",
+      "Name": "Laboratory / glass motion",
+      "InputValues": [
+        {
+          "Id": "ca02f7a3-a03a-4db0-a05d-3a66b0c9ab11",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "3a4c36f9-e8c1-4ab7-b370-0f548b054933",
+          "Type": "System.String",
+          "Value": ""
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "f578a8cf-75aa-5c6b-a719-7e18c66da774",
+      "SymbolId": "2fcdea21-18f1-4006-a2fe-aab40893fed8",
+      "SymbolName": "Lib.render.scene.DrawScene",
+      "Name": "Laboratory / glass PBR",
+      "InputValues": [
+        {
+          "Id": "d517b62c-0f11-4d76-a945-4dabb7d84d74",
+          "Type": "System.Boolean",
+          "Value": false
+        },
+        {
+          "Id": "121f0f29-36f3-4ef7-9ebf-d14ad65b16a2",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "69151dfb-59cf-4618-8642-c9dc88260786",
+          "Type": "System.Int32",
+          "Value": 0
+        },
+        {
+          "Id": "42e7cc49-5102-4e74-8bea-c7698cb4abca",
+          "Type": "SharpDX.Direct3D11.CullMode",
+          "Value": "Back"
+        },
+        {
+          "Id": "5f63b525-5da3-44a3-8875-11a82c37b0a5",
+          "Type": "System.Boolean",
+          "Value": true
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "f8cdfe6d-fe84-5763-ab2a-3e3e7b521785",
+      "SymbolId": "2fcdea21-18f1-4006-a2fe-aab40893fed8",
+      "SymbolName": "Lib.render.scene.DrawScene",
+      "Name": "Laboratory / solid inserts in glass assets",
+      "InputValues": [
+        {
+          "Id": "d517b62c-0f11-4d76-a945-4dabb7d84d74",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "121f0f29-36f3-4ef7-9ebf-d14ad65b16a2",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "69151dfb-59cf-4618-8642-c9dc88260786",
+          "Type": "System.Int32",
+          "Value": 4
+        },
+        {
+          "Id": "42e7cc49-5102-4e74-8bea-c7698cb4abca",
+          "Type": "SharpDX.Direct3D11.CullMode",
+          "Value": "Back"
+        },
+        {
+          "Id": "5f63b525-5da3-44a3-8875-11a82c37b0a5",
+          "Type": "System.Boolean",
+          "Value": true
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "66324dcc-752c-5789-8670-a20002fff12f",
+      "SymbolId": "a3f64d34-1fab-4230-86b3-1c3deba3f90b",
+      "SymbolName": "Lib.render.transform.Group",
+      "Name": "0 / LABORATORY",
+      "InputValues": [],
+      "Outputs": []
+    },
+    {
+      "Id": "1f8ceefa-230f-5089-8a34-1125d5245c3f",
+      "SymbolId": "00618c91-f39a-44ea-b9d8-175c996460dc",
+      "SymbolName": "Lib.render.scene.LoadGltfScene",
+      "Name": "Thermal / opaque geometry",
+      "InputValues": [
+        {
+          "Id": "292e80cf-ba31-4a50-9bf4-83712430f811",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "49237499-9b1e-4371-afac-4e3394868370",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "d7ae3173-c490-47cf-8d4b-4c25102f6904",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "57f129ae-0b2e-465d-8c0e-f6259fdd37ce",
+          "Type": "System.Boolean",
+          "Value": false
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "d20a2c1e-4cff-53bb-afaa-57b41ed27480",
+      "SymbolId": "8cc13ea4-9e0d-4b61-9b1f-b72f6c470a7a",
+      "SymbolName": "PrismalLabs.BlenderExport.BlenderAnimationScene",
+      "Name": "Thermal / opaque motion",
+      "InputValues": [
+        {
+          "Id": "ca02f7a3-a03a-4db0-a05d-3a66b0c9ab11",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "3a4c36f9-e8c1-4ab7-b370-0f548b054933",
+          "Type": "System.String",
+          "Value": ""
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "298d49bd-ab4f-595b-871f-80c5ef8ca50a",
+      "SymbolId": "2fcdea21-18f1-4006-a2fe-aab40893fed8",
+      "SymbolName": "Lib.render.scene.DrawScene",
+      "Name": "Thermal / opaque PBR",
+      "InputValues": [
+        {
+          "Id": "d517b62c-0f11-4d76-a945-4dabb7d84d74",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "121f0f29-36f3-4ef7-9ebf-d14ad65b16a2",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "69151dfb-59cf-4618-8642-c9dc88260786",
+          "Type": "System.Int32",
+          "Value": 4
+        },
+        {
+          "Id": "42e7cc49-5102-4e74-8bea-c7698cb4abca",
+          "Type": "SharpDX.Direct3D11.CullMode",
+          "Value": "Back"
+        },
+        {
+          "Id": "5f63b525-5da3-44a3-8875-11a82c37b0a5",
+          "Type": "System.Boolean",
+          "Value": true
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "cda61dd4-d567-520b-8c7c-1aafe6433427",
+      "SymbolId": "00618c91-f39a-44ea-b9d8-175c996460dc",
+      "SymbolName": "Lib.render.scene.LoadGltfScene",
+      "Name": "Thermal / glass geometry",
+      "InputValues": [
+        {
+          "Id": "292e80cf-ba31-4a50-9bf4-83712430f811",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "49237499-9b1e-4371-afac-4e3394868370",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "d7ae3173-c490-47cf-8d4b-4c25102f6904",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "57f129ae-0b2e-465d-8c0e-f6259fdd37ce",
+          "Type": "System.Boolean",
+          "Value": false
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "aee3f38b-c48f-5b82-ae1d-ee95b3f1db38",
+      "SymbolId": "8cc13ea4-9e0d-4b61-9b1f-b72f6c470a7a",
+      "SymbolName": "PrismalLabs.BlenderExport.BlenderAnimationScene",
+      "Name": "Thermal / glass motion",
+      "InputValues": [
+        {
+          "Id": "ca02f7a3-a03a-4db0-a05d-3a66b0c9ab11",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "3a4c36f9-e8c1-4ab7-b370-0f548b054933",
+          "Type": "System.String",
+          "Value": ""
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "5b40fb59-5372-5aac-a8f6-e4ad4ef58685",
+      "SymbolId": "2fcdea21-18f1-4006-a2fe-aab40893fed8",
+      "SymbolName": "Lib.render.scene.DrawScene",
+      "Name": "Thermal / glass PBR",
+      "InputValues": [
+        {
+          "Id": "d517b62c-0f11-4d76-a945-4dabb7d84d74",
+          "Type": "System.Boolean",
+          "Value": false
+        },
+        {
+          "Id": "121f0f29-36f3-4ef7-9ebf-d14ad65b16a2",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "69151dfb-59cf-4618-8642-c9dc88260786",
+          "Type": "System.Int32",
+          "Value": 0
+        },
+        {
+          "Id": "42e7cc49-5102-4e74-8bea-c7698cb4abca",
+          "Type": "SharpDX.Direct3D11.CullMode",
+          "Value": "Back"
+        },
+        {
+          "Id": "5f63b525-5da3-44a3-8875-11a82c37b0a5",
+          "Type": "System.Boolean",
+          "Value": true
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "bcee0f06-78c1-55be-9bdd-84a321f9fddc",
+      "SymbolId": "2fcdea21-18f1-4006-a2fe-aab40893fed8",
+      "SymbolName": "Lib.render.scene.DrawScene",
+      "Name": "Thermal / solid inserts in glass assets",
+      "InputValues": [
+        {
+          "Id": "d517b62c-0f11-4d76-a945-4dabb7d84d74",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "121f0f29-36f3-4ef7-9ebf-d14ad65b16a2",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "69151dfb-59cf-4618-8642-c9dc88260786",
+          "Type": "System.Int32",
+          "Value": 4
+        },
+        {
+          "Id": "42e7cc49-5102-4e74-8bea-c7698cb4abca",
+          "Type": "SharpDX.Direct3D11.CullMode",
+          "Value": "Back"
+        },
+        {
+          "Id": "5f63b525-5da3-44a3-8875-11a82c37b0a5",
+          "Type": "System.Boolean",
+          "Value": true
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "9308f93c-7e9f-5ead-82b4-1a218b2d5ced",
+      "SymbolId": "a3f64d34-1fab-4230-86b3-1c3deba3f90b",
+      "SymbolName": "Lib.render.transform.Group",
+      "Name": "1 / THERMAL",
+      "InputValues": [],
+      "Outputs": []
+    },
+    {
+      "Id": "d91ffb1e-9857-5ab4-ab57-a4003da04bc8",
+      "SymbolId": "00618c91-f39a-44ea-b9d8-175c996460dc",
+      "SymbolName": "Lib.render.scene.LoadGltfScene",
+      "Name": "Culture / opaque geometry",
+      "InputValues": [
+        {
+          "Id": "292e80cf-ba31-4a50-9bf4-83712430f811",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "49237499-9b1e-4371-afac-4e3394868370",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "d7ae3173-c490-47cf-8d4b-4c25102f6904",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "57f129ae-0b2e-465d-8c0e-f6259fdd37ce",
+          "Type": "System.Boolean",
+          "Value": false
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "891a9f31-c36d-53fa-8bf1-1d1d025150fe",
+      "SymbolId": "8cc13ea4-9e0d-4b61-9b1f-b72f6c470a7a",
+      "SymbolName": "PrismalLabs.BlenderExport.BlenderAnimationScene",
+      "Name": "Culture / opaque motion",
+      "InputValues": [
+        {
+          "Id": "ca02f7a3-a03a-4db0-a05d-3a66b0c9ab11",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "3a4c36f9-e8c1-4ab7-b370-0f548b054933",
+          "Type": "System.String",
+          "Value": ""
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "52d48453-d06d-521c-bbcf-c74b355d5dea",
+      "SymbolId": "2fcdea21-18f1-4006-a2fe-aab40893fed8",
+      "SymbolName": "Lib.render.scene.DrawScene",
+      "Name": "Culture / opaque PBR",
+      "InputValues": [
+        {
+          "Id": "d517b62c-0f11-4d76-a945-4dabb7d84d74",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "121f0f29-36f3-4ef7-9ebf-d14ad65b16a2",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "69151dfb-59cf-4618-8642-c9dc88260786",
+          "Type": "System.Int32",
+          "Value": 4
+        },
+        {
+          "Id": "42e7cc49-5102-4e74-8bea-c7698cb4abca",
+          "Type": "SharpDX.Direct3D11.CullMode",
+          "Value": "Back"
+        },
+        {
+          "Id": "5f63b525-5da3-44a3-8875-11a82c37b0a5",
+          "Type": "System.Boolean",
+          "Value": true
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "75db6d56-d209-5759-a65d-27604f0121f4",
+      "SymbolId": "00618c91-f39a-44ea-b9d8-175c996460dc",
+      "SymbolName": "Lib.render.scene.LoadGltfScene",
+      "Name": "Culture / glass geometry",
+      "InputValues": [
+        {
+          "Id": "292e80cf-ba31-4a50-9bf4-83712430f811",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "49237499-9b1e-4371-afac-4e3394868370",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "d7ae3173-c490-47cf-8d4b-4c25102f6904",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "57f129ae-0b2e-465d-8c0e-f6259fdd37ce",
+          "Type": "System.Boolean",
+          "Value": false
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "f8a101f9-a833-5428-bb4d-c765a6c5b549",
+      "SymbolId": "8cc13ea4-9e0d-4b61-9b1f-b72f6c470a7a",
+      "SymbolName": "PrismalLabs.BlenderExport.BlenderAnimationScene",
+      "Name": "Culture / glass motion",
+      "InputValues": [
+        {
+          "Id": "ca02f7a3-a03a-4db0-a05d-3a66b0c9ab11",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "3a4c36f9-e8c1-4ab7-b370-0f548b054933",
+          "Type": "System.String",
+          "Value": ""
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "3708d71a-f3ab-518b-9450-9b7eb8c7fcf5",
+      "SymbolId": "2fcdea21-18f1-4006-a2fe-aab40893fed8",
+      "SymbolName": "Lib.render.scene.DrawScene",
+      "Name": "Culture / glass PBR",
+      "InputValues": [
+        {
+          "Id": "d517b62c-0f11-4d76-a945-4dabb7d84d74",
+          "Type": "System.Boolean",
+          "Value": false
+        },
+        {
+          "Id": "121f0f29-36f3-4ef7-9ebf-d14ad65b16a2",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "69151dfb-59cf-4618-8642-c9dc88260786",
+          "Type": "System.Int32",
+          "Value": 0
+        },
+        {
+          "Id": "42e7cc49-5102-4e74-8bea-c7698cb4abca",
+          "Type": "SharpDX.Direct3D11.CullMode",
+          "Value": "Back"
+        },
+        {
+          "Id": "5f63b525-5da3-44a3-8875-11a82c37b0a5",
+          "Type": "System.Boolean",
+          "Value": true
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "ccbe5334-5624-53fe-8c5d-90d99df618c3",
+      "SymbolId": "2fcdea21-18f1-4006-a2fe-aab40893fed8",
+      "SymbolName": "Lib.render.scene.DrawScene",
+      "Name": "Culture / solid inserts in glass assets",
+      "InputValues": [
+        {
+          "Id": "d517b62c-0f11-4d76-a945-4dabb7d84d74",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "121f0f29-36f3-4ef7-9ebf-d14ad65b16a2",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "69151dfb-59cf-4618-8642-c9dc88260786",
+          "Type": "System.Int32",
+          "Value": 4
+        },
+        {
+          "Id": "42e7cc49-5102-4e74-8bea-c7698cb4abca",
+          "Type": "SharpDX.Direct3D11.CullMode",
+          "Value": "Back"
+        },
+        {
+          "Id": "5f63b525-5da3-44a3-8875-11a82c37b0a5",
+          "Type": "System.Boolean",
+          "Value": true
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "19585963-aeea-55bf-8cf7-ef161620dd45",
+      "SymbolId": "a3f64d34-1fab-4230-86b3-1c3deba3f90b",
+      "SymbolName": "Lib.render.transform.Group",
+      "Name": "2 / CULTURE",
+      "InputValues": [],
+      "Outputs": []
+    },
+    {
+      "Id": "2dcf136a-a9d2-51a7-aa26-301e14ef5583",
+      "SymbolId": "00618c91-f39a-44ea-b9d8-175c996460dc",
+      "SymbolName": "Lib.render.scene.LoadGltfScene",
+      "Name": "Circuit / opaque geometry",
+      "InputValues": [
+        {
+          "Id": "292e80cf-ba31-4a50-9bf4-83712430f811",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "49237499-9b1e-4371-afac-4e3394868370",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "d7ae3173-c490-47cf-8d4b-4c25102f6904",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "57f129ae-0b2e-465d-8c0e-f6259fdd37ce",
+          "Type": "System.Boolean",
+          "Value": false
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "d3a16555-64c8-5156-95f6-2c37b83e3f29",
+      "SymbolId": "8cc13ea4-9e0d-4b61-9b1f-b72f6c470a7a",
+      "SymbolName": "PrismalLabs.BlenderExport.BlenderAnimationScene",
+      "Name": "Circuit / opaque motion",
+      "InputValues": [
+        {
+          "Id": "ca02f7a3-a03a-4db0-a05d-3a66b0c9ab11",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "3a4c36f9-e8c1-4ab7-b370-0f548b054933",
+          "Type": "System.String",
+          "Value": ""
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "50c737ae-2695-549d-b21a-161d5edd8984",
+      "SymbolId": "2fcdea21-18f1-4006-a2fe-aab40893fed8",
+      "SymbolName": "Lib.render.scene.DrawScene",
+      "Name": "Circuit / opaque PBR",
+      "InputValues": [
+        {
+          "Id": "d517b62c-0f11-4d76-a945-4dabb7d84d74",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "121f0f29-36f3-4ef7-9ebf-d14ad65b16a2",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "69151dfb-59cf-4618-8642-c9dc88260786",
+          "Type": "System.Int32",
+          "Value": 4
+        },
+        {
+          "Id": "42e7cc49-5102-4e74-8bea-c7698cb4abca",
+          "Type": "SharpDX.Direct3D11.CullMode",
+          "Value": "Back"
+        },
+        {
+          "Id": "5f63b525-5da3-44a3-8875-11a82c37b0a5",
+          "Type": "System.Boolean",
+          "Value": true
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "4dd2ed7a-f184-5395-88aa-ebbe575b353f",
+      "SymbolId": "a3f64d34-1fab-4230-86b3-1c3deba3f90b",
+      "SymbolName": "Lib.render.transform.Group",
+      "Name": "3 / CIRCUIT",
+      "InputValues": [],
+      "Outputs": []
+    },
+    {
+      "Id": "d6ab442e-3b64-546a-aac8-be78e656a952",
+      "SymbolId": "00618c91-f39a-44ea-b9d8-175c996460dc",
+      "SymbolName": "Lib.render.scene.LoadGltfScene",
+      "Name": "Analog / opaque geometry",
+      "InputValues": [
+        {
+          "Id": "292e80cf-ba31-4a50-9bf4-83712430f811",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "49237499-9b1e-4371-afac-4e3394868370",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "d7ae3173-c490-47cf-8d4b-4c25102f6904",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "57f129ae-0b2e-465d-8c0e-f6259fdd37ce",
+          "Type": "System.Boolean",
+          "Value": false
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "1769bb6c-bda5-57ae-a509-cc1560c8c232",
+      "SymbolId": "8cc13ea4-9e0d-4b61-9b1f-b72f6c470a7a",
+      "SymbolName": "PrismalLabs.BlenderExport.BlenderAnimationScene",
+      "Name": "Analog / opaque motion",
+      "InputValues": [
+        {
+          "Id": "ca02f7a3-a03a-4db0-a05d-3a66b0c9ab11",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "3a4c36f9-e8c1-4ab7-b370-0f548b054933",
+          "Type": "System.String",
+          "Value": ""
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "5c012bb7-90dd-50a3-bbcb-75ea5369aaac",
+      "SymbolId": "2fcdea21-18f1-4006-a2fe-aab40893fed8",
+      "SymbolName": "Lib.render.scene.DrawScene",
+      "Name": "Analog / opaque PBR",
+      "InputValues": [
+        {
+          "Id": "d517b62c-0f11-4d76-a945-4dabb7d84d74",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "121f0f29-36f3-4ef7-9ebf-d14ad65b16a2",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "69151dfb-59cf-4618-8642-c9dc88260786",
+          "Type": "System.Int32",
+          "Value": 4
+        },
+        {
+          "Id": "42e7cc49-5102-4e74-8bea-c7698cb4abca",
+          "Type": "SharpDX.Direct3D11.CullMode",
+          "Value": "Back"
+        },
+        {
+          "Id": "5f63b525-5da3-44a3-8875-11a82c37b0a5",
+          "Type": "System.Boolean",
+          "Value": true
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "22fb9c96-9fd0-5d8d-856b-2841696875ac",
+      "SymbolId": "00618c91-f39a-44ea-b9d8-175c996460dc",
+      "SymbolName": "Lib.render.scene.LoadGltfScene",
+      "Name": "Analog / glass geometry",
+      "InputValues": [
+        {
+          "Id": "292e80cf-ba31-4a50-9bf4-83712430f811",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "49237499-9b1e-4371-afac-4e3394868370",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "d7ae3173-c490-47cf-8d4b-4c25102f6904",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "57f129ae-0b2e-465d-8c0e-f6259fdd37ce",
+          "Type": "System.Boolean",
+          "Value": false
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "d81bfb7a-96c2-55de-b30f-bfeeb6eb955f",
+      "SymbolId": "8cc13ea4-9e0d-4b61-9b1f-b72f6c470a7a",
+      "SymbolName": "PrismalLabs.BlenderExport.BlenderAnimationScene",
+      "Name": "Analog / glass motion",
+      "InputValues": [
+        {
+          "Id": "ca02f7a3-a03a-4db0-a05d-3a66b0c9ab11",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "3a4c36f9-e8c1-4ab7-b370-0f548b054933",
+          "Type": "System.String",
+          "Value": ""
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "76637f2f-b4e7-506c-907d-d6be7fae89b1",
+      "SymbolId": "2fcdea21-18f1-4006-a2fe-aab40893fed8",
+      "SymbolName": "Lib.render.scene.DrawScene",
+      "Name": "Analog / glass PBR",
+      "InputValues": [
+        {
+          "Id": "d517b62c-0f11-4d76-a945-4dabb7d84d74",
+          "Type": "System.Boolean",
+          "Value": false
+        },
+        {
+          "Id": "121f0f29-36f3-4ef7-9ebf-d14ad65b16a2",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "69151dfb-59cf-4618-8642-c9dc88260786",
+          "Type": "System.Int32",
+          "Value": 0
+        },
+        {
+          "Id": "42e7cc49-5102-4e74-8bea-c7698cb4abca",
+          "Type": "SharpDX.Direct3D11.CullMode",
+          "Value": "Back"
+        },
+        {
+          "Id": "5f63b525-5da3-44a3-8875-11a82c37b0a5",
+          "Type": "System.Boolean",
+          "Value": true
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "769aa07b-35ee-5add-a682-b3db3203e2d2",
+      "SymbolId": "2fcdea21-18f1-4006-a2fe-aab40893fed8",
+      "SymbolName": "Lib.render.scene.DrawScene",
+      "Name": "Analog / solid inserts in glass assets",
+      "InputValues": [
+        {
+          "Id": "d517b62c-0f11-4d76-a945-4dabb7d84d74",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "121f0f29-36f3-4ef7-9ebf-d14ad65b16a2",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "69151dfb-59cf-4618-8642-c9dc88260786",
+          "Type": "System.Int32",
+          "Value": 4
+        },
+        {
+          "Id": "42e7cc49-5102-4e74-8bea-c7698cb4abca",
+          "Type": "SharpDX.Direct3D11.CullMode",
+          "Value": "Back"
+        },
+        {
+          "Id": "5f63b525-5da3-44a3-8875-11a82c37b0a5",
+          "Type": "System.Boolean",
+          "Value": true
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "2848570c-88b5-5313-b25c-373d3dcc8796",
+      "SymbolId": "a3f64d34-1fab-4230-86b3-1c3deba3f90b",
+      "SymbolName": "Lib.render.transform.Group",
+      "Name": "4 / ANALOG",
+      "InputValues": [],
+      "Outputs": []
+    },
+    {
+      "Id": "6b185158-958d-5b9e-8506-b6646397fe54",
+      "SymbolId": "00618c91-f39a-44ea-b9d8-175c996460dc",
+      "SymbolName": "Lib.render.scene.LoadGltfScene",
+      "Name": "Clockwork / opaque geometry",
+      "InputValues": [
+        {
+          "Id": "292e80cf-ba31-4a50-9bf4-83712430f811",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "49237499-9b1e-4371-afac-4e3394868370",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "d7ae3173-c490-47cf-8d4b-4c25102f6904",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "57f129ae-0b2e-465d-8c0e-f6259fdd37ce",
+          "Type": "System.Boolean",
+          "Value": false
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "7f86fbe7-b902-5c65-9e42-269420991bc6",
+      "SymbolId": "8cc13ea4-9e0d-4b61-9b1f-b72f6c470a7a",
+      "SymbolName": "PrismalLabs.BlenderExport.BlenderAnimationScene",
+      "Name": "Clockwork / opaque motion",
+      "InputValues": [
+        {
+          "Id": "ca02f7a3-a03a-4db0-a05d-3a66b0c9ab11",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "3a4c36f9-e8c1-4ab7-b370-0f548b054933",
+          "Type": "System.String",
+          "Value": ""
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "2f6ae7c8-b02c-50b6-9f26-d20b3b253585",
+      "SymbolId": "2fcdea21-18f1-4006-a2fe-aab40893fed8",
+      "SymbolName": "Lib.render.scene.DrawScene",
+      "Name": "Clockwork / opaque PBR",
+      "InputValues": [
+        {
+          "Id": "d517b62c-0f11-4d76-a945-4dabb7d84d74",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "121f0f29-36f3-4ef7-9ebf-d14ad65b16a2",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "69151dfb-59cf-4618-8642-c9dc88260786",
+          "Type": "System.Int32",
+          "Value": 4
+        },
+        {
+          "Id": "42e7cc49-5102-4e74-8bea-c7698cb4abca",
+          "Type": "SharpDX.Direct3D11.CullMode",
+          "Value": "Back"
+        },
+        {
+          "Id": "5f63b525-5da3-44a3-8875-11a82c37b0a5",
+          "Type": "System.Boolean",
+          "Value": true
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "4713402b-ed8b-56d4-b730-2a8e32a26a54",
+      "SymbolId": "a3f64d34-1fab-4230-86b3-1c3deba3f90b",
+      "SymbolName": "Lib.render.transform.Group",
+      "Name": "5 / CLOCKWORK",
+      "InputValues": [],
+      "Outputs": []
+    },
+    {
+      "Id": "9284441a-7da6-5142-a539-b789fbb0566c",
+      "SymbolId": "00618c91-f39a-44ea-b9d8-175c996460dc",
+      "SymbolName": "Lib.render.scene.LoadGltfScene",
+      "Name": "Resonator / opaque geometry",
+      "InputValues": [
+        {
+          "Id": "292e80cf-ba31-4a50-9bf4-83712430f811",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "49237499-9b1e-4371-afac-4e3394868370",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "d7ae3173-c490-47cf-8d4b-4c25102f6904",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "57f129ae-0b2e-465d-8c0e-f6259fdd37ce",
+          "Type": "System.Boolean",
+          "Value": false
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "0bf7494e-d944-5fd6-bbc2-63660dbd1750",
+      "SymbolId": "8cc13ea4-9e0d-4b61-9b1f-b72f6c470a7a",
+      "SymbolName": "PrismalLabs.BlenderExport.BlenderAnimationScene",
+      "Name": "Resonator / opaque motion",
+      "InputValues": [
+        {
+          "Id": "ca02f7a3-a03a-4db0-a05d-3a66b0c9ab11",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "3a4c36f9-e8c1-4ab7-b370-0f548b054933",
+          "Type": "System.String",
+          "Value": ""
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "8b8084f6-64c3-5f1d-aa4c-c494fb1be408",
+      "SymbolId": "2fcdea21-18f1-4006-a2fe-aab40893fed8",
+      "SymbolName": "Lib.render.scene.DrawScene",
+      "Name": "Resonator / opaque PBR",
+      "InputValues": [
+        {
+          "Id": "d517b62c-0f11-4d76-a945-4dabb7d84d74",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "121f0f29-36f3-4ef7-9ebf-d14ad65b16a2",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "69151dfb-59cf-4618-8642-c9dc88260786",
+          "Type": "System.Int32",
+          "Value": 4
+        },
+        {
+          "Id": "42e7cc49-5102-4e74-8bea-c7698cb4abca",
+          "Type": "SharpDX.Direct3D11.CullMode",
+          "Value": "Back"
+        },
+        {
+          "Id": "5f63b525-5da3-44a3-8875-11a82c37b0a5",
+          "Type": "System.Boolean",
+          "Value": true
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "e980d064-3ea0-522d-a83c-bce89ca12fd9",
+      "SymbolId": "00618c91-f39a-44ea-b9d8-175c996460dc",
+      "SymbolName": "Lib.render.scene.LoadGltfScene",
+      "Name": "Resonator / glass geometry",
+      "InputValues": [
+        {
+          "Id": "292e80cf-ba31-4a50-9bf4-83712430f811",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "49237499-9b1e-4371-afac-4e3394868370",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "d7ae3173-c490-47cf-8d4b-4c25102f6904",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "57f129ae-0b2e-465d-8c0e-f6259fdd37ce",
+          "Type": "System.Boolean",
+          "Value": false
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "aad9da32-ab18-5ab9-bdfa-ca2980b9f6f2",
+      "SymbolId": "8cc13ea4-9e0d-4b61-9b1f-b72f6c470a7a",
+      "SymbolName": "PrismalLabs.BlenderExport.BlenderAnimationScene",
+      "Name": "Resonator / glass motion",
+      "InputValues": [
+        {
+          "Id": "ca02f7a3-a03a-4db0-a05d-3a66b0c9ab11",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "3a4c36f9-e8c1-4ab7-b370-0f548b054933",
+          "Type": "System.String",
+          "Value": ""
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "a651991e-5312-5a02-b7f8-7c751ad55a7c",
+      "SymbolId": "2fcdea21-18f1-4006-a2fe-aab40893fed8",
+      "SymbolName": "Lib.render.scene.DrawScene",
+      "Name": "Resonator / glass PBR",
+      "InputValues": [
+        {
+          "Id": "d517b62c-0f11-4d76-a945-4dabb7d84d74",
+          "Type": "System.Boolean",
+          "Value": false
+        },
+        {
+          "Id": "121f0f29-36f3-4ef7-9ebf-d14ad65b16a2",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "69151dfb-59cf-4618-8642-c9dc88260786",
+          "Type": "System.Int32",
+          "Value": 0
+        },
+        {
+          "Id": "42e7cc49-5102-4e74-8bea-c7698cb4abca",
+          "Type": "SharpDX.Direct3D11.CullMode",
+          "Value": "Back"
+        },
+        {
+          "Id": "5f63b525-5da3-44a3-8875-11a82c37b0a5",
+          "Type": "System.Boolean",
+          "Value": true
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "e8744e6b-4b37-5995-91b2-276133377d0d",
+      "SymbolId": "2fcdea21-18f1-4006-a2fe-aab40893fed8",
+      "SymbolName": "Lib.render.scene.DrawScene",
+      "Name": "Resonator / solid inserts in glass assets",
+      "InputValues": [
+        {
+          "Id": "d517b62c-0f11-4d76-a945-4dabb7d84d74",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "121f0f29-36f3-4ef7-9ebf-d14ad65b16a2",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "69151dfb-59cf-4618-8642-c9dc88260786",
+          "Type": "System.Int32",
+          "Value": 4
+        },
+        {
+          "Id": "42e7cc49-5102-4e74-8bea-c7698cb4abca",
+          "Type": "SharpDX.Direct3D11.CullMode",
+          "Value": "Back"
+        },
+        {
+          "Id": "5f63b525-5da3-44a3-8875-11a82c37b0a5",
+          "Type": "System.Boolean",
+          "Value": true
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "a0cbaa09-5169-566f-b19a-dd1f78940661",
+      "SymbolId": "a3f64d34-1fab-4230-86b3-1c3deba3f90b",
+      "SymbolName": "Lib.render.transform.Group",
+      "Name": "6 / RESONATOR",
+      "InputValues": [],
+      "Outputs": []
+    },
+    {
+      "Id": "18e019e0-d07c-5104-a753-b3d61e6cf624",
+      "SymbolId": "00618c91-f39a-44ea-b9d8-175c996460dc",
+      "SymbolName": "Lib.render.scene.LoadGltfScene",
+      "Name": "Emblem / opaque geometry",
+      "InputValues": [
+        {
+          "Id": "292e80cf-ba31-4a50-9bf4-83712430f811",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "49237499-9b1e-4371-afac-4e3394868370",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "d7ae3173-c490-47cf-8d4b-4c25102f6904",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "57f129ae-0b2e-465d-8c0e-f6259fdd37ce",
+          "Type": "System.Boolean",
+          "Value": false
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "dcb6f8b8-c569-53bb-8469-a58f0f8b0453",
+      "SymbolId": "8cc13ea4-9e0d-4b61-9b1f-b72f6c470a7a",
+      "SymbolName": "PrismalLabs.BlenderExport.BlenderAnimationScene",
+      "Name": "Emblem / opaque motion",
+      "InputValues": [
+        {
+          "Id": "ca02f7a3-a03a-4db0-a05d-3a66b0c9ab11",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "3a4c36f9-e8c1-4ab7-b370-0f548b054933",
+          "Type": "System.String",
+          "Value": ""
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "06a98894-cc71-501a-91e5-96a1cae4e7a3",
+      "SymbolId": "2fcdea21-18f1-4006-a2fe-aab40893fed8",
+      "SymbolName": "Lib.render.scene.DrawScene",
+      "Name": "Emblem / opaque PBR",
+      "InputValues": [
+        {
+          "Id": "d517b62c-0f11-4d76-a945-4dabb7d84d74",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "121f0f29-36f3-4ef7-9ebf-d14ad65b16a2",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "69151dfb-59cf-4618-8642-c9dc88260786",
+          "Type": "System.Int32",
+          "Value": 4
+        },
+        {
+          "Id": "42e7cc49-5102-4e74-8bea-c7698cb4abca",
+          "Type": "SharpDX.Direct3D11.CullMode",
+          "Value": "Back"
+        },
+        {
+          "Id": "5f63b525-5da3-44a3-8875-11a82c37b0a5",
+          "Type": "System.Boolean",
+          "Value": true
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "b0eb0c7e-1b0d-54da-9ad7-1d04196596e1",
+      "SymbolId": "a3f64d34-1fab-4230-86b3-1c3deba3f90b",
+      "SymbolName": "Lib.render.transform.Group",
+      "Name": "7 / EMBLEM",
+      "InputValues": [],
+      "Outputs": []
+    },
+    {
+      "Id": "e270921b-1fb6-5429-81d5-7a7267c1e310",
+      "SymbolId": "e64f95e4-c045-400f-98ca-7c020ad46174",
+      "SymbolName": "Lib.flow.Switch",
+      "Name": "ACTIVE WORLD / cuts follow timeline",
+      "InputValues": [
+        {
+          "Id": "e896b269-d17e-417f-be1f-2d6e9addae91",
+          "Type": "System.Boolean",
+          "Value": true
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "4b7e30fd-61e0-5a62-a076-82ffb9bfa628",
+      "SymbolId": "ed467242-caba-58ac-b8e9-69a494a93e39",
+      "SymbolName": "PrismalLabs.BlenderExport.BlenderExportLights",
+      "Name": "Blender lights / active world / keyed energy",
+      "InputValues": [
+        {
+          "Id": "e0a26c9d-fc85-59a7-88b5-1d1b0d8c5c3f",
+          "Type": "System.String",
+          "Value": ""
+        },
+        {
+          "Id": "a17e4d92-6c38-4f0b-b5d1-2e9a7c8f6043",
+          "Type": "System.String",
+          "Value": "laboratory,thermal,culture,circuit,analog,clockwork,resonator,emblem"
+        },
+        {
+          "Id": "48ad955c-730a-5e12-866b-938588a436ea",
+          "Type": "System.Single",
+          "Value": 0.06
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "721d08b7-15b1-5313-b442-d1d3bce54816",
+      "SymbolId": "f3b66187-34b2-4018-8380-279f9f296ded",
+      "SymbolName": "Lib.render.shading.SetEnvironment",
+      "Name": "Prismal Labs / studio reflections",
+      "InputValues": [
+        {
+          "Id": "de6b9cb3-69ce-4b23-add6-a564648ec3a8",
+          "Type": "System.Int32",
+          "Value": 0
+        },
+        {
+          "Id": "4f573afe-8815-4fd3-a655-89ec40bf3c22",
+          "Type": "System.Boolean",
+          "Value": false
+        },
+        {
+          "Id": "c3c815fa-8672-4d99-99a7-986844f2fc45",
+          "Type": "System.Boolean",
+          "Value": false
+        },
+        {
+          "Id": "71c54c8e-a95f-47e8-b126-0cdaa89ae49b",
+          "Type": "System.Single",
+          "Value": 1.3
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "5086fd6b-7a59-589e-a06b-b339a0c25e33",
+      "SymbolId": "746d886c-5ab6-44b1-bb15-f3ce2fadf7e6",
+      "SymbolName": "Lib.render.camera.Camera",
+      "Name": "Blender camera rail / 60 Hz",
+      "InputValues": [
+        {
+          "Id": "f66e91a1-b991-48c3-a8c9-33bcad0c2f6f",
+          "Type": "System.Single",
+          "Value": 1.7777777777777777
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "ed4da69f-15c4-5268-a1e5-3eaff03c1bc4",
+      "SymbolId": "f9fe78c5-43a6-48ae-8e8c-6cdbbc330dd1",
+      "SymbolName": "Lib.image.generate.basic.RenderTarget",
+      "Name": "Bridge Template / HDR render",
+      "InputValues": [
+        {
+          "Id": "03749b41-cc3c-4f38-aea6-d7cea19fc073",
+          "Type": "T3.Core.DataTypes.Vector.Int2",
+          "Value": {
+            "X": 1280,
+            "Y": 720
+          }
+        },
+        {
+          "Id": "6ea4f801-ff52-4266-a41f-b9ef02c68510",
+          "Type": "System.Boolean",
+          "Value": true
+        },
+        {
+          "Id": "e882e0f0-03f9-46e6-ac7a-709e6fa66613",
+          "Type": "System.Int32",
+          "Value": 4
+        },
+        {
+          "Id": "8bb4a4e5-0c88-4d99-a5b2-2c9e22bd301f",
+          "Type": "System.Numerics.Vector4",
+          "Value": {
+            "X": 0.006,
+            "Y": 0.012,
+            "Z": 0.019,
+            "W": 1
+          }
+        },
+        {
+          "Id": "ec46bef4-8dce-4eb4-bfe8-e35a5ac416ec",
+          "Type": "SharpDX.DXGI.Format",
+          "Value": "R16G16B16A16_Float"
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "77868b45-119f-59ad-9b3d-e9f7eb6e0cc4",
+      "SymbolId": "f634e126-8834-46ea-bd6e-5ebfdc8b0733",
+      "SymbolName": "Lib.image.fx.blur.Bloom",
+      "Name": "Glow / Nixie, arcs, logo",
+      "InputValues": [
+        {
+          "Id": "28e0b719-0888-4ef6-85d9-bbd75f7a4537",
+          "Type": "System.Single",
+          "Value": 0.8
+        },
+        {
+          "Id": "bb706662-2555-4f3b-a81e-60e04f052f36",
+          "Type": "System.Single",
+          "Value": 1.2
+        },
+        {
+          "Id": "2064aba1-658e-4795-a4fc-5be1026d7064",
+          "Type": "System.Int32",
+          "Value": 6
+        },
+        {
+          "Id": "e7412f9b-b5e3-4166-8f5e-4b142ccee55a",
+          "Type": "System.Boolean",
+          "Value": false
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "df449e46-71c9-5da1-9f92-463deae0acf2",
+      "SymbolId": "946da16c-f536-4887-b764-af9468f22c0f",
+      "SymbolName": "Lib.image.fx.blur.Blur",
+      "Name": "Lens defocus at physical passages",
+      "InputValues": [
+        {
+          "Id": "3c8b43be-430f-4afe-8244-5282be49bfbc",
+          "Type": "System.Single",
+          "Value": 24.0
+        },
+        {
+          "Id": "9c944546-1363-4e3b-b706-31a4b750db2c",
+          "Type": "SharpDX.Direct3D11.TextureAddressMode",
+          "Value": "Clamp"
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "a4fd38d4-327e-567a-84a5-2070a640df81",
+      "SymbolId": "f9fe78c5-43a6-48ae-8e8c-6cdbbc330dd1",
+      "SymbolName": "Lib.image.generate.basic.RenderTarget",
+      "Name": "Uniform optical depth / no wipe",
+      "InputValues": [
+        {
+          "Id": "03749b41-cc3c-4f38-aea6-d7cea19fc073",
+          "Type": "T3.Core.DataTypes.Vector.Int2",
+          "Value": {
+            "X": 16,
+            "Y": 16
+          }
+        },
+        {
+          "Id": "6ea4f801-ff52-4266-a41f-b9ef02c68510",
+          "Type": "System.Boolean",
+          "Value": false
+        },
+        {
+          "Id": "e882e0f0-03f9-46e6-ac7a-709e6fa66613",
+          "Type": "System.Int32",
+          "Value": 1
+        },
+        {
+          "Id": "ec46bef4-8dce-4eb4-bfe8-e35a5ac416ec",
+          "Type": "SharpDX.DXGI.Format",
+          "Value": "R16G16B16A16_Float"
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "9498fb71-45ef-53d6-818d-b0903c8d4ed4",
+      "SymbolId": "48781d5a-d67f-4b9f-8554-35185ddb6c5c",
+      "SymbolName": "Lib.image.use.BlendImages",
+      "Name": "Organic material passage",
+      "InputValues": [
+        {
+          "Id": "48e4a15f-7806-4f10-b7b5-bb383e480d59",
+          "Type": "T3.Core.DataTypes.Vector.Int2",
+          "Value": {
+            "X": 1280,
+            "Y": 720
+          }
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "f81a4679-70a0-54ce-8afe-4f95671059c4",
+      "SymbolId": "025b32e9-b570-45be-ae84-50424982aae3",
+      "SymbolName": "Lib.image.color.ToneMapping",
+      "Name": "Bridge Template / final output",
+      "InputValues": [
+        {
+          "Id": "37d4e1e6-e5a0-40b6-ada9-9481f5a807de",
+          "Type": "System.Int32",
+          "Value": 4
+        },
+        {
+          "Id": "b3ac35c2-7f59-49fb-a4ad-84dc5a8c3841",
+          "Type": "System.Single",
+          "Value": 1.25
+        },
+        {
+          "Id": "be44974c-2685-40ff-86b6-bdf1cc38eee4",
+          "Type": "System.Boolean",
+          "Value": false
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "9f18523d-89b5-5e63-a3a9-9621b9a2c6ec",
+      "SymbolId": "5a2752e8-95ae-4d76-b903-1f52ef43bcdc",
+      "SymbolName": "Lib.render.basic.DrawScreenQuad",
+      "Name": "Final output / linear resolution fit",
+      "InputValues": [
+        {
+          "Id": "4e8fecd0-00ca-404e-a9d4-1cb0d3e044f1",
+          "Type": "System.Numerics.Vector4",
+          "Value": {
+            "X": 1,
+            "Y": 1,
+            "Z": 1,
+            "W": 1
+          }
+        },
+        {
+          "Id": "a680706a-3e0f-4b93-9953-05df8d32109a",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "4ca612b7-a899-4567-98e4-8b6e96d5f251",
+          "Type": "System.Single",
+          "Value": 1.0
+        },
+        {
+          "Id": "60cef5fb-b22a-4fa0-83bb-093d0f1d5b56",
+          "Type": "System.Int32",
+          "Value": 0
+        },
+        {
+          "Id": "6a91ba46-257d-4c3c-94c5-72cbc06ee816",
+          "Type": "System.Boolean",
+          "Value": false
+        },
+        {
+          "Id": "2680baf9-3dbd-4ade-b109-19b3b0f1d40f",
+          "Type": "System.Boolean",
+          "Value": false
+        },
+        {
+          "Id": "6fd86a21-d06c-4edb-bbe2-39d7411e46d1",
+          "Type": "System.Numerics.Vector2",
+          "Value": {
+            "X": 0,
+            "Y": 0
+          }
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "326434c9-60a6-5f9c-94bf-dde20d9239b9",
+      "SymbolId": "f9fe78c5-43a6-48ae-8e8c-6cdbbc330dd1",
+      "SymbolName": "Lib.image.generate.basic.RenderTarget",
+      "Name": "Bridge Template / target export render",
+      "InputValues": [
+        {
+          "Id": "03749b41-cc3c-4f38-aea6-d7cea19fc073",
+          "Type": "T3.Core.DataTypes.Vector.Int2",
+          "Value": {
+            "X": 960,
+            "Y": 540
+          }
+        },
+        {
+          "Id": "6ea4f801-ff52-4266-a41f-b9ef02c68510",
+          "Type": "System.Boolean",
+          "Value": false
+        },
+        {
+          "Id": "e882e0f0-03f9-46e6-ac7a-709e6fa66613",
+          "Type": "System.Int32",
+          "Value": 1
+        },
+        {
+          "Id": "8bb4a4e5-0c88-4d99-a5b2-2c9e22bd301f",
+          "Type": "System.Numerics.Vector4",
+          "Value": {
+            "X": 0.006,
+            "Y": 0.012,
+            "Z": 0.019,
+            "W": 1
+          }
+        },
+        {
+          "Id": "ec46bef4-8dce-4eb4-bfe8-e35a5ac416ec",
+          "Type": "SharpDX.DXGI.Format",
+          "Value": "R16G16B16A16_Float"
+        }
+      ],
+      "Outputs": []
+    },
+    {
+      "Id": "5be9e642-6e6e-50bf-89ed-7fb15175c0ef",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 01 / The dormant laboratory",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 0.0,
+                "End": 6.0
+              },
+              "SourceRange": {
+                "Start": 0.0,
+                "End": 6.0
+              },
+              "LayerIndex": 0,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "b06f8a8e-e0df-599d-9ce0-2cb32c2cccf3",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 02 / The archived gyroscope",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 6.0,
+                "End": 10.0
+              },
+              "SourceRange": {
+                "Start": 6.0,
+                "End": 10.0
+              },
+              "LayerIndex": 0,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "b567c607-dc8c-581a-abc7-c51bdaf479ae",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 03 / Heat gives motion",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 10.0,
+                "End": 15.0
+              },
+              "SourceRange": {
+                "Start": 10.0,
+                "End": 15.0
+              },
+              "LayerIndex": 0,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "328ed95f-0a15-5cf8-bcf1-e172fb3c9e0b",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 04 / Through the meniscus",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 15.0,
+                "End": 20.0
+              },
+              "SourceRange": {
+                "Start": 15.0,
+                "End": 20.0
+              },
+              "LayerIndex": 0,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "17422dea-a2f5-52fc-836e-aff849ff8a93",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 05 / A universe of bubbles",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 20.0,
+                "End": 23.0
+              },
+              "SourceRange": {
+                "Start": 20.0,
+                "End": 23.0
+              },
+              "LayerIndex": 1,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "036d4e68-3c85-5a13-884b-c96f98980816",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 06 / Convection",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 23.0,
+                "End": 26.0
+              },
+              "SourceRange": {
+                "Start": 23.0,
+                "End": 26.0
+              },
+              "LayerIndex": 1,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "69c0dab0-19e0-521e-ac7a-54ff241bf4b7",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 07 / The skin of a bubble",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 26.0,
+                "End": 29.0
+              },
+              "SourceRange": {
+                "Start": 26.0,
+                "End": 29.0
+              },
+              "LayerIndex": 1,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "aa977243-78e2-56d4-b18c-e9d2ef413d13",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 08 / Order in the current",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 29.0,
+                "End": 32.0
+              },
+              "SourceRange": {
+                "Start": 29.0,
+                "End": 32.0
+              },
+              "LayerIndex": 1,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "8af378a3-510f-5bd9-865c-951dcfe73f56",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 09 / A field of light",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 32.0,
+                "End": 35.0
+              },
+              "SourceRange": {
+                "Start": 32.0,
+                "End": 35.0
+              },
+              "LayerIndex": 1,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "1cbfde6d-3812-5103-8731-e5d44403d923",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 10 / The prepared culture",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 35.0,
+                "End": 41.0
+              },
+              "SourceRange": {
+                "Start": 35.0,
+                "End": 41.0
+              },
+              "LayerIndex": 0,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "e0de435c-c302-5b03-8d32-3253d0a57d65",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 11 / Through the microscope",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 41.0,
+                "End": 47.0
+              },
+              "SourceRange": {
+                "Start": 41.0,
+                "End": 47.0
+              },
+              "LayerIndex": 0,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "a8f2aa0b-aae5-51bd-8399-39c2ae4a00f7",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 12 / Living constellations",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 47.0,
+                "End": 53.0
+              },
+              "SourceRange": {
+                "Start": 47.0,
+                "End": 53.0
+              },
+              "LayerIndex": 2,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "2e613724-bdf4-5523-a4dc-f866770a521f",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 13 / A shared rhythm",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 53.0,
+                "End": 59.0
+              },
+              "SourceRange": {
+                "Start": 53.0,
+                "End": 59.0
+              },
+              "LayerIndex": 2,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "8d206d45-120e-5bbb-9865-b9b368b6f1df",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 14 / Life becomes pattern",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 59.0,
+                "End": 65.0
+              },
+              "SourceRange": {
+                "Start": 59.0,
+                "End": 65.0
+              },
+              "LayerIndex": 2,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "1cc41900-f898-5386-9efa-e832d6385208",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 15 / The circuit landscape",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 65.0,
+                "End": 71.0
+              },
+              "SourceRange": {
+                "Start": 65.0,
+                "End": 71.0
+              },
+              "LayerIndex": 3,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "9a5da436-034b-575f-84b2-a04acb57fdb6",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 16 / Capacitor canyon",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 71.0,
+                "End": 77.0
+              },
+              "SourceRange": {
+                "Start": 71.0,
+                "End": 77.0
+              },
+              "LayerIndex": 3,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "66b18ca3-d11c-5a10-8089-32cbc413d23b",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 17 / Resistance and resonance",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 77.0,
+                "End": 83.0
+              },
+              "SourceRange": {
+                "Start": 77.0,
+                "End": 83.0
+              },
+              "LayerIndex": 3,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "9850d827-b30b-5c7c-9bcf-363237f11be4",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 18 / The processing core",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 83.0,
+                "End": 89.0
+              },
+              "SourceRange": {
+                "Start": 83.0,
+                "End": 89.0
+              },
+              "LayerIndex": 3,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "6ffd38e9-41c4-529a-a748-a94bc7f3ea73",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 19 / Beyond silicon",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 89.0,
+                "End": 95.0
+              },
+              "SourceRange": {
+                "Start": 89.0,
+                "End": 95.0
+              },
+              "LayerIndex": 3,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "06772701-9fbf-57ae-bcef-eefc51c0ec78",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 20 / The warmth of the valve",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 95.0,
+                "End": 100.0
+              },
+              "SourceRange": {
+                "Start": 95.0,
+                "End": 100.0
+              },
+              "LayerIndex": 4,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "d89b113e-2fb6-5a37-b7b5-d01940a0ee9e",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 21 / Inside the electrode chamber",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 100.0,
+                "End": 105.0
+              },
+              "SourceRange": {
+                "Start": 100.0,
+                "End": 105.0
+              },
+              "LayerIndex": 4,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "fc67bb92-d787-5884-ab82-92d83383c997",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 22 / Numbers in neon",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 105.0,
+                "End": 110.0
+              },
+              "SourceRange": {
+                "Start": 105.0,
+                "End": 110.0
+              },
+              "LayerIndex": 4,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "b7d9f8e2-68cb-553e-901b-1b61687b8314",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 23 / The clockwork observatory",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 110.0,
+                "End": 115.0
+              },
+              "SourceRange": {
+                "Start": 110.0,
+                "End": 115.0
+              },
+              "LayerIndex": 5,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "b8656e0f-659a-58ff-a225-faf49c96123a",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 24 / Locked to the beat",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 115.0,
+                "End": 120.0
+              },
+              "SourceRange": {
+                "Start": 115.0,
+                "End": 120.0
+              },
+              "LayerIndex": 5,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "93dbbbef-6150-50db-bcf8-0e83675aae65",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 25 / The resonator wakes",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 120.0,
+                "End": 125.0
+              },
+              "SourceRange": {
+                "Start": 120.0,
+                "End": 125.0
+              },
+              "LayerIndex": 6,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "d9243717-103d-5eae-8059-088fb5c0a8c5",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 26 / The climbing discharge",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 125.0,
+                "End": 130.0
+              },
+              "SourceRange": {
+                "Start": 125.0,
+                "End": 130.0
+              },
+              "LayerIndex": 6,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "e7e8f3a0-a37f-5d1a-84cf-3614a9ad9082",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 27 / One coherent wave",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 130.0,
+                "End": 135.0
+              },
+              "SourceRange": {
+                "Start": 130.0,
+                "End": 135.0
+              },
+              "LayerIndex": 6,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "bd25df33-a1f4-5bae-949c-bb29a41dd612",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 28 / Prismal",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 135.0,
+                "End": 140.0
+              },
+              "SourceRange": {
+                "Start": 135.0,
+                "End": 140.0
+              },
+              "LayerIndex": 7,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "e3dfd68b-59d5-5d06-ac24-929efda19988",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 29 / First light returns",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 140.0,
+                "End": 146.0
+              },
+              "SourceRange": {
+                "Start": 140.0,
+                "End": 146.0
+              },
+              "LayerIndex": 0,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "Id": "2366daf2-6b3b-50e1-9828-9efb5b7a2fa2",
+      "SymbolId": "3036067a-a4c2-434b-b0e3-ac95c5c943f4",
+      "SymbolName": "Lib.flow.TimeClip",
+      "Name": "SHOT 30 / Bridge Template / Prismal Labs",
+      "InputValues": [],
+      "Outputs": [
+        {
+          "Id": "de6ff8b5-40fe-47fa-b9f2-d926b17f9a7f",
+          "OutputData": {
+            "Type": "T3.Core.Animation.TimeClip",
+            "TimeClip": {
+              "TimeRange": {
+                "Start": 146.0,
+                "End": 150.0
+              },
+              "SourceRange": {
+                "Start": 146.0,
+                "End": 150.0
+              },
+              "LayerIndex": 7,
+              "SourceUnit": "Bars"
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "Connections": [
+    {
+      "SourceParentOrChildId": "574e20fe-39d7-5619-9821-5e6578718561",
+      "SourceSlotId": "c2d28ebe-e235-4234-8234-eb56e87ed9af",
+      "TargetParentOrChildId": "d405f933-fcf5-52d2-add0-0a761f578882",
+      "TargetSlotId": "f5cd6fc8-54bd-4cf0-885f-2b244d9c1902"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "dcc2da87-6bd5-5e0b-87ac-2cb31a95ee76",
+      "TargetParentOrChildId": "d405f933-fcf5-52d2-add0-0a761f578882",
+      "TargetSlotId": "ee2eaef9-6e5a-48b3-9df0-91b2f9ab7dc7"
+    },
+    {
+      "SourceParentOrChildId": "d405f933-fcf5-52d2-add0-0a761f578882",
+      "SourceSlotId": "cbb6f6a0-27c9-4555-8e5e-fd23e8d3f991",
+      "TargetParentOrChildId": "f3259196-582a-5932-8abb-038989e66932",
+      "TargetSlotId": "22ad6256-f741-4e8f-9a47-4b5b82e2cecf"
+    },
+    {
+      "SourceParentOrChildId": "2cbbb768-3d6b-546e-8707-a43efd555c26",
+      "SourceSlotId": "c2d28ebe-e235-4234-8234-eb56e87ed9af",
+      "TargetParentOrChildId": "61d32e13-0ce7-5726-bf43-2b3f7dc832fa",
+      "TargetSlotId": "f5cd6fc8-54bd-4cf0-885f-2b244d9c1902"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "dcc2da87-6bd5-5e0b-87ac-2cb31a95ee76",
+      "TargetParentOrChildId": "61d32e13-0ce7-5726-bf43-2b3f7dc832fa",
+      "TargetSlotId": "ee2eaef9-6e5a-48b3-9df0-91b2f9ab7dc7"
+    },
+    {
+      "SourceParentOrChildId": "61d32e13-0ce7-5726-bf43-2b3f7dc832fa",
+      "SourceSlotId": "20bcdd8a-2615-4e45-b9db-15548809a25e",
+      "TargetParentOrChildId": "f578a8cf-75aa-5c6b-a719-7e18c66da774",
+      "TargetSlotId": "22ad6256-f741-4e8f-9a47-4b5b82e2cecf"
+    },
+    {
+      "SourceParentOrChildId": "61d32e13-0ce7-5726-bf43-2b3f7dc832fa",
+      "SourceSlotId": "47cf6d63-582b-46e6-b94a-b69b1c77f347",
+      "TargetParentOrChildId": "f8cdfe6d-fe84-5763-ab2a-3e3e7b521785",
+      "TargetSlotId": "22ad6256-f741-4e8f-9a47-4b5b82e2cecf"
+    },
+    {
+      "SourceParentOrChildId": "f3259196-582a-5932-8abb-038989e66932",
+      "SourceSlotId": "3b00e1d6-f966-4b03-81fc-2291e0fa7dbf",
+      "TargetParentOrChildId": "66324dcc-752c-5789-8670-a20002fff12f",
+      "TargetSlotId": "9e961f73-1ee7-4369-9ac7-5c653e570b6f"
+    },
+    {
+      "SourceParentOrChildId": "f8cdfe6d-fe84-5763-ab2a-3e3e7b521785",
+      "SourceSlotId": "3b00e1d6-f966-4b03-81fc-2291e0fa7dbf",
+      "TargetParentOrChildId": "66324dcc-752c-5789-8670-a20002fff12f",
+      "TargetSlotId": "9e961f73-1ee7-4369-9ac7-5c653e570b6f"
+    },
+    {
+      "SourceParentOrChildId": "f578a8cf-75aa-5c6b-a719-7e18c66da774",
+      "SourceSlotId": "3b00e1d6-f966-4b03-81fc-2291e0fa7dbf",
+      "TargetParentOrChildId": "66324dcc-752c-5789-8670-a20002fff12f",
+      "TargetSlotId": "9e961f73-1ee7-4369-9ac7-5c653e570b6f"
+    },
+    {
+      "SourceParentOrChildId": "1f8ceefa-230f-5089-8a34-1125d5245c3f",
+      "SourceSlotId": "c2d28ebe-e235-4234-8234-eb56e87ed9af",
+      "TargetParentOrChildId": "d20a2c1e-4cff-53bb-afaa-57b41ed27480",
+      "TargetSlotId": "f5cd6fc8-54bd-4cf0-885f-2b244d9c1902"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "dcc2da87-6bd5-5e0b-87ac-2cb31a95ee76",
+      "TargetParentOrChildId": "d20a2c1e-4cff-53bb-afaa-57b41ed27480",
+      "TargetSlotId": "ee2eaef9-6e5a-48b3-9df0-91b2f9ab7dc7"
+    },
+    {
+      "SourceParentOrChildId": "d20a2c1e-4cff-53bb-afaa-57b41ed27480",
+      "SourceSlotId": "cbb6f6a0-27c9-4555-8e5e-fd23e8d3f991",
+      "TargetParentOrChildId": "298d49bd-ab4f-595b-871f-80c5ef8ca50a",
+      "TargetSlotId": "22ad6256-f741-4e8f-9a47-4b5b82e2cecf"
+    },
+    {
+      "SourceParentOrChildId": "cda61dd4-d567-520b-8c7c-1aafe6433427",
+      "SourceSlotId": "c2d28ebe-e235-4234-8234-eb56e87ed9af",
+      "TargetParentOrChildId": "aee3f38b-c48f-5b82-ae1d-ee95b3f1db38",
+      "TargetSlotId": "f5cd6fc8-54bd-4cf0-885f-2b244d9c1902"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "dcc2da87-6bd5-5e0b-87ac-2cb31a95ee76",
+      "TargetParentOrChildId": "aee3f38b-c48f-5b82-ae1d-ee95b3f1db38",
+      "TargetSlotId": "ee2eaef9-6e5a-48b3-9df0-91b2f9ab7dc7"
+    },
+    {
+      "SourceParentOrChildId": "aee3f38b-c48f-5b82-ae1d-ee95b3f1db38",
+      "SourceSlotId": "20bcdd8a-2615-4e45-b9db-15548809a25e",
+      "TargetParentOrChildId": "5b40fb59-5372-5aac-a8f6-e4ad4ef58685",
+      "TargetSlotId": "22ad6256-f741-4e8f-9a47-4b5b82e2cecf"
+    },
+    {
+      "SourceParentOrChildId": "aee3f38b-c48f-5b82-ae1d-ee95b3f1db38",
+      "SourceSlotId": "47cf6d63-582b-46e6-b94a-b69b1c77f347",
+      "TargetParentOrChildId": "bcee0f06-78c1-55be-9bdd-84a321f9fddc",
+      "TargetSlotId": "22ad6256-f741-4e8f-9a47-4b5b82e2cecf"
+    },
+    {
+      "SourceParentOrChildId": "298d49bd-ab4f-595b-871f-80c5ef8ca50a",
+      "SourceSlotId": "3b00e1d6-f966-4b03-81fc-2291e0fa7dbf",
+      "TargetParentOrChildId": "9308f93c-7e9f-5ead-82b4-1a218b2d5ced",
+      "TargetSlotId": "9e961f73-1ee7-4369-9ac7-5c653e570b6f"
+    },
+    {
+      "SourceParentOrChildId": "bcee0f06-78c1-55be-9bdd-84a321f9fddc",
+      "SourceSlotId": "3b00e1d6-f966-4b03-81fc-2291e0fa7dbf",
+      "TargetParentOrChildId": "9308f93c-7e9f-5ead-82b4-1a218b2d5ced",
+      "TargetSlotId": "9e961f73-1ee7-4369-9ac7-5c653e570b6f"
+    },
+    {
+      "SourceParentOrChildId": "5b40fb59-5372-5aac-a8f6-e4ad4ef58685",
+      "SourceSlotId": "3b00e1d6-f966-4b03-81fc-2291e0fa7dbf",
+      "TargetParentOrChildId": "9308f93c-7e9f-5ead-82b4-1a218b2d5ced",
+      "TargetSlotId": "9e961f73-1ee7-4369-9ac7-5c653e570b6f"
+    },
+    {
+      "SourceParentOrChildId": "d91ffb1e-9857-5ab4-ab57-a4003da04bc8",
+      "SourceSlotId": "c2d28ebe-e235-4234-8234-eb56e87ed9af",
+      "TargetParentOrChildId": "891a9f31-c36d-53fa-8bf1-1d1d025150fe",
+      "TargetSlotId": "f5cd6fc8-54bd-4cf0-885f-2b244d9c1902"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "dcc2da87-6bd5-5e0b-87ac-2cb31a95ee76",
+      "TargetParentOrChildId": "891a9f31-c36d-53fa-8bf1-1d1d025150fe",
+      "TargetSlotId": "ee2eaef9-6e5a-48b3-9df0-91b2f9ab7dc7"
+    },
+    {
+      "SourceParentOrChildId": "891a9f31-c36d-53fa-8bf1-1d1d025150fe",
+      "SourceSlotId": "cbb6f6a0-27c9-4555-8e5e-fd23e8d3f991",
+      "TargetParentOrChildId": "52d48453-d06d-521c-bbcf-c74b355d5dea",
+      "TargetSlotId": "22ad6256-f741-4e8f-9a47-4b5b82e2cecf"
+    },
+    {
+      "SourceParentOrChildId": "75db6d56-d209-5759-a65d-27604f0121f4",
+      "SourceSlotId": "c2d28ebe-e235-4234-8234-eb56e87ed9af",
+      "TargetParentOrChildId": "f8a101f9-a833-5428-bb4d-c765a6c5b549",
+      "TargetSlotId": "f5cd6fc8-54bd-4cf0-885f-2b244d9c1902"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "dcc2da87-6bd5-5e0b-87ac-2cb31a95ee76",
+      "TargetParentOrChildId": "f8a101f9-a833-5428-bb4d-c765a6c5b549",
+      "TargetSlotId": "ee2eaef9-6e5a-48b3-9df0-91b2f9ab7dc7"
+    },
+    {
+      "SourceParentOrChildId": "f8a101f9-a833-5428-bb4d-c765a6c5b549",
+      "SourceSlotId": "20bcdd8a-2615-4e45-b9db-15548809a25e",
+      "TargetParentOrChildId": "3708d71a-f3ab-518b-9450-9b7eb8c7fcf5",
+      "TargetSlotId": "22ad6256-f741-4e8f-9a47-4b5b82e2cecf"
+    },
+    {
+      "SourceParentOrChildId": "f8a101f9-a833-5428-bb4d-c765a6c5b549",
+      "SourceSlotId": "47cf6d63-582b-46e6-b94a-b69b1c77f347",
+      "TargetParentOrChildId": "ccbe5334-5624-53fe-8c5d-90d99df618c3",
+      "TargetSlotId": "22ad6256-f741-4e8f-9a47-4b5b82e2cecf"
+    },
+    {
+      "SourceParentOrChildId": "52d48453-d06d-521c-bbcf-c74b355d5dea",
+      "SourceSlotId": "3b00e1d6-f966-4b03-81fc-2291e0fa7dbf",
+      "TargetParentOrChildId": "19585963-aeea-55bf-8cf7-ef161620dd45",
+      "TargetSlotId": "9e961f73-1ee7-4369-9ac7-5c653e570b6f"
+    },
+    {
+      "SourceParentOrChildId": "ccbe5334-5624-53fe-8c5d-90d99df618c3",
+      "SourceSlotId": "3b00e1d6-f966-4b03-81fc-2291e0fa7dbf",
+      "TargetParentOrChildId": "19585963-aeea-55bf-8cf7-ef161620dd45",
+      "TargetSlotId": "9e961f73-1ee7-4369-9ac7-5c653e570b6f"
+    },
+    {
+      "SourceParentOrChildId": "3708d71a-f3ab-518b-9450-9b7eb8c7fcf5",
+      "SourceSlotId": "3b00e1d6-f966-4b03-81fc-2291e0fa7dbf",
+      "TargetParentOrChildId": "19585963-aeea-55bf-8cf7-ef161620dd45",
+      "TargetSlotId": "9e961f73-1ee7-4369-9ac7-5c653e570b6f"
+    },
+    {
+      "SourceParentOrChildId": "2dcf136a-a9d2-51a7-aa26-301e14ef5583",
+      "SourceSlotId": "c2d28ebe-e235-4234-8234-eb56e87ed9af",
+      "TargetParentOrChildId": "d3a16555-64c8-5156-95f6-2c37b83e3f29",
+      "TargetSlotId": "f5cd6fc8-54bd-4cf0-885f-2b244d9c1902"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "dcc2da87-6bd5-5e0b-87ac-2cb31a95ee76",
+      "TargetParentOrChildId": "d3a16555-64c8-5156-95f6-2c37b83e3f29",
+      "TargetSlotId": "ee2eaef9-6e5a-48b3-9df0-91b2f9ab7dc7"
+    },
+    {
+      "SourceParentOrChildId": "d3a16555-64c8-5156-95f6-2c37b83e3f29",
+      "SourceSlotId": "cbb6f6a0-27c9-4555-8e5e-fd23e8d3f991",
+      "TargetParentOrChildId": "50c737ae-2695-549d-b21a-161d5edd8984",
+      "TargetSlotId": "22ad6256-f741-4e8f-9a47-4b5b82e2cecf"
+    },
+    {
+      "SourceParentOrChildId": "50c737ae-2695-549d-b21a-161d5edd8984",
+      "SourceSlotId": "3b00e1d6-f966-4b03-81fc-2291e0fa7dbf",
+      "TargetParentOrChildId": "4dd2ed7a-f184-5395-88aa-ebbe575b353f",
+      "TargetSlotId": "9e961f73-1ee7-4369-9ac7-5c653e570b6f"
+    },
+    {
+      "SourceParentOrChildId": "d6ab442e-3b64-546a-aac8-be78e656a952",
+      "SourceSlotId": "c2d28ebe-e235-4234-8234-eb56e87ed9af",
+      "TargetParentOrChildId": "1769bb6c-bda5-57ae-a509-cc1560c8c232",
+      "TargetSlotId": "f5cd6fc8-54bd-4cf0-885f-2b244d9c1902"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "dcc2da87-6bd5-5e0b-87ac-2cb31a95ee76",
+      "TargetParentOrChildId": "1769bb6c-bda5-57ae-a509-cc1560c8c232",
+      "TargetSlotId": "ee2eaef9-6e5a-48b3-9df0-91b2f9ab7dc7"
+    },
+    {
+      "SourceParentOrChildId": "1769bb6c-bda5-57ae-a509-cc1560c8c232",
+      "SourceSlotId": "cbb6f6a0-27c9-4555-8e5e-fd23e8d3f991",
+      "TargetParentOrChildId": "5c012bb7-90dd-50a3-bbcb-75ea5369aaac",
+      "TargetSlotId": "22ad6256-f741-4e8f-9a47-4b5b82e2cecf"
+    },
+    {
+      "SourceParentOrChildId": "22fb9c96-9fd0-5d8d-856b-2841696875ac",
+      "SourceSlotId": "c2d28ebe-e235-4234-8234-eb56e87ed9af",
+      "TargetParentOrChildId": "d81bfb7a-96c2-55de-b30f-bfeeb6eb955f",
+      "TargetSlotId": "f5cd6fc8-54bd-4cf0-885f-2b244d9c1902"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "dcc2da87-6bd5-5e0b-87ac-2cb31a95ee76",
+      "TargetParentOrChildId": "d81bfb7a-96c2-55de-b30f-bfeeb6eb955f",
+      "TargetSlotId": "ee2eaef9-6e5a-48b3-9df0-91b2f9ab7dc7"
+    },
+    {
+      "SourceParentOrChildId": "d81bfb7a-96c2-55de-b30f-bfeeb6eb955f",
+      "SourceSlotId": "20bcdd8a-2615-4e45-b9db-15548809a25e",
+      "TargetParentOrChildId": "76637f2f-b4e7-506c-907d-d6be7fae89b1",
+      "TargetSlotId": "22ad6256-f741-4e8f-9a47-4b5b82e2cecf"
+    },
+    {
+      "SourceParentOrChildId": "d81bfb7a-96c2-55de-b30f-bfeeb6eb955f",
+      "SourceSlotId": "47cf6d63-582b-46e6-b94a-b69b1c77f347",
+      "TargetParentOrChildId": "769aa07b-35ee-5add-a682-b3db3203e2d2",
+      "TargetSlotId": "22ad6256-f741-4e8f-9a47-4b5b82e2cecf"
+    },
+    {
+      "SourceParentOrChildId": "5c012bb7-90dd-50a3-bbcb-75ea5369aaac",
+      "SourceSlotId": "3b00e1d6-f966-4b03-81fc-2291e0fa7dbf",
+      "TargetParentOrChildId": "2848570c-88b5-5313-b25c-373d3dcc8796",
+      "TargetSlotId": "9e961f73-1ee7-4369-9ac7-5c653e570b6f"
+    },
+    {
+      "SourceParentOrChildId": "769aa07b-35ee-5add-a682-b3db3203e2d2",
+      "SourceSlotId": "3b00e1d6-f966-4b03-81fc-2291e0fa7dbf",
+      "TargetParentOrChildId": "2848570c-88b5-5313-b25c-373d3dcc8796",
+      "TargetSlotId": "9e961f73-1ee7-4369-9ac7-5c653e570b6f"
+    },
+    {
+      "SourceParentOrChildId": "76637f2f-b4e7-506c-907d-d6be7fae89b1",
+      "SourceSlotId": "3b00e1d6-f966-4b03-81fc-2291e0fa7dbf",
+      "TargetParentOrChildId": "2848570c-88b5-5313-b25c-373d3dcc8796",
+      "TargetSlotId": "9e961f73-1ee7-4369-9ac7-5c653e570b6f"
+    },
+    {
+      "SourceParentOrChildId": "6b185158-958d-5b9e-8506-b6646397fe54",
+      "SourceSlotId": "c2d28ebe-e235-4234-8234-eb56e87ed9af",
+      "TargetParentOrChildId": "7f86fbe7-b902-5c65-9e42-269420991bc6",
+      "TargetSlotId": "f5cd6fc8-54bd-4cf0-885f-2b244d9c1902"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "dcc2da87-6bd5-5e0b-87ac-2cb31a95ee76",
+      "TargetParentOrChildId": "7f86fbe7-b902-5c65-9e42-269420991bc6",
+      "TargetSlotId": "ee2eaef9-6e5a-48b3-9df0-91b2f9ab7dc7"
+    },
+    {
+      "SourceParentOrChildId": "7f86fbe7-b902-5c65-9e42-269420991bc6",
+      "SourceSlotId": "cbb6f6a0-27c9-4555-8e5e-fd23e8d3f991",
+      "TargetParentOrChildId": "2f6ae7c8-b02c-50b6-9f26-d20b3b253585",
+      "TargetSlotId": "22ad6256-f741-4e8f-9a47-4b5b82e2cecf"
+    },
+    {
+      "SourceParentOrChildId": "2f6ae7c8-b02c-50b6-9f26-d20b3b253585",
+      "SourceSlotId": "3b00e1d6-f966-4b03-81fc-2291e0fa7dbf",
+      "TargetParentOrChildId": "4713402b-ed8b-56d4-b730-2a8e32a26a54",
+      "TargetSlotId": "9e961f73-1ee7-4369-9ac7-5c653e570b6f"
+    },
+    {
+      "SourceParentOrChildId": "9284441a-7da6-5142-a539-b789fbb0566c",
+      "SourceSlotId": "c2d28ebe-e235-4234-8234-eb56e87ed9af",
+      "TargetParentOrChildId": "0bf7494e-d944-5fd6-bbc2-63660dbd1750",
+      "TargetSlotId": "f5cd6fc8-54bd-4cf0-885f-2b244d9c1902"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "dcc2da87-6bd5-5e0b-87ac-2cb31a95ee76",
+      "TargetParentOrChildId": "0bf7494e-d944-5fd6-bbc2-63660dbd1750",
+      "TargetSlotId": "ee2eaef9-6e5a-48b3-9df0-91b2f9ab7dc7"
+    },
+    {
+      "SourceParentOrChildId": "0bf7494e-d944-5fd6-bbc2-63660dbd1750",
+      "SourceSlotId": "cbb6f6a0-27c9-4555-8e5e-fd23e8d3f991",
+      "TargetParentOrChildId": "8b8084f6-64c3-5f1d-aa4c-c494fb1be408",
+      "TargetSlotId": "22ad6256-f741-4e8f-9a47-4b5b82e2cecf"
+    },
+    {
+      "SourceParentOrChildId": "e980d064-3ea0-522d-a83c-bce89ca12fd9",
+      "SourceSlotId": "c2d28ebe-e235-4234-8234-eb56e87ed9af",
+      "TargetParentOrChildId": "aad9da32-ab18-5ab9-bdfa-ca2980b9f6f2",
+      "TargetSlotId": "f5cd6fc8-54bd-4cf0-885f-2b244d9c1902"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "dcc2da87-6bd5-5e0b-87ac-2cb31a95ee76",
+      "TargetParentOrChildId": "aad9da32-ab18-5ab9-bdfa-ca2980b9f6f2",
+      "TargetSlotId": "ee2eaef9-6e5a-48b3-9df0-91b2f9ab7dc7"
+    },
+    {
+      "SourceParentOrChildId": "aad9da32-ab18-5ab9-bdfa-ca2980b9f6f2",
+      "SourceSlotId": "20bcdd8a-2615-4e45-b9db-15548809a25e",
+      "TargetParentOrChildId": "a651991e-5312-5a02-b7f8-7c751ad55a7c",
+      "TargetSlotId": "22ad6256-f741-4e8f-9a47-4b5b82e2cecf"
+    },
+    {
+      "SourceParentOrChildId": "aad9da32-ab18-5ab9-bdfa-ca2980b9f6f2",
+      "SourceSlotId": "47cf6d63-582b-46e6-b94a-b69b1c77f347",
+      "TargetParentOrChildId": "e8744e6b-4b37-5995-91b2-276133377d0d",
+      "TargetSlotId": "22ad6256-f741-4e8f-9a47-4b5b82e2cecf"
+    },
+    {
+      "SourceParentOrChildId": "8b8084f6-64c3-5f1d-aa4c-c494fb1be408",
+      "SourceSlotId": "3b00e1d6-f966-4b03-81fc-2291e0fa7dbf",
+      "TargetParentOrChildId": "a0cbaa09-5169-566f-b19a-dd1f78940661",
+      "TargetSlotId": "9e961f73-1ee7-4369-9ac7-5c653e570b6f"
+    },
+    {
+      "SourceParentOrChildId": "e8744e6b-4b37-5995-91b2-276133377d0d",
+      "SourceSlotId": "3b00e1d6-f966-4b03-81fc-2291e0fa7dbf",
+      "TargetParentOrChildId": "a0cbaa09-5169-566f-b19a-dd1f78940661",
+      "TargetSlotId": "9e961f73-1ee7-4369-9ac7-5c653e570b6f"
+    },
+    {
+      "SourceParentOrChildId": "a651991e-5312-5a02-b7f8-7c751ad55a7c",
+      "SourceSlotId": "3b00e1d6-f966-4b03-81fc-2291e0fa7dbf",
+      "TargetParentOrChildId": "a0cbaa09-5169-566f-b19a-dd1f78940661",
+      "TargetSlotId": "9e961f73-1ee7-4369-9ac7-5c653e570b6f"
+    },
+    {
+      "SourceParentOrChildId": "18e019e0-d07c-5104-a753-b3d61e6cf624",
+      "SourceSlotId": "c2d28ebe-e235-4234-8234-eb56e87ed9af",
+      "TargetParentOrChildId": "dcb6f8b8-c569-53bb-8469-a58f0f8b0453",
+      "TargetSlotId": "f5cd6fc8-54bd-4cf0-885f-2b244d9c1902"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "dcc2da87-6bd5-5e0b-87ac-2cb31a95ee76",
+      "TargetParentOrChildId": "dcb6f8b8-c569-53bb-8469-a58f0f8b0453",
+      "TargetSlotId": "ee2eaef9-6e5a-48b3-9df0-91b2f9ab7dc7"
+    },
+    {
+      "SourceParentOrChildId": "dcb6f8b8-c569-53bb-8469-a58f0f8b0453",
+      "SourceSlotId": "cbb6f6a0-27c9-4555-8e5e-fd23e8d3f991",
+      "TargetParentOrChildId": "06a98894-cc71-501a-91e5-96a1cae4e7a3",
+      "TargetSlotId": "22ad6256-f741-4e8f-9a47-4b5b82e2cecf"
+    },
+    {
+      "SourceParentOrChildId": "06a98894-cc71-501a-91e5-96a1cae4e7a3",
+      "SourceSlotId": "3b00e1d6-f966-4b03-81fc-2291e0fa7dbf",
+      "TargetParentOrChildId": "b0eb0c7e-1b0d-54da-9ad7-1d04196596e1",
+      "TargetSlotId": "9e961f73-1ee7-4369-9ac7-5c653e570b6f"
+    },
+    {
+      "SourceParentOrChildId": "66324dcc-752c-5789-8670-a20002fff12f",
+      "SourceSlotId": "977ca2f4-cddb-4b9a-82b2-ff66453bbf9b",
+      "TargetParentOrChildId": "e270921b-1fb6-5429-81d5-7a7267c1e310",
+      "TargetSlotId": "988dd1b5-636d-4a78-9592-2c6601401cc1"
+    },
+    {
+      "SourceParentOrChildId": "9308f93c-7e9f-5ead-82b4-1a218b2d5ced",
+      "SourceSlotId": "977ca2f4-cddb-4b9a-82b2-ff66453bbf9b",
+      "TargetParentOrChildId": "e270921b-1fb6-5429-81d5-7a7267c1e310",
+      "TargetSlotId": "988dd1b5-636d-4a78-9592-2c6601401cc1"
+    },
+    {
+      "SourceParentOrChildId": "19585963-aeea-55bf-8cf7-ef161620dd45",
+      "SourceSlotId": "977ca2f4-cddb-4b9a-82b2-ff66453bbf9b",
+      "TargetParentOrChildId": "e270921b-1fb6-5429-81d5-7a7267c1e310",
+      "TargetSlotId": "988dd1b5-636d-4a78-9592-2c6601401cc1"
+    },
+    {
+      "SourceParentOrChildId": "4dd2ed7a-f184-5395-88aa-ebbe575b353f",
+      "SourceSlotId": "977ca2f4-cddb-4b9a-82b2-ff66453bbf9b",
+      "TargetParentOrChildId": "e270921b-1fb6-5429-81d5-7a7267c1e310",
+      "TargetSlotId": "988dd1b5-636d-4a78-9592-2c6601401cc1"
+    },
+    {
+      "SourceParentOrChildId": "2848570c-88b5-5313-b25c-373d3dcc8796",
+      "SourceSlotId": "977ca2f4-cddb-4b9a-82b2-ff66453bbf9b",
+      "TargetParentOrChildId": "e270921b-1fb6-5429-81d5-7a7267c1e310",
+      "TargetSlotId": "988dd1b5-636d-4a78-9592-2c6601401cc1"
+    },
+    {
+      "SourceParentOrChildId": "4713402b-ed8b-56d4-b730-2a8e32a26a54",
+      "SourceSlotId": "977ca2f4-cddb-4b9a-82b2-ff66453bbf9b",
+      "TargetParentOrChildId": "e270921b-1fb6-5429-81d5-7a7267c1e310",
+      "TargetSlotId": "988dd1b5-636d-4a78-9592-2c6601401cc1"
+    },
+    {
+      "SourceParentOrChildId": "a0cbaa09-5169-566f-b19a-dd1f78940661",
+      "SourceSlotId": "977ca2f4-cddb-4b9a-82b2-ff66453bbf9b",
+      "TargetParentOrChildId": "e270921b-1fb6-5429-81d5-7a7267c1e310",
+      "TargetSlotId": "988dd1b5-636d-4a78-9592-2c6601401cc1"
+    },
+    {
+      "SourceParentOrChildId": "b0eb0c7e-1b0d-54da-9ad7-1d04196596e1",
+      "SourceSlotId": "977ca2f4-cddb-4b9a-82b2-ff66453bbf9b",
+      "TargetParentOrChildId": "e270921b-1fb6-5429-81d5-7a7267c1e310",
+      "TargetSlotId": "988dd1b5-636d-4a78-9592-2c6601401cc1"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "763db5bd-827a-5bed-9924-dbec43b3d7a7",
+      "TargetParentOrChildId": "e270921b-1fb6-5429-81d5-7a7267c1e310",
+      "TargetSlotId": "00fd2794-567a-4f9b-a900-c2ebf9760764"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "763db5bd-827a-5bed-9924-dbec43b3d7a7",
+      "TargetParentOrChildId": "4b7e30fd-61e0-5a62-a076-82ffb9bfa628",
+      "TargetSlotId": "fc6c833a-fcc3-506a-9808-f2f5e0d21c17"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "dcc2da87-6bd5-5e0b-87ac-2cb31a95ee76",
+      "TargetParentOrChildId": "4b7e30fd-61e0-5a62-a076-82ffb9bfa628",
+      "TargetSlotId": "51c24b39-749f-5bba-8c24-3c8376e49112"
+    },
+    {
+      "SourceParentOrChildId": "e270921b-1fb6-5429-81d5-7a7267c1e310",
+      "SourceSlotId": "9300b07e-977d-47b0-908e-c4b1e5e53a64",
+      "TargetParentOrChildId": "4b7e30fd-61e0-5a62-a076-82ffb9bfa628",
+      "TargetSlotId": "15864c39-8af3-501d-9be8-3e07898e1060"
+    },
+    {
+      "SourceParentOrChildId": "4b7e30fd-61e0-5a62-a076-82ffb9bfa628",
+      "SourceSlotId": "9b031ccc-0af3-56dc-9c83-3d1f971a84cd",
+      "TargetParentOrChildId": "721d08b7-15b1-5313-b442-d1d3bce54816",
+      "TargetSlotId": "e4482cab-f20c-4f9f-9179-c64944164509"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "f9f621a6-5972-5ff5-bf55-8c0aa4ba3f90",
+      "TargetParentOrChildId": "5086fd6b-7a59-589e-a06b-b339a0c25e33",
+      "TargetSlotId": "313596cc-3854-436b-89da-5fd40164ce76"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "edd4ec3f-286b-50ee-98c5-bdf3f0560ef5",
+      "TargetParentOrChildId": "5086fd6b-7a59-589e-a06b-b339a0c25e33",
+      "TargetSlotId": "a7acb25c-d60c-43a6-b1df-2cd5c6e183f3"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "bd82686d-4bb7-5c8c-8b0c-154784c130b4",
+      "TargetParentOrChildId": "5086fd6b-7a59-589e-a06b-b339a0c25e33",
+      "TargetSlotId": "e6dfbfb9-efed-4c17-8860-9c1a1ca2fa38"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "993634db-47a2-5f92-8987-172157c46bab",
+      "TargetParentOrChildId": "5086fd6b-7a59-589e-a06b-b339a0c25e33",
+      "TargetSlotId": "7bde5a5a-ce82-4903-92ff-14e540a605f0"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "5f1a1df0-fe35-5c8e-bff4-019aa3454c4c",
+      "TargetParentOrChildId": "5086fd6b-7a59-589e-a06b-b339a0c25e33",
+      "TargetSlotId": "199d4ce0-aab1-403a-ad42-216ef1061a0e"
+    },
+    {
+      "SourceParentOrChildId": "721d08b7-15b1-5313-b442-d1d3bce54816",
+      "SourceSlotId": "1f8cbdfd-ffcd-4604-b4b4-5f1184daf138",
+      "TargetParentOrChildId": "5086fd6b-7a59-589e-a06b-b339a0c25e33",
+      "TargetSlotId": "047b8fae-468c-48a7-8f3a-5fac8dd5b3c6"
+    },
+    {
+      "SourceParentOrChildId": "5086fd6b-7a59-589e-a06b-b339a0c25e33",
+      "SourceSlotId": "2e1742d8-9ba3-4236-a0cd-a2b02c9f5924",
+      "TargetParentOrChildId": "ed4da69f-15c4-5268-a1e5-3eaff03c1bc4",
+      "TargetSlotId": "4da253b7-4953-439a-b03f-1d515a78bddf"
+    },
+    {
+      "SourceParentOrChildId": "ed4da69f-15c4-5268-a1e5-3eaff03c1bc4",
+      "SourceSlotId": "7a4c4feb-be2f-463e-96c6-cd9a6bad77a2",
+      "TargetParentOrChildId": "77868b45-119f-59ad-9b3d-e9f7eb6e0cc4",
+      "TargetSlotId": "97d8f330-5957-4309-8c56-d94c1266f6cb"
+    },
+    {
+      "SourceParentOrChildId": "77868b45-119f-59ad-9b3d-e9f7eb6e0cc4",
+      "SourceSlotId": "f3fa372d-f037-48fd-8a8d-a0135b4c20cb",
+      "TargetParentOrChildId": "df449e46-71c9-5da1-9f92-463deae0acf2",
+      "TargetSlotId": "c115fd60-86c5-425f-975b-0b5e92c0f42b"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "e645bbb3-9202-552e-a127-1d079a18375f",
+      "TargetParentOrChildId": "df449e46-71c9-5da1-9f92-463deae0acf2",
+      "TargetSlotId": "99188668-b6ac-468b-a892-cd020a3862b2"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "aba0ed96-12fe-58c3-94ab-b2023bc3af0f",
+      "TargetParentOrChildId": "a4fd38d4-327e-567a-84a5-2070a640df81",
+      "TargetSlotId": "8bb4a4e5-0c88-4d99-a5b2-2c9e22bd301f"
+    },
+    {
+      "SourceParentOrChildId": "df449e46-71c9-5da1-9f92-463deae0acf2",
+      "SourceSlotId": "fa46b9f0-46d6-4ab3-8406-409e1dc5e9a4",
+      "TargetParentOrChildId": "9498fb71-45ef-53d6-818d-b0903c8d4ed4",
+      "TargetSlotId": "12a875e2-89c8-4a16-91ec-9f9ac431f10c"
+    },
+    {
+      "SourceParentOrChildId": "a4fd38d4-327e-567a-84a5-2070a640df81",
+      "SourceSlotId": "7a4c4feb-be2f-463e-96c6-cd9a6bad77a2",
+      "TargetParentOrChildId": "9498fb71-45ef-53d6-818d-b0903c8d4ed4",
+      "TargetSlotId": "12a875e2-89c8-4a16-91ec-9f9ac431f10c"
+    },
+    {
+      "SourceParentOrChildId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "SourceSlotId": "125574ac-61db-5536-a5bf-0f2222bcbe8e",
+      "TargetParentOrChildId": "9498fb71-45ef-53d6-818d-b0903c8d4ed4",
+      "TargetSlotId": "f1888e3b-edf6-409c-9cda-8c97fb18c38e"
+    },
+    {
+      "SourceParentOrChildId": "9498fb71-45ef-53d6-818d-b0903c8d4ed4",
+      "SourceSlotId": "83ad8874-210d-461f-b7ce-dfd7ff6338f9",
+      "TargetParentOrChildId": "f81a4679-70a0-54ce-8afe-4f95671059c4",
+      "TargetSlotId": "72e51856-bc8f-4bcf-a6d8-6c7b4f8b0583"
+    },
+    {
+      "SourceParentOrChildId": "f81a4679-70a0-54ce-8afe-4f95671059c4",
+      "SourceSlotId": "05c886f7-2c2c-4fe8-8b66-d6967dc43367",
+      "TargetParentOrChildId": "9f18523d-89b5-5e63-a3a9-9621b9a2c6ec",
+      "TargetSlotId": "92c66734-dce9-402a-95f6-cde0e58bf32f"
+    },
+    {
+      "SourceParentOrChildId": "00000000-0000-0000-0000-000000000000",
+      "SourceSlotId": "c84919d5-4b2e-51fc-9155-a1708e66acb7",
+      "TargetParentOrChildId": "326434c9-60a6-5f9c-94bf-dde20d9239b9",
+      "TargetSlotId": "03749b41-cc3c-4f38-aea6-d7cea19fc073"
+    },
+    {
+      "SourceParentOrChildId": "9f18523d-89b5-5e63-a3a9-9621b9a2c6ec",
+      "SourceSlotId": "3c8116a2-2686-41ba-8bfd-d1b3fb929b02",
+      "TargetParentOrChildId": "326434c9-60a6-5f9c-94bf-dde20d9239b9",
+      "TargetSlotId": "4da253b7-4953-439a-b03f-1d515a78bddf"
+    },
+    {
+      "SourceParentOrChildId": "326434c9-60a6-5f9c-94bf-dde20d9239b9",
+      "SourceSlotId": "7a4c4feb-be2f-463e-96c6-cd9a6bad77a2",
+      "TargetParentOrChildId": "00000000-0000-0000-0000-000000000000",
+      "TargetSlotId": "fc3c0a8c-64d8-5b3e-9974-0f702bef8b26"
+    }
+  ],
+  "Animator": [
+    {
+      "InstanceId": "966ad1e6-4df6-5aee-b21d-2cbf7716b17e",
+      "InputId": "9aaf2997-d503-5100-97db-9e3f19bd0e50",
+      "Curve": {
+        "PreCurve": "Constant",
+        "PostCurve": "Constant",
+        "Keys": [
+          {
+            "Time": 0.0,
+            "Value": 0.0,
+            "InInterpolation": "Constant",
+            "OutInterpolation": "Constant"
+          },
+          {
+            "Time": 20.0,
+            "Value": 1.0,
+            "InInterpolation": "Constant",
+            "OutInterpolation": "Constant"
+          },
+          {
+            "Time": 35.0,
+            "Value": 0.0,
+            "InInterpolation": "Constant",
+            "OutInterpolation": "Constant"
+          },
+          {
+            "Time": 47.0,
+            "Value": 2.0,
+            "InInterpolation": "Constant",
+            "OutInterpolation": "Constant"
+          },
+          {
+            "Time": 65.0,
+            "Value": 3.0,
+            "InInterpolation": "Constant",
+            "OutInterpolation": "Constant"
+          },
+          {
+            "Time": 95.0,
+            "Value": 4.0,
+            "InInterpolation": "Constant",
+            "OutInterpolation": "Constant"
+          },
+          {
+            "Time": 110.0,
+            "Value": 5.0,
+            "InInterpolation": "Constant",
+            "OutInterpolation": "Constant"
+          },
+          {
+            "Time": 120.0,
+            "Value": 6.0,
+            "InInterpolation": "Constant",
+            "OutInterpolation": "Constant"
+          },
+          {
+            "Time": 135.0,
+            "Value": 7.0,
+            "InInterpolation": "Constant",
+            "OutInterpolation": "Constant"
+          },
+          {
+            "Time": 140.0,
+            "Value": 0.0,
+            "InInterpolation": "Constant",
+            "OutInterpolation": "Constant"
+          },
+          {
+            "Time": 146.0,
+            "Value": 7.0,
+            "InInterpolation": "Constant",
+            "OutInterpolation": "Constant"
+          }
+        ]
+      }
+    }
+  ],
+  "ProjectSettings": {
+    "Enabled": true,
+    "Playback": {
+      "Bpm": 120.0,
+      "AudioSource": "ProjectSoundTrack",
+      "Syncing": "Timeline",
+      "EnableAudioBeatLocking": false
+    },
+    "Export": {
+      "Title": "Bridge Template",
+      "Author": "Prismal Labs",
+      "PreferredWidth": 960,
+      "PreferredHeight": 540
+    }
+  }
+}

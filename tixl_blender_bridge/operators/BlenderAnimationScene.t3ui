@@ -1,0 +1,11 @@
+{
+  "FormatVersion": 3,
+  "Id": "8cc13ea4-9e0d-4b61-9b1f-b72f6c470a7a",
+  "Description": "Applies a Blender export cache to a loaded glTF scene. DataPath points to the TIXLANIM transform/channel cache and GlbPath points to the matching GLB. Evaluates transforms, visibility, animated PBR/emission channels, and mesh morph targets at TimeSeconds. Use OpaqueResult for depth-writing solids and TransparentResult for back-to-front alpha geometry; Result is the unpartitioned scene. Export caches must use the TIXLANIM binary contract and preserve source node names.",
+  "InputUis": [
+    {"InputId":"f5cd6fc8-54bd-4cf0-885f-2b244d9c1902","GroupTitle":"Scene"},
+    {"InputId":"ca02f7a3-a03a-4db0-a05d-3a66b0c9ab11","GroupTitle":"Blender export","Description":"Path to the TIXLANIM transform/channel cache (.bin)."},
+    {"InputId":"ee2eaef9-6e5a-48b3-9df0-91b2f9ab7dc7","GroupTitle":"Playback","Description":"Scene time in seconds. Cache samples are evaluated at 60 Hz."},
+    {"InputId":"3a4c36f9-e8c1-4ab7-b370-0f548b054933","GroupTitle":"Blender export","Description":"Path to the matching GLB used for morph data, material defaults, and transparent primitive bounds."}
+  ]
+}

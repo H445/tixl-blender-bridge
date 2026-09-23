@@ -1,0 +1,363 @@
+"""Keep TiXL runtime caches in sync with a saved Blender project.
+
+Examples:
+  python source/blend_sync.py sync --blend path/to/project.blend
+  python source/blend_sync.py watch --blend path/to/project.blend
+
+The only authoring input is the .blend. Generated GLB/animation files are a
+private cache. Blender runs out of process and never blocks a TiXL frame.
+"""
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+import os
+import shutil
+import struct
+import subprocess
+import sys
+import time
+import uuid
+from contextlib import contextmanager
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[1]
+BLENDER = Path(os.environ.get("TIXL_BRIDGE_BLENDER", shutil.which("blender") or "blender"))
+TIXL_PROJECT = Path(os.environ.get("TIXL_BRIDGE_OPERATOR_PROJECT", ""))
+TIXL_EDITOR = Path(os.environ.get("TIXL_BRIDGE_EDITOR", ""))
+BRIDGE_PORT = os.environ.get("TIXL_BRIDGE_PORT", "9042")
+
+
+def digest(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as stream:
+        for block in iter(lambda: stream.read(1024 * 1024), b""):
+            h.update(block)
+    return h.hexdigest()
+
+
+@contextmanager
+def export_lock(cache: Path):
+    cache.mkdir(parents=True, exist_ok=True)
+    path = cache / ".blend_sync.lock"
+    deadline = time.time() + 2 * 3600
+    while True:
+        try:
+            fd = os.open(path, os.O_WRONLY | os.O_CREAT | os.O_EXCL)
+            break
+        except FileExistsError:
+            # Saves made during a bake queue behind it. Each queued process
+            # rechecks the latest saved source after acquiring the lock.
+            if time.time() - path.stat().st_mtime > 6 * 3600:
+                path.unlink()
+            elif time.time() >= deadline:
+                raise TimeoutError(f"Timed out waiting for TiXL sync: {cache}")
+            else:
+                time.sleep(2)
+    try:
+        with os.fdopen(fd, "w") as stream:
+            stream.write(f"pid={os.getpid()} started={time.time()}\n")
+        yield
+    finally:
+        path.unlink(missing_ok=True)
+
+
+def profile_for(blend: Path, requested: str) -> str:
+    return "generic"
+
+
+def cache_for(blend: Path, profile: str, requested: Path | None) -> Path:
+    if requested:
+        return requested.resolve()
+    return blend.parent / ".tixl_cache" / blend.stem
+
+
+def valid_cache(cache: Path, sha: str) -> bool:
+    manifest_path = cache / "worlds" / "manifest.json"
+    if not manifest_path.is_file() or not (cache / "camera_60hz.bin").is_file():
+        return False
+    try:
+        manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+        if manifest.get("source_sha256") != sha:
+            return False
+        for world in manifest["worlds"]:
+            name = world["world"]
+            for suffix in ("animation.bin", "animation.json", "channels.json", "manifest.json"):
+                if not (cache / "worlds" / f"{name}_{suffix}").is_file():
+                    return False
+            for pass_name in world["glbs"]:
+                if not (cache / "worlds" / f"{name}_{pass_name}.glb").is_file():
+                    return False
+        return True
+    except (ValueError, KeyError, OSError, TypeError):
+        return False
+
+
+def validate_stage(stage: Path, sha: str) -> dict:
+    worlds = stage / "worlds"
+    manifest = json.loads((worlds / "manifest.json").read_text(encoding="utf-8"))
+    if manifest["source_sha256"] != sha or not manifest["worlds"]:
+        raise ValueError("The staged export does not match the saved Blender file")
+    for world in manifest["worlds"]:
+        name = world["world"]
+        binary = worlds / f"{name}_animation.bin"
+        with binary.open("rb") as stream:
+            if stream.read(9) != b"TIXLANIM\x01":
+                raise ValueError(f"Invalid animation cache for {name}")
+            count = struct.unpack("<I", stream.read(4))[0]
+        if count != world["object_count"]:
+            raise ValueError(f"Object count mismatch for {name}")
+        metadata = json.loads((worlds / f"{name}_animation.json").read_text(encoding="utf-8"))
+        channels = json.loads((worlds / f"{name}_channels.json").read_text(encoding="utf-8"))
+        for suffix in ("animation.json", "channels.json", "manifest.json"):
+            json.loads((worlds / f"{name}_{suffix}").read_text(encoding="utf-8"))
+        nodes, materials = set(), set()
+        for part in world["glbs"]:
+            with (worlds / f"{name}_{part}.glb").open("rb") as stream:
+                if stream.read(4) != b"glTF":
+                    raise ValueError(f"Invalid GLB for {name}/{part}")
+                stream.seek(12)
+                length, chunk_type = struct.unpack("<I4s", stream.read(8))
+                if chunk_type != b"JSON":
+                    raise ValueError(f"Missing GLB JSON for {name}/{part}")
+                gltf = json.loads(stream.read(length))
+                nodes.update(node["name"] for node in gltf.get("nodes", []) if "mesh" in node)
+                materials.update(material["name"] for material in gltf.get("materials", []) if "name" in material)
+        expected = {row["export_name"] for row in metadata["records"]}
+        if nodes != expected:
+            raise ValueError(f"GLB and animation node names differ for {name}")
+        if any(track["export_name"] not in materials for track in channels["materials"]):
+            raise ValueError(f"Animated material is missing from GLB for {name}")
+    with (stage / "camera_60hz.bin").open("rb") as stream:
+        samples = struct.unpack("<i", stream.read(4))[0]
+        if samples < 2 or stream.seek(0, os.SEEK_END) != 4 + samples * 48:
+            raise ValueError("Invalid camera rail")
+    return manifest
+
+
+def publish(stage: Path, cache: Path, manifest: dict, profile: str) -> None:
+    # Staging and live paths share a parent volume, so directory replacement is
+    # atomic from the reader's perspective. Preserve the previous good cache.
+    live = cache / "worlds"
+    archive = cache / ".previous" / time.strftime("%Y%m%d_%H%M%S")
+    archive.parent.mkdir(parents=True, exist_ok=True)
+    if live.exists():
+        live.replace(archive)
+    try:
+        (stage / "worlds").replace(live)
+    except Exception:
+        if archive.exists() and not live.exists():
+            archive.replace(live)
+        raise
+    # The manifest is descriptive; graph loaders use stable paths in `worlds`.
+    path = live / "manifest.json"
+    for world in manifest["worlds"]:
+        world["glbs"] = {part: str(live / f'{world["world"]}_{part}.glb') for part in world["glbs"]}
+    path.write_text(json.dumps(manifest, indent=2), encoding="utf-8")
+    shutil.copy2(stage / "camera_60hz.bin", cache / "camera_60hz.bin")
+    shutil.copy2(stage / "camera_timeline.json", cache / "camera_timeline.json")
+    (cache / "blend_sync_state.json").write_text(json.dumps({
+        "source_blend": manifest["source_blend"],
+        "source_sha256": manifest["source_sha256"],
+        "profile": profile,
+        "worlds": [w["world"] for w in manifest["worlds"]],
+        "camera_rail": str(cache / "camera_60hz.bin"),
+        "generated_at": time.strftime("%Y-%m-%dT%H:%M:%S"),
+    }, indent=2), encoding="utf-8")
+
+
+def generic_finish(blend: Path, cache: Path, manifest: dict, install: bool) -> None:
+    from blend_sync_graph import generate
+    files = generate(blend, cache, manifest)
+    if not install:
+        return
+    if not os.environ.get("TIXL_BRIDGE_OPERATOR_PROJECT") or not os.environ.get("TIXL_BRIDGE_EDITOR"):
+        raise ValueError("Set TiXL operator project and editor paths in the Blender add-on preferences")
+    if not TIXL_PROJECT.is_dir() or not TIXL_EDITOR.is_dir():
+        raise FileNotFoundError("TiXL operator project or editor directory not found")
+    csproj = next(TIXL_PROJECT.glob("*.csproj"), None)
+    if csproj is None:
+        raise FileNotFoundError(f"No TiXL .csproj in {TIXL_PROJECT}")
+    target = TIXL_PROJECT / "Symbols"
+    operator_files = sorted((ROOT / "operators").glob("Blender*.*"))
+    if len(operator_files) != 9:
+        raise FileNotFoundError("The three reusable TiXL operators are missing from this package")
+    install_files = operator_files + files
+    if all((target / file.name).is_file() and digest(target / file.name) == digest(file) for file in install_files):
+        ensure_generic_project(blend, cache, files)
+        return
+    # Probe the destination before interrupting an open TiXL session. In a
+    # restricted caller the cache can still be built, but installation waits.
+    probe = target / (".blend_sync_probe_" + uuid.uuid4().hex)
+    try:
+        probe.write_text("probe", encoding="utf-8")
+    finally:
+        probe.unlink(missing_ok=True)
+    was_running = bool(subprocess.run(["powershell", "-NoProfile", "-Command",
+        "[bool](Get-Process TiXL -ErrorAction SilentlyContinue)"], capture_output=True, text=True).stdout.strip().lower() == "true")
+    if was_running:
+        subprocess.run(["powershell", "-NoProfile", "-Command",
+                        "Stop-Process -Name TiXL -Force -ErrorAction SilentlyContinue"], check=True)
+    try:
+        for file in install_files:
+            shutil.copy2(file, target / file.name)
+        subprocess.run(["dotnet", "build", str(csproj), "--no-restore",
+                        f"-p:T3_ASSEMBLY_PATH={TIXL_EDITOR}", "--nologo"], check=True)
+    finally:
+        if was_running:
+            subprocess.Popen([str(TIXL_EDITOR / "TiXL.exe"), "--debug-server", BRIDGE_PORT, "--window", "1600x900", "--no-splash"],
+                             cwd=str(TIXL_EDITOR), creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+    ensure_generic_project(blend, cache, files)
+
+
+def bridge(method: str, **params):
+    from tixl_bridge import call
+    last_error = None
+    for _ in range(30):
+        try:
+            return call(method, **params)
+        except (ConnectionError, ConnectionRefusedError, OSError, TimeoutError) as error:
+            last_error = error
+            time.sleep(1)
+        except RuntimeError as error:
+            if "NO_GRAPH_WINDOW" not in str(error):
+                raise
+            last_error = error
+            time.sleep(1)
+    raise RuntimeError(f"TiXL debug bridge did not start: {last_error}")
+
+
+def ensure_generic_project(blend: Path, cache: Path, files: list[Path]) -> None:
+    from blend_sync_project import populate
+    marker = cache / "tixl_project.json"
+    graph_sha = hashlib.sha256("|".join(digest(file) for file in files).encode()).hexdigest()
+    existing = None
+    if marker.is_file():
+        state = json.loads(marker.read_text(encoding="utf-8"))
+        if Path(state["path"]).is_dir():
+            if state.get("graph_sha256") == graph_sha:
+                return
+            existing = state
+    label = "".join(c for c in blend.stem.title() if c.isalnum()) or "BlenderScene"
+    suffix = uuid.uuid5(uuid.NAMESPACE_URL, str(blend.resolve()).lower()).hex[:8]
+    name = existing["name"] if existing else f"Blend{label}{suffix}"
+    path = Path(existing["path"]) if existing else TIXL_PROJECT.parent / name
+    if not (path / f"{name}.csproj").is_file():
+        bridge("newProject", name=f"PrismalLabs.{name}")
+    probe = path / "Symbols" / (".blend_sync_probe_" + uuid.uuid4().hex)
+    try:
+        probe.write_text("probe", encoding="utf-8")
+    finally:
+        probe.unlink(missing_ok=True)
+    subprocess.run(["powershell", "-NoProfile", "-Command",
+                    "Stop-Process -Name TiXL -Force -ErrorAction SilentlyContinue"], check=True)
+    try:
+        populate(path, files, cache / "project_backups", TIXL_EDITOR)
+    finally:
+        subprocess.Popen([str(TIXL_EDITOR / "TiXL.exe"), "--debug-server", BRIDGE_PORT, "--window", "1600x900", "--no-splash"],
+                         cwd=str(TIXL_EDITOR), creationflags=getattr(subprocess, "CREATE_NO_WINDOW", 0))
+    bridge("openProject", name=name)
+    marker.write_text(json.dumps({"name": name, "path": str(path), "source_blend": str(blend),
+                                  "graph_sha256": graph_sha}, indent=2), encoding="utf-8")
+
+
+def sync(blend: Path, requested_profile: str, requested_cache: Path | None,
+         blender: Path, force: bool, install: bool) -> dict:
+    blend = blend.resolve()
+    if not blend.is_file() or blend.suffix.lower() != ".blend":
+        raise FileNotFoundError(f"Saved .blend file not found: {blend}")
+    profile = profile_for(blend, requested_profile)
+    cache = cache_for(blend, profile, requested_cache)
+    stat_before = (blend.stat().st_size, blend.stat().st_mtime_ns)
+    sha = digest(blend)
+    if stat_before != (blend.stat().st_size, blend.stat().st_mtime_ns):
+        raise RuntimeError("Blender save was still changing; retry sync shortly")
+    if not force and valid_cache(cache, sha):
+        generic_finish(blend, cache, json.loads((cache / "worlds" / "manifest.json").read_text()), install)
+        return {"status": "up_to_date", "blend": str(blend), "cache": str(cache), "profile": profile}
+    if not blender.is_file():
+        raise FileNotFoundError(f"Blender executable not found: {blender}")
+    with export_lock(cache):
+        stable = (blend.stat().st_size, blend.stat().st_mtime_ns)
+        sha = digest(blend)
+        if stable != (blend.stat().st_size, blend.stat().st_mtime_ns):
+            raise RuntimeError("Blender save changed during sync; retry on the next save")
+        if not force and valid_cache(cache, sha):
+            generic_finish(blend, cache, json.loads((cache / "worlds" / "manifest.json").read_text()), install)
+            return {"status": "up_to_date", "blend": str(blend), "cache": str(cache), "profile": profile}
+        stage = cache / ".staging" / uuid.uuid4().hex
+        stage.mkdir(parents=True)
+        cmd = [str(blender), "--background", str(blend), "--python", str(ROOT / "source" / "blend_sync_worker.py"),
+               "--", "--staging", str(stage)]
+        log = stage / "export.log"
+        with log.open("w", encoding="utf-8") as output:
+            completed = subprocess.run(cmd, stdout=output, stderr=subprocess.STDOUT)
+        if completed.returncode or "BLEND_SYNC_STAGE_COMPLETE" not in log.read_text(encoding="utf-8", errors="replace"):
+            raise RuntimeError(f"Blender export failed; prior cache retained. See {log}")
+        manifest = validate_stage(stage, sha)
+        publish(stage, cache, manifest, profile)
+        generic_finish(blend, cache, manifest, install)
+        if install:
+            project = json.loads((cache / "tixl_project.json").read_text(encoding="utf-8"))
+            bridge("reload", project=project["name"])
+            bridge("openProject", name=project["name"])
+        return {"status": "rebuilt", "blend": str(blend), "cache": str(cache),
+                "profile": profile, "worlds": len(manifest["worlds"]), "log": str(log)}
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("action", choices=("sync", "watch", "status", "install"))
+    parser.add_argument("--blend", required=True, type=Path)
+    parser.add_argument("--profile", choices=("auto", "generic"), default="auto")
+    parser.add_argument("--cache-root", type=Path)
+    parser.add_argument("--blender", type=Path, default=BLENDER)
+    parser.add_argument("--force", action="store_true")
+    parser.add_argument("--no-install", action="store_true", help="Build cache and graph without installing into TiXL")
+    parser.add_argument("--interval", type=float, default=4.0, help="Watch poll interval in seconds")
+    options = parser.parse_args()
+    if options.action == "status":
+        blend = options.blend.resolve()
+        profile = profile_for(blend, options.profile)
+        cache = cache_for(blend, profile, options.cache_root)
+        result = {"status": "up_to_date" if valid_cache(cache, digest(blend)) else "stale",
+                  "blend": str(blend), "cache": str(cache), "profile": profile}
+        print(json.dumps(result, indent=2))
+        return
+    if options.action == "install":
+        blend = options.blend.resolve()
+        profile = profile_for(blend, options.profile)
+        cache = cache_for(blend, profile, options.cache_root)
+        if profile != "generic" or not valid_cache(cache, digest(blend)):
+            raise ValueError("Install requires an up-to-date generic Blender cache")
+        generic_finish(blend, cache, json.loads((cache / "worlds" / "manifest.json").read_text()), True)
+        print(json.dumps({"status": "installed", "blend": str(blend)}))
+        return
+    if options.action == "sync":
+        print(json.dumps(sync(options.blend, options.profile, options.cache_root,
+                              options.blender, options.force, not options.no_install), indent=2))
+        return
+    last_error = None
+    while True:
+        try:
+            # Wait until a save has settled; never read a partially written blend.
+            before = (options.blend.stat().st_size, options.blend.stat().st_mtime_ns)
+            time.sleep(2)
+            after = (options.blend.stat().st_size, options.blend.stat().st_mtime_ns)
+            if before == after:
+                result = sync(options.blend, options.profile, options.cache_root,
+                              options.blender, False, not options.no_install)
+                if result["status"] != "up_to_date":
+                    print(json.dumps(result), flush=True)
+            last_error = None
+        except Exception as error:
+            message = str(error)
+            if message != last_error:
+                print(json.dumps({"status": "error", "message": message}), flush=True)
+                last_error = message
+        time.sleep(max(1.0, options.interval))
+
+
+if __name__ == "__main__":
+    main()
