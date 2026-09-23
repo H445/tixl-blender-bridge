@@ -3,3 +3,4 @@ __pycache__/
 .tixl_cache/
 *.blend1
 *.blend2
+.agents/
