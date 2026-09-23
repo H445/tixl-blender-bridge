@@ -1,3 +1,5 @@
+** WARNING: This is a very early experimental project. It is not yet ready for production use. Back up your current existing projects first. **
+
 # Blender → TiXL Bridge
 
 Edit a scene in Blender, save its `.blend`, and let the bridge build the TiXL version in the background. **The `.blend` is the file you manage.** GLB meshes, animation data, camera samples, lights, and a TiXL graph are generated caches.
