@@ -60,6 +60,10 @@ In Blender, open the **Scene Properties → TiXL Bridge** panel and run **Sync s
 
 *TiXL: the generated graph, including the Blender camera timeline and scene export nodes.*
 
+![TiXL generated output and Blender Camera Timeline operator](docs/screenshots/tixl-bridge-operator.png)
+
+*TiXL: the generated scene output alongside the reusable Blender Camera Timeline operator, which reads the exported camera rail and supports scene routing.*
+
 ## Where things go
 
 The authored `.blend` stays where you saved it. Generated data, logs, and the TiXL project link live in `.tixl_cache/<blend name>/` beside it. A newly generated TiXL project is created beside the operator project. **Do not edit generated graphs or cache files**; the next save may replace them.
