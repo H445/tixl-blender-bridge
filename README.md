@@ -44,6 +44,18 @@ By default the active Blender scene is one TiXL world. To use several worlds, ad
 
 The named collections must exist. Keep the time ranges contiguous; the generated graph switches branches at their boundaries. Camera markers can control the view independently.
 
+## See the bridge in action
+
+In Blender, open the **Scene Properties → TiXL Bridge** panel and run **Sync saved .blend to TiXL** (or enable **Sync after save**). The add-on reads the saved scene and builds its generated project. Open that project in TiXL to inspect the graph created from the same `.blend` file.
+
+![Blender scene with the TiXL Bridge controls](docs/screenshots/blender-bridge.png)
+
+*Blender: the saved source scene and the bridge controls used to sync it.*
+
+![TiXL graph generated from the Blender scene](docs/screenshots/tixl-generated-graph.png)
+
+*TiXL: the generated graph, including the Blender camera timeline and scene export nodes.*
+
 ## Where things go
 
 The authored `.blend` stays where you saved it. Generated data, logs, and the TiXL project link live in `.tixl_cache/<blend name>/` beside it. A newly generated TiXL project is created beside the operator project. **Do not edit generated graphs or cache files**; the next save may replace them.
