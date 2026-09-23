@@ -52,6 +52,14 @@ This is a save-driven build, not direct `.blend` playback inside TiXL. Blender s
 
 ## Command line / troubleshooting
 
+When updating this add-on from a checkout, copy the updated plugin into Blender and enable it with one command. Close Blender first if it is running, then run this from the repository folder using the Blender executable on your machine:
+
+```powershell
+& "<path-to-blender.exe>" --background --python install_blender_addon.py
+```
+
+This copies the current `tixl_blender_bridge/` package, checks every copied file, and enables the add-on. It saves first-install settings and keeps existing TiXL paths and connection mode on later updates. On a first install, either set those paths in Blender's add-on preferences or pass `-- --operator-project "C:\path\to\OperatorProject" --editor-dir "C:\path\to\TiXL\Editor\build"` after the script name. Restart any Blender window that was already open. Rebuild the distributable ZIP with `python build_addon_zip.py` whenever package files change.
+
 The Blender add-on runs `tixl_blender_bridge/source/blend_sync.py` using Blender's bundled Python. For a cache-only build, set `TIXL_BRIDGE_BLENDER` to your Blender executable and run:
 
 ```powershell
@@ -69,5 +77,6 @@ If a save does not appear in TiXL, check `sync_logs/latest.log` first. Missing c
 - `tixl_blender_bridge/source/` — exporter, validation, graph generation, and TiXL installation.
 - `tixl_blender_bridge/templates/` — internal graph template; never install it as a TiXL project.
 - `build_addon_zip.py` — reproduces the installable ZIP.
+- `install_blender_addon.py` — copies, enables, and verifies this checkout in local Blender.
 
 The add-on currently targets Windows TiXL builds. Its background exporter does not run during TiXL render frames.
