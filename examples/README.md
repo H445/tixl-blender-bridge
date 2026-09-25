@@ -46,10 +46,102 @@ The bridge writes the generated project location to
 workstation, it uses the TiXL user folder and root namespace
 `PrismalLabs.TixlBlenderBridge`. The cache is generated output ignored by Git.
 At 120 BPM, the TiXL composition lasts 60 bars (120 seconds).
+The TiXL home graph contains ten editable **Blender Source Clip** TimeClips,
+one for each move. They feed a global **Blender Clip Sequence** for camera and
+world selection, and each clip also feeds the sequence for its own world. The
+eight world sequences lead through **Blender World Clip Time** nodes directly
+into their **Blender Animation Scene** nodes. Two worlds contain two moves, so
+both of their source clips connect to the same world sequence. Move or trim
+clips in TiXL to change the performance timing; the default wiring keeps the
+camera and all eight worlds in sync. Insert any TiXL float operator on a world
+sequence's time wire or between World Clip Time and Animation Scene to retime
+one world independently. The same home graph exposes all eight character
+mesh branches, materials, lights, cameras, `RenderTarget`, and tone mapping.
+Each branch has **Select mesh** and **Replace mesh** nodes. Give both the same
+`PrimitiveIndex` (zero selects the character's anatomical mesh), then insert
+a TiXL mesh operator between them to edit its vertices or topology. The
+**Select mesh** status shows the chosen primitive's name and the total count.
+Each branch also has **Select textures** and **Replace textures** nodes.
+Route albedo, normal, roughness/metal/occlusion, or emissive `Texture2D` wires
+through TiXL image operators to alter the rendered material. The editable
+home graph and TimeClips survive later Blender syncs. The first migration
+saved the previous home graph under
+`examples/.tixl_cache/humanoid_breakdance/project_backups/`.
+
+**Preload all Blender worlds** initializes the eight GLB and animation branches
+while TiXL is paused, before the world switch starts playing. The light operator
+also reads all eight world light caches on that paused frame. Pause once after
+opening the project before pressing play; later scene cuts use resident data.
+Syncing a new Blender save waits for a paused TiXL transport before publishing
+replacement cache files.
+
+## Nightclub lighting at 120 BPM
+
+The dancer performs on a raised circular stage with perspective floor guides,
+a 144-tile LED wall, eight sweeping lasers, two moving projector gobos and
+visible beam edges, and six animated lights. The wall, stage rings, lasers,
+projectors, and light levels are keyed to a **120 BPM grid**: beat one is frame
+1, each beat is 30 frames (0.5 seconds), and the two-minute performance has
+240 beats. The TiXL composition also runs at 120 BPM. The original soundtrack
+starts at composition time zero and changes arrangement at all ten movement
+boundaries.
+
+![Nightclub stage in TiXL](../docs/screenshots/tixl-nightclub-variation.png)
+
+To replace the set in the saved `.blend` without rebaking the character, run:
+
+```powershell
+blender --background examples/humanoid_breakdance.blend --python examples/decorate_nightclub.py
+```
+
+The set builder is idempotent and is also called by `build_breakdance.py`.
+After saving, run the bridge sync again. Check the beat grid, shared world
+geometry, animated lights, and stage coverage with:
+
+```powershell
+blender --background examples/humanoid_breakdance.blend --python examples/validate_nightclub.py
+```
+
+## Original 120 BPM soundtrack
+
+Run `python examples/build_soundtrack.py` to create
+`audio/breakdance_nightclub_120bpm.wav`, a two-minute stereo score built for
+the ten dance TimeClips. It has a 90s deep drum-and-bass / breakbeat sound at
+the project's fixed 120 BPM: swung sixteenth-note breaks played from
+[recorded Pearl acoustic drum hits](audio/drums/README.md), ghost snares,
+detuned Reese bass, sub bass, Rhodes-style keys, and dub delays. The builder
+adds no continuous static or vinyl-crackle layer. The arrangement
+gets denser through the footwork and aerial moves, drops the break for the
+1:00–1:04 motorcycle freeze, then builds into the finale. The 0.5-second beat
+grid also matches the LED wall and lights. The generated companion `*.cues.json` lists
+the exact movement boundaries and levels.
+
+In the TiXL home graph, **Soundtrack / 120 BPM / ten movements** is an editable
+`AudioClip` spanning 60 bars. Its `AudioReference` feeds **Soundtrack bus / mix
+here**, whose `Result` feeds **Execute / picture + soundtrack** alongside the
+render command. The Execute output enters the final `RenderTarget` command
+input, so the bus is evaluated with the picture. The AudioClip uses the
+project's `Assets/audio/` copy of the WAV. Adjust its timing, replace the file,
+or insert TiXL audio effects before the bus in the same graph. The continuous
+file avoids a new audio source load at each movement cut.
+
+To regenerate the score and install it into an existing TiXL user project,
+close TiXL and run:
+
+```powershell
+python examples/build_soundtrack.py
+python examples/install_soundtrack.py --project "C:\path\to\TixlBlenderBridge"
+```
+
+Then launch TiXL with `--debug-server 9042` and open `TixlBlenderBridge`.
+The installer preserves an existing soundtrack graph and saves the prior home
+symbol in `examples/.tixl_cache/soundtrack_backup/` when it first adds the nodes.
+
+![TiXL AudioClip, bus and Execute](../docs/screenshots/tixl-soundtrack-bus.png)
 
 ## Rebuild
 
-`build_breakdance.py` rebuilds the Blender scene from the source BVH files in
+`build_breakdance.py` rebuilds the Blender scene and nightclub from the source BVH files in
 `mocap/`. It needs Blender 5.2, [MPFB](https://extensions.blender.org/add-ons/mpfb/),
 and the CC0 [MakeHuman system assets and skins02 packs](https://static.makehumancommunity.org/assets/assetpacks.html)
 installed through MPFB. Run:

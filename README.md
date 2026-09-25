@@ -2,21 +2,21 @@
 
 # Blender → TiXL Bridge
 
-Edit a scene in Blender, save its `.blend`, and let the bridge build the TiXL version in the background. **The `.blend` is the file you manage.** GLB meshes, animation data, camera samples, lights, and a TiXL graph are generated caches.
+Edit a scene in Blender, save its `.blend`, and let the bridge build the TiXL version in the background. The `.blend` owns the source scene; the TiXL project home exposes editable timing, mesh buffers, material textures, and rendering in one graph. GLB meshes, animation data, camera samples, lights, and the Blender import symbol are generated caches.
 
-This repository contains the Blender add-on and three reusable TiXL operators: **Blender Animation Scene**, **Blender Camera Timeline**, and **Blender Export Lights**. They are shared by every generated project; none is tied to a particular demo.
+This repository contains the Blender add-on and eleven reusable TiXL operators: **Blender Animation Scene**, **Blender Camera Timeline**, **Blender Export Lights**, **Blender World Preload**, **Blender Source Clip**, **Blender Clip Sequence**, **Blender World Clip Time**, **Blender Mesh Select**, **Blender Mesh Replace**, **Blender Texture Select**, and **Blender Texture Replace**. They are shared by every generated project; none is tied to a particular demo.
 
 ## Set up once (Windows)
 
 You need Blender 4.3 or newer (tested with 5.2), a TiXL Editor build, a TiXL C# operator project, and the .NET SDK. Create the operator project once in TiXL so it has valid release metadata. You can then close TiXL; **the debug server is optional**.
 
-1. Download or clone this repository. In Blender, open **Edit → Preferences → Add-ons → Install from Disk**, choose **`tixl_blender_bridge.zip`**, and enable **Prismal Labs Blender → TiXL Bridge**. (In Blender versions that call it **Get Extensions**, use **Install from Disk** there.)
+1. Download or clone this repository and run `python build_addon_zip.py` to build the local add-on package. In Blender, open **Edit → Preferences → Add-ons → Install from Disk**, choose **`tixl_blender_bridge.zip`**, and enable **Prismal Labs Blender → TiXL Bridge**. (In Blender versions that call it **Get Extensions**, use **Install from Disk** there.)
 2. Open the add-on preferences and set **TiXL operator project** to the folder containing your TiXL `.csproj` and `Symbols` folder. Set **TiXL Editor folder** to the build folder containing `TiXL.exe`. Leave **TiXL connection** on **Auto** unless you want to force a mode.
 3. Open any Blender project with an active camera. In **Scene Properties → TiXL Bridge**, turn on **Sync after save**. Save the `.blend`.
 
-The first save can take a while. Watch `<blend folder>/.tixl_cache/<blend name>/sync_logs/latest.log`. The bridge installs the operators, creates a TiXL project for this `.blend` from your TiXL-created project scaffold, and builds it. The project is created beside the operator project; its exact path is recorded in `.tixl_cache/<blend name>/tixl_project.json`. In offline mode, **select the generated project once in TiXL**. In debug mode, the bridge opens it for you. Later Blender saves rebuild changed content automatically. TiXL may restart to load new files, so save any open TiXL work first. The **Sync saved .blend to TiXL** button runs the same process on demand.
+The first save can take a while. Watch `<blend folder>/.tixl_cache/<blend name>/sync_logs/latest.log`. The bridge installs the operators, creates a TiXL project for this `.blend` from your TiXL-created project scaffold, and builds it. The project is created beside the operator project; its exact path is recorded in `.tixl_cache/<blend name>/tixl_project.json`. In offline mode, **select the generated project once in TiXL**. In debug mode, the bridge opens it for you. Later Blender saves rebuild the import symbol while preserving edits to the project home and its TimeClips, mesh ports, texture ports, and render graph. TiXL may restart to load new files, so save any open TiXL work first. The **Sync saved .blend to TiXL** button runs the same process on demand.
 
-**Daily use:** work in Blender and save. You do not need to export or import binary files by hand. A failed rebuild keeps the previous validated cache.
+**Daily use:** work in Blender and save. You do not need to export or import binary files by hand. A failed rebuild keeps the previous validated cache. A repeat sync with unchanged source keeps generated file timestamps and leaves an already-open TiXL project alone.
 
 ## TiXL connection modes
 
@@ -33,7 +33,10 @@ To use live mode, start TiXL with `--debug-server 9042`, or select **Debug bridg
 - Meshes and UV textures in GLB; PBR material properties supported by Blender's glTF export.
 - Object transforms, visibility, shape keys, material color and emission, and lights sampled at 60 Hz.
 - The active camera, including camera-bound timeline markers for cuts.
-- A generated TiXL graph with one branch per Blender world, camera movement, scene switching, rendering, and final output resolution control.
+- A generated Blender import symbol with one branch per world, camera movement, scene switching, rendering, and final output resolution control.
+- An editable project home with source TimeClips. Moving a clip changes when that Blender section plays; trimming or changing its source range changes which part of the export it samples. Each clip feeds the global camera/world timing sequence and its own world's clip sequence. A **Blender World Clip Time** node connects each world sequence to its **Blender Animation Scene**, so their relationship is visible in the home graph. The default wires keep camera, geometry, materials, and world selection on the same mapped source time.
+- Direct mesh and material texture edit ports in each animated world of the home graph, alongside `LoadGltfScene`, `DrawScene`, lights, camera, `RenderTarget`, and tone mapping.
+- A **Preload all Blender worlds** node before the world switch. On the first paused evaluation, it initializes each GLB and animation branch; the light operator caches every world manifest and channel set. Scene cuts then select already-loaded data. If TiXL opens while transport is running, pause once to warm the project before playback. A background sync waits for TiXL to pause before publishing changed cache files or reloading operators.
 
 By default the active Blender scene is one TiXL world. To use several worlds, add a **Scene custom property** named `tixl_worlds` containing JSON like this:
 
@@ -48,27 +51,28 @@ The named collections must exist. Keep the time ranges contiguous; the generated
 
 ## See the bridge in action
 
-In Blender, open the **Scene Properties → TiXL Bridge** panel and run **Sync saved .blend to TiXL** (or enable **Sync after save**). The add-on reads the saved scene and builds its generated project. Open that project in TiXL to inspect the graph created from the same `.blend` file.
+In Blender, open the **Scene Properties → TiXL Bridge** panel and run **Sync saved .blend to TiXL** (or enable **Sync after save**). The add-on reads the saved scene and builds its TiXL project. Open that project to edit the source clips in the home timeline. Pan right in the same graph for the mesh, material texture, and render branches.
 
-![Blender scene with the TiXL Bridge controls](docs/screenshots/blender-bridge.png)
+![TiXL home with ten editable breakdance clips and the rendered character](docs/screenshots/tixl-editable-clips.png)
 
-*Blender: the saved scene and the controls used to sync it to TiXL.*
+*TiXL: ten named source clips drive the Blender import while the project home remains editable.*
 
-![Blender add-on preferences for the TiXL Bridge](docs/screenshots/blender-preferences.png)
+![TiXL mesh and texture edit ports with colored wires](docs/screenshots/tixl-mesh-texture-taps.png)
 
-*Blender preferences: select the TiXL operator project and editor folder, then choose Auto, Offline, or Debug bridge mode.*
+*TiXL: a world branch exposes a mesh buffer wire and four material `Texture2D` wires in the home graph.*
 
-![TiXL graph generated from the Blender scene](docs/screenshots/tixl-generated-graph.png)
+The two-minute example also includes a nightclub set keyed to the 120 BPM
+composition: a raised stage, LED wall, lasers, moving projector pools, and
+animated lights. Its first beat is at timeline zero. An original two-minute
+soundtrack follows the ten dance sections and runs as an editable `AudioClip`
+through an `AudioBus` and `Execute` in the TiXL home graph. See
+[the example score and installation steps](examples/README.md#original-120-bpm-soundtrack).
 
-*TiXL: the generated graph, including the Blender camera timeline and scene export nodes.*
-
-![TiXL generated output and Blender Camera Timeline operator](docs/screenshots/tixl-bridge-operator.png)
-
-*TiXL: the generated scene output alongside the reusable Blender Camera Timeline operator, which reads the exported camera rail and supports scene routing.*
+![Breakdance in the 120 BPM nightclub](docs/screenshots/tixl-nightclub-variation.png)
 
 ## Where things go
 
-The authored `.blend` stays where you saved it. Generated data, logs, and the TiXL project link live in `.tixl_cache/<blend name>/` beside it. A newly generated TiXL project is created beside the operator project. **Do not edit generated graphs or cache files**; the next save may replace them.
+The authored `.blend` stays where you saved it. Generated data, logs, and the TiXL project link live in `.tixl_cache/<blend name>/` beside it. A newly generated TiXL project is created beside the operator project. Edit the project's home graph for timing, audio, effects, geometry, material maps, camera, lighting, and render settings. For each world, the default timing path is **Source Clips → world Clip Sequence → World Clip Time → Animation Scene**. Insert native TiXL float operators between the world sequence and World Clip Time, or between World Clip Time and Animation Scene. The latter point can also carry a complete user-built time path. The global clip sequence still controls camera mapping and world selection. Sync preserves modified timing wires and TimeClips. In each world, **Select mesh** feeds **Replace mesh** by default. Set the same zero-based `PrimitiveIndex` on both, then insert native TiXL mesh operators between their mesh ports. The selector's status shows the selected primitive's name and the total count. Operators such as `TransformMesh`, `DeformMesh`, and `SplitMeshVertices` can change vertex data or topology. **Select textures** exposes the chosen primitive's albedo, normal, roughness/metal/occlusion, and emissive maps as `Texture2D` outputs; route any map through TiXL image operators before its matching **Replace textures** input. Both selectors default to primitive zero, and their replacement nodes feed the rendered scene. The final `RenderTarget` and tone mapping texture chain is also in the home graph. These edits affect TiXL output; edit the `.blend` when the source asset itself should change. Sync preserves the home graph and replaces only the generated import symbol. If a Blender change adds or removes worlds, add or remove the corresponding scene branches in TiXL. When migrating an older project, the bridge backs up its former home symbol under `project_backups/` in the cache.
 
 This is a save-driven build, not direct `.blend` playback inside TiXL. Blender shaders and World nodes that glTF cannot represent need TiXL-side equivalents. In particular, arbitrary procedural materials and physical refraction are not guaranteed to match Blender.
 
@@ -91,6 +95,8 @@ python tixl_blender_bridge/source/blend_sync.py sync --blend C:\path\scene.blend
 `status --blend ...` checks whether the cache matches the saved file. `--force` rebuilds even when the source hash matches. A full command-line TiXL installation also needs `TIXL_BRIDGE_OPERATOR_PROJECT` and `TIXL_BRIDGE_EDITOR` set to the same folders used in the add-on preferences. `TIXL_BRIDGE_MODE` selects `auto`, `offline`, or `debug`; `TIXL_BRIDGE_PORT` changes the local port. Set `TIXL_BRIDGE_LAUNCH_EDITOR=0` if you want the bridge to build files without starting TiXL.
 
 If a save does not appear in TiXL, check `sync_logs/latest.log` first. Missing cameras, missing collections, and a project without release metadata are reported there. In offline mode, newly created projects require a one-time selection in TiXL.
+After a bridge update changes the home graph's `.t3` structure, restart the TiXL editor to load that structure; the debug bridge's `reload` recompiles operators but can keep an already-open graph in memory.
+If TiXL is open without the debug bridge, close it before publishing a changed cache. The bridge needs transport state to keep cache replacement off the realtime playback path.
 
 ## Package layout
 

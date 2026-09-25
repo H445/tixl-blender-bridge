@@ -4,3 +4,10 @@ __pycache__/
 *.blend1
 *.blend2
 .agents/
+# Rebuilt locally from source; generated TiXL imports remain under .tixl_cache/.
+/tixl_blender_bridge.zip
+/examples/audio/breakdance_nightclub_120bpm.wav
+/examples/audio/breakdance_nightclub_120bpm.cues.json
+# Intermediate capture sets; keep curated screenshots referenced by the docs.
+/docs/screenshots/tixl-flat-output*.png
+/docs/screenshots/tixl-preloaded-*.png
