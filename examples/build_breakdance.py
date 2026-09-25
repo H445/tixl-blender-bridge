@@ -8,11 +8,14 @@ Run: blender --background --python examples/build_breakdance.py
 """
 
 import json
+import sys
 from math import ceil, pi, sin
 from pathlib import Path
 
 import bpy
 from mathutils import Quaternion, Vector
+sys.path.insert(0, str(Path(__file__).resolve().parent))
+from nightclub_set import decorate
 
 
 HERE = Path(__file__).resolve().parent
@@ -483,6 +486,7 @@ cameras = (
 scene.camera = cameras[0]
 for index, marker in enumerate(sorted(scene.timeline_markers, key=lambda m: m.frame)):
     marker.camera = cameras[(0, 0, 1, 0, 2, 1, 0, 2, 1, 0)[index]]
+decorate(scene)
 scene.view_settings.view_transform = "AgX"
 scene.frame_set(1)
 
