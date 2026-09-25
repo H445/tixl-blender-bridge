@@ -4,6 +4,7 @@ using System.IO;
 using System.Numerics;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Text.Json;
 using T3.Core.Operator;
 using T3.Core.Operator.Attributes;
@@ -34,6 +35,7 @@ public sealed class BlenderCameraTimeline : Instance<BlenderCameraTimeline>
     [Input(Guid="8e21625b-2c15-5b6c-8b42-78aa3500bf8b")] public readonly InputSlot<bool> UseOverride=new();
     [Input(Guid="9aaf2997-d503-5100-97db-9e3f19bd0e50")] public readonly InputSlot<int> ActiveWorld=new();
     [Input(Guid="70bceb8e-15a0-592f-a01b-ff73dfac2a59")] public readonly InputSlot<string> TimelineDataPath=new();
+    [Input(Guid="2748faa0-a40e-5a5e-8810-1170aff75f74")] public readonly InputSlot<string> WorldStartSeconds=new();
     public BlenderCameraTimeline()
     {
         TimeSeconds.UpdateAction=Update;
@@ -54,6 +56,7 @@ public sealed class BlenderCameraTimeline : Instance<BlenderCameraTimeline>
         FillIntensity.UpdateAction=Update;
     }
     private readonly List<Shot> _shots=new(); private readonly List<Passage> _passages=new(); private readonly List<TimeMapPoint> _timeMap=new(); private string _timelinePath=string.Empty;
+    private readonly List<float> _worldStarts=new(); private string _worldStartsText=string.Empty;
     private float[] _samples=Array.Empty<float>();
     private string _path=string.Empty;
     private static float Smooth(float x) { x=Math.Clamp(x,0,1); return x*x*x*(x*(x*6-15)+10); }
@@ -69,11 +72,25 @@ public sealed class BlenderCameraTimeline : Instance<BlenderCameraTimeline>
         }
         var timelinePath=TimelineDataPath.GetValue(context)??string.Empty;
         if(timelinePath!=_timelinePath){LoadTimeline(timelinePath);_timelinePath=timelinePath;}
+        var worldStartsText=WorldStartSeconds.GetValue(context)??string.Empty;
+        if(worldStartsText!=_worldStartsText)
+        {
+            _worldStarts.Clear();
+            foreach(var token in worldStartsText.Split(',',StringSplitOptions.RemoveEmptyEntries))
+                if(float.TryParse(token,NumberStyles.Float,CultureInfo.InvariantCulture,out var start))_worldStarts.Add(start);
+            _worldStartsText=worldStartsText;
+        }
         float outputTime=Math.Max(0,UseOverride.GetValue(context)?OverrideTime.GetValue(context):(float)(context.LocalTime*240/context.Playback.Bpm));
         float t=MapSourceTime(outputTime);
         int shot=0; while(shot+1<_shots.Count && t>=_shots[shot+1].Start)shot++;
         TimeSeconds.Value=t; ShotIndex.Value=_shots.Count==0?0:_shots[shot].Id; ShotLabel.Value=_shots.Count==0?string.Empty:_shots[shot].Label;
-        WorldIndex.Value=ActiveWorld.GetValue(context);
+        var worldIndex=ActiveWorld.GetValue(context);
+        if(_worldStarts.Count>0)
+        {
+            worldIndex=0;
+            while(worldIndex+1<_worldStarts.Count && t>=_worldStarts[worldIndex+1])worldIndex++;
+        }
+        WorldIndex.Value=worldIndex;
         int countSamples=_samples.Length/12; float frame=t*60; int a=Math.Clamp((int)frame,0,countSamples-1),b=Math.Min(a+1,countSamples-1);
         float u=frame-a;
         // Hold the last camera sample before a cut; never interpolate across worlds.

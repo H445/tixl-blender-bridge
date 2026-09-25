@@ -5,7 +5,7 @@
   "InputUis": [
     {"InputId":"f5cd6fc8-54bd-4cf0-885f-2b244d9c1902","GroupTitle":"Scene"},
     {"InputId":"ca02f7a3-a03a-4db0-a05d-3a66b0c9ab11","GroupTitle":"Blender export","Description":"Path to the TIXLANIM transform/channel cache (.bin)."},
-    {"InputId":"ee2eaef9-6e5a-48b3-9df0-91b2f9ab7dc7","GroupTitle":"Playback","Description":"Scene time in seconds. Cache samples are evaluated at 60 Hz."},
+    {"InputId":"ee2eaef9-6e5a-48b3-9df0-91b2f9ab7dc7","GroupTitle":"Playback","Description":"Scene time in seconds from this world's Blender World Clip Time node. Insert native TiXL float operators on this wire to retime its animation. Cache samples are evaluated at 60 Hz."},
     {"InputId":"3a4c36f9-e8c1-4ab7-b370-0f548b054933","GroupTitle":"Blender export","Description":"Path to the matching GLB used for morph data, material defaults, and transparent primitive bounds."}
   ]
 }

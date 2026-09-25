@@ -1,0 +1,5 @@
+{
+  "FormatVersion": 3,
+  "Id": "c25f4c1c-e88d-575e-b8a0-befcf44f208c",
+  "Description": "Replace the selected primitive's four texture maps after TiXL image processing. Keep PrimitiveIndex aligned with BlenderTextureSelect; Blender PBR color and roughness values remain animated."
+}

@@ -211,6 +211,28 @@ def bridge_available() -> bool:
         return False
 
 
+def wait_for_editor_pause() -> None:
+    """Keep changed cache files and symbols off TiXL's realtime path."""
+    if not editor_running():
+        return
+    if not bridge_available():
+        raise RuntimeError(f"Close TiXL or launch it with --debug-server {BRIDGE_PORT} before publishing a Blender cache")
+    announced = False
+    while True:
+        try:
+            context = bridge_call("getContext", timeout=10)
+        except (OSError, ConnectionError):
+            if not editor_running():
+                return
+            raise
+        if not context.get("time", {}).get("isPlaying", False):
+            return
+        if not announced:
+            print("TiXL is playing; waiting for a paused frame before publishing Blender changes", flush=True)
+            announced = True
+        time.sleep(0.5)
+
+
 def open_project_when_ready(name: str) -> None:
     last_error = None
     for _ in range(45):
@@ -225,6 +247,9 @@ def open_project_when_ready(name: str) -> None:
 
 def generic_finish(blend: Path, cache: Path, manifest: dict, install: bool, refresh_runtime: bool = False) -> None:
     from blend_sync_graph import generate
+    # A parent TiXL project can watch generated C# inside this checkout.
+    # Keep all graph/source writes off the active transport.
+    wait_for_editor_pause()
     files = generate(blend, cache, manifest)
     if not install:
         return
@@ -237,13 +262,33 @@ def generic_finish(blend: Path, cache: Path, manifest: dict, install: bool, refr
         raise FileNotFoundError(f"No TiXL .csproj in {TIXL_PROJECT}")
     target = TIXL_PROJECT / "Symbols"
     operator_files = sorted((ROOT / "operators").glob("Blender*.*"))
-    if len(operator_files) != 9:
-        raise FileNotFoundError("The three reusable TiXL operators are missing from this package")
+    for stem in ("BlenderAnimationScene", "BlenderCameraTimeline", "BlenderExportLights",
+                 "BlenderWorldPreload", "BlenderWorldClipTime",
+                 "BlenderSourceClip", "BlenderClipSequence", "BlenderMeshSelect",
+                 "BlenderMeshReplace", "BlenderTextureSelect", "BlenderTextureReplace"):
+        if any(not (ROOT / "operators" / f"{stem}{suffix}").is_file()
+               for suffix in (".cs", ".t3", ".t3ui")):
+            raise FileNotFoundError(f"Incomplete TiXL operator: {stem}")
     install_files = operator_files
-    needs_copy = any(not (target / file.name).is_file() or digest(target / file.name) != digest(file)
+    operator_target = target / "PrismalLabs" / "BlenderExport"
+    needs_copy = any(not (operator_target / file.name).is_file()
+                     or digest(operator_target / file.name) != digest(file)
+                     or (target / file.name).is_file()
                      for file in install_files)
+    def install_operators() -> None:
+        operator_target.mkdir(parents=True, exist_ok=True)
+        backup = cache / "project_backups" / ("operator_root_duplicates_" + uuid.uuid4().hex[:8])
+        for file in install_files:
+            legacy = target / file.name
+            if legacy.is_file():
+                backup.mkdir(parents=True, exist_ok=True)
+                shutil.copy2(legacy, backup / file.name)
+                legacy.unlink()
+            destination = operator_target / file.name
+            if not destination.is_file() or digest(destination) != digest(file):
+                shutil.copy2(file, destination)
     marker = cache / "tixl_project.json"
-    graph_sha = hashlib.sha256("|".join(digest(file) for file in files).encode()).hexdigest()
+    graph_sha = hashlib.sha256(("world-clip-lanes-v6|" + "|".join(digest(file) for file in files)).encode()).hexdigest()
     project_state = json.loads(marker.read_text(encoding="utf-8")) if marker.is_file() else {}
     needs_project = (project_state.get("graph_sha256") != graph_sha
                      or not Path(project_state.get("path", "")).is_dir())
@@ -251,8 +296,11 @@ def generic_finish(blend: Path, cache: Path, manifest: dict, install: bool, refr
     wants_debug = MODE == "debug" or live
     if not needs_copy and not needs_project and not refresh_runtime:
         if live and project_state.get("name"):
-            bridge_call("openProject", name=project_state["name"])
+            context = bridge_call("getContext")
+            if context.get("compositionName") != project_state["name"]:
+                bridge_call("openProject", name=project_state["name"])
         return
+    wait_for_editor_pause()
     # Probe the destination before interrupting an open TiXL session. In a
     # restricted caller the cache can still be built, but installation waits.
     probe = target / (".blend_sync_probe_" + uuid.uuid4().hex)
@@ -262,8 +310,7 @@ def generic_finish(blend: Path, cache: Path, manifest: dict, install: bool, refr
         probe.unlink(missing_ok=True)
     if live and project_state.get("name") and Path(project_state.get("path", "")).is_dir():
         if needs_copy:
-            for file in install_files:
-                shutil.copy2(file, target / file.name)
+            install_operators()
             bridge_call("reload", project=csproj.stem)
         ensure_generic_project(blend, cache, files, build=False)
         bridge_call("reload", project=project_state["name"])
@@ -273,8 +320,7 @@ def generic_finish(blend: Path, cache: Path, manifest: dict, install: bool, refr
     success = False
     try:
         if needs_copy:
-            for file in install_files:
-                shutil.copy2(file, target / file.name)
+            install_operators()
             subprocess.run(["dotnet", "build", str(csproj),
                             f"-p:T3_ASSEMBLY_PATH={TIXL_EDITOR}", "--nologo"], check=True)
         ensure_generic_project(blend, cache, files)
@@ -290,7 +336,7 @@ def generic_finish(blend: Path, cache: Path, manifest: dict, install: bool, refr
 def ensure_generic_project(blend: Path, cache: Path, files: list[Path], build: bool = True) -> None:
     from blend_sync_project import create_scaffold, populate
     marker = cache / "tixl_project.json"
-    graph_sha = hashlib.sha256("|".join(digest(file) for file in files).encode()).hexdigest()
+    graph_sha = hashlib.sha256(("world-clip-lanes-v6|" + "|".join(digest(file) for file in files)).encode()).hexdigest()
     existing = None
     if marker.is_file():
         state = json.loads(marker.read_text(encoding="utf-8"))
@@ -329,6 +375,7 @@ def sync(blend: Path, requested_profile: str, requested_cache: Path | None,
         return {"status": "up_to_date", "blend": str(blend), "cache": str(cache), "profile": profile}
     if not blender.is_file():
         raise FileNotFoundError(f"Blender executable not found: {blender}")
+    wait_for_editor_pause()
     with export_lock(cache):
         stable = (blend.stat().st_size, blend.stat().st_mtime_ns)
         sha = digest(blend)
@@ -347,6 +394,7 @@ def sync(blend: Path, requested_profile: str, requested_cache: Path | None,
         if completed.returncode or "BLEND_SYNC_STAGE_COMPLETE" not in log.read_text(encoding="utf-8", errors="replace"):
             raise RuntimeError(f"Blender export failed; prior cache retained. See {log}")
         manifest = validate_stage(stage, sha)
+        wait_for_editor_pause()
         publish(stage, cache, manifest, profile)
         generic_finish(blend, cache, manifest, install, refresh_runtime=True)
         return {"status": "rebuilt", "blend": str(blend), "cache": str(cache),

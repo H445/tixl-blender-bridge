@@ -24,22 +24,44 @@ public sealed class BlenderExportLights : Instance<BlenderExportLights>
     [Input(Guid="a17e4d92-6c38-4f0b-b5d1-2e9a7c8f6043")] public readonly InputSlot<string> SceneNames=new();
     private readonly List<Light>[] _lights=new List<Light>[8];
     private string _directory=string.Empty;
+    private string _sceneNamesValue=string.Empty;
+    private string[] _sceneNames=["scene"];
+    private bool _loaded;
     public BlenderExportLights() {Output.UpdateAction=Update;}
     private void Update(EvaluationContext context)
     {
         var directory=WorldDirectory.GetValue(context)??string.Empty;
-        if(directory!=_directory) {Array.Clear(_lights);_directory=directory;}
-        var names=(SceneNames.GetValue(context)??string.Empty).Split(',',StringSplitOptions.RemoveEmptyEntries|StringSplitOptions.TrimEntries);
-        if(names.Length==0)names=new[]{"scene"};
-        var world=Math.Clamp(WorldIndex.GetValue(context),0,names.Length-1);
-        if(world>=_lights.Length)throw new InvalidOperationException("BlenderExportLights supports at most 8 scene indices; use separate instances for larger sets.");
-        var lights=_lights[world]??=Load(directory,names[world]);
+        var requestedNames=SceneNames.GetValue(context)??string.Empty;
+        if(!_loaded || directory!=_directory || requestedNames!=_sceneNamesValue)
+        {
+            // TiXL renders a paused frame when the project opens. Load every
+            // world's lights there; never open a new manifest at a scene cut.
+            // If transport was already running, keep the previous cache until
+            // it pauses instead of performing file I/O on a playback frame.
+            if(Math.Abs(context.Playback.PlaybackSpeed)<=0.001)
+            {
+                var names=requestedNames.Split(',',StringSplitOptions.RemoveEmptyEntries|StringSplitOptions.TrimEntries);
+                if(names.Length==0)names=["scene"];
+                if(names.Length>_lights.Length)
+                    throw new InvalidOperationException("BlenderExportLights supports at most 8 scene indices; use separate instances for larger sets.");
+                var loaded=new List<Light>[names.Length];
+                for(var i=0;i<names.Length;i++) loaded[i]=Load(directory,names[i]);
+                Array.Clear(_lights);
+                Array.Copy(loaded,_lights,loaded.Length);
+                _sceneNames=names;
+                _directory=directory;
+                _sceneNamesValue=requestedNames;
+                _loaded=true;
+            }
+        }
+        var world=Math.Clamp(WorldIndex.GetValue(context),0,_sceneNames.Length-1);
+        var lights=_lights[world];
         var frame=TimeSeconds.GetValue(context)*60+1;
         var scale=EnergyScale.GetValue(context);
         var pushed=0;
         try
         {
-            foreach(var light in lights)
+            foreach(var light in lights??[])
             {
                 var energy=light.Energy;var position=light.Position;var color=light.Color;
                 if(light.Samples.Count>0)

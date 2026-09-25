@@ -59,15 +59,16 @@ def camera_shots(scene, profile, duration, staging):
     if not markers:
         if scene.camera is None:
             raise ValueError("The Blender scene has no active camera or camera timeline markers")
-        return [(0.0, duration, scene.camera)]
+        return [(0.0, duration, scene.camera, "Main scene")]
     result = []
     if markers[0].frame > scene.frame_start and scene.camera:
-        result.append((0.0, (markers[0].frame - scene.frame_start) / exporter.SOURCE_FPS, scene.camera))
+        result.append((0.0, (markers[0].frame - scene.frame_start) / exporter.SOURCE_FPS,
+                       scene.camera, "Opening"))
     for index, marker in enumerate(markers):
         start = max(0.0, (marker.frame - scene.frame_start) / exporter.SOURCE_FPS)
         end = (markers[index + 1].frame - scene.frame_start) / exporter.SOURCE_FPS if index + 1 < len(markers) else duration
         if end > start:
-            result.append((start, end, marker.camera))
+            result.append((start, end, marker.camera, marker.name or marker.camera.name))
     return result
 
 
@@ -97,8 +98,8 @@ def write_camera(scene, profile, staging):
                       float(camera.data.clip_start), float(camera.data.clip_end))
             stream.write(struct.pack("<12f", *values))
     (staging / "camera_timeline.json").write_text(json.dumps({
-        "shots": [{"id": i + 1, "start": start, "label": camera.name}
-                  for i, (start, end, camera) in enumerate(shots)],
+        "shots": [{"id": i + 1, "start": start, "label": label, "camera": camera.name}
+                  for i, (start, end, camera, label) in enumerate(shots)],
         "passages": []
     }, indent=2), encoding="utf-8")
     print(f"CAMERA_COMPLETE {count} samples", flush=True)

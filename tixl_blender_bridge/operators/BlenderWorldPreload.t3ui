@@ -1,0 +1,5 @@
+{
+  "FormatVersion": 3,
+  "Id": "f3cf6968-ad60-41e4-a900-32566c8f0f2d",
+  "Description": "Preloads every connected Blender world on the first paused render, then passes through the active drawing command without revisiting inactive worlds. Connect each BlenderAnimationScene Result output to Worlds."
+}

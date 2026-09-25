@@ -56,9 +56,21 @@ public sealed class BlenderAnimationScene : Instance<BlenderAnimationScene>, ISt
 
     private void Update(EvaluationContext context)
     {
-        var scene = Scene.GetValue(context);
         var requestedPath = DataPath.GetValue(context) ?? string.Empty;
         var requestedGlbPath = GlbPath.GetValue(context) ?? string.Empty;
+        // Scene.GetValue can trigger the native glTF loader. If this operator
+        // has not been initialized (or its source changed), leave the old
+        // scene on screen until a paused frame can safely rebuild bindings.
+        if (Math.Abs(context.Playback.PlaybackSpeed) > 0.001
+            && (_scene == null || requestedPath != _requestedPath || requestedGlbPath != _requestedGlbPath))
+        {
+            _status = "Pause playback to load changed Blender scene data.";
+            Result.Value = _scene!;
+            OpaqueResult.Value = _opaqueScene;
+            TransparentResult.Value = _transparentScene;
+            return;
+        }
+        var scene = Scene.GetValue(context);
         if (scene == null)
         {
             Result.Value = scene!;
@@ -293,7 +305,7 @@ public sealed class BlenderAnimationScene : Instance<BlenderAnimationScene>, ISt
             Transforms = transforms;
             Channels = channels;
             // Geometry can stop moving before material, visibility, or morph
-            // animation ends. The analog Nixie materials are a concrete case.
+            // animation ends, so include every channel in the duration.
             var last = 1;
             foreach (var track in transforms.Values)
                 last = Math.Max(last, track.Start + track.Samples.Length - 1);

@@ -1,7 +1,7 @@
 {
   "FormatVersion": 3,
   "Id": "ed467242-caba-58ac-b8e9-69a494a93e39",
-  "Description": "Loads Blender light manifests and optional keyed light channels for the selected exported scene. WorldDirectory contains <scene>_manifest.json and optional <scene>_channels.json files. WorldIndex selects the scene, TimeSeconds samples animated lights, and EnergyScale calibrates Blender energy to TiXL point-light units. The operator forwards the incoming Command after pushing lights.",
+  "Description": "Preloads every Blender light manifest and keyed channel set on a paused initialization frame. WorldDirectory contains <scene>_manifest.json and optional <scene>_channels.json files. WorldIndex selects cached lights, TimeSeconds samples their animation, and EnergyScale calibrates Blender energy to TiXL point-light units. The operator forwards the incoming Command after pushing lights.",
   "InputUis": [
     {"InputId":"15864c39-8af3-501d-9be8-3e07898e1060","GroupTitle":"Command"},
     {"InputId":"e0a26c9d-fc85-59a7-88b5-1d1b0d8c5c3f","GroupTitle":"Blender export","Description":"Directory containing exported light manifests and channel files."},

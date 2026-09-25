@@ -1,0 +1,11 @@
+{
+  "FormatVersion": 3,
+  "Id": "a34b77c3-9eb5-41cd-86f6-6d8eba4fe0a0",
+  "Description": "Connect this world's Blender Source Clips through a Blender Clip Sequence to WorldClipTime. By default, GlobalClipTime and WorldClipTime match, so the camera-mapped time passes through unchanged. Insert any TiXL float operators on the WorldClipTime or TimeSeconds wires to retime this world's animation without changing camera cuts or other worlds.",
+  "InputUis": [
+    {"InputId":"784572bb-8070-4ebb-89e8-959caaaaff76","GroupTitle":"Global timing","Description":"Time selected by all source clips, before Blender camera mapping."},
+    {"InputId":"ffef5b73-69cb-47f9-ae33-638d2659322b","GroupTitle":"This world","Description":"Time selected by this world's source clips. Insert float operators on this wire to retime this world."},
+    {"InputId":"375451d0-393d-49c4-9cf8-c2010c034894","GroupTitle":"Global timing","Description":"Time after Blender camera mapping. This is preserved when the two clip times match."},
+    {"InputId":"f67fb4a9-149c-4b49-84b8-f177bf653e9e","GroupTitle":"This world","Description":"True when one of this world's clips is active in the TiXL timeline."}
+  ]
+}
