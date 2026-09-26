@@ -58,16 +58,18 @@ To use live mode, start TiXL with `--debug-server 9042`, or select **Debug bridg
 - Direct mesh and material texture edit ports in each animated world of the home graph, alongside `LoadGltfScene`, `DrawScene`, lights, camera, `RenderTarget`, and tone mapping.
 - A **Preload all Blender worlds** node before the world switch. On the first paused evaluation, it initializes each GLB and animation branch; the light operator caches every world manifest and channel set. Scene cuts then select already-loaded data. If TiXL opens while transport is running, pause once to warm the project before playback. A background sync waits for TiXL to pause before publishing changed cache files or reloading operators.
 
-By default the active Blender scene is one TiXL world. To use several worlds, add a **Scene custom property** named `tixl_worlds` containing JSON like this:
+By default the active Blender scene is one TiXL world. To use several worlds, add a **Scene custom property** named `tixl_worlds`. The bundled [BlendShapeExample](examples/README.md) uses these four collections and time ranges:
 
 ```json
 [
-  {"name":"lab","collection":"Lab","start_seconds":0,"end_seconds":30},
-  {"name":"culture","collection":"Culture","start_seconds":30,"end_seconds":60}
+  {"name":"cube","collection":"Cube","start_seconds":0,"end_seconds":4},
+  {"name":"sphere","collection":"Sphere","start_seconds":4,"end_seconds":8},
+  {"name":"prism","collection":"Prism","start_seconds":8,"end_seconds":12},
+  {"name":"cylinder","collection":"Cylinder","start_seconds":12,"end_seconds":16}
 ]
 ```
 
-The named collections must exist. Keep the time ranges contiguous; the generated graph switches branches at their boundaries. Camera markers can control the view independently.
+The named collections must exist. Keep the time ranges contiguous; the generated graph switches branches at their boundaries. In this example, each world lasts eight beats at 120 BPM: four beats holding its shape, then four beats morphing into the next. Camera markers can control the view independently.
 
 New project homes use a compact layout: each world has a row from clips and
 source timing through mesh and texture edits to drawing. The world switch and
