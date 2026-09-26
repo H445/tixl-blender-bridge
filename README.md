@@ -49,6 +49,14 @@ By default the active Blender scene is one TiXL world. To use several worlds, ad
 
 The named collections must exist. Keep the time ranges contiguous; the generated graph switches branches at their boundaries. Camera markers can control the view independently.
 
+## Release example
+
+The add-on ZIP ships a small [Shape Cycle example](examples/README.md): cube →
+sphere → triangular prism → cylinder → cube. Open `examples/shape_cycle.blend`
+from this checkout, or `tixl_blender_bridge/examples/shape_cycle.blend` from the
+extracted release ZIP, and sync it through the add-on. Its four centered worlds
+morph over a 16-second loop at the default 120 BPM.
+
 ## Where things go
 
 The authored `.blend` stays where you saved it. Generated data, logs, and the TiXL project link live in `.tixl_cache/<blend name>/` beside it. A newly generated TiXL project is created beside the operator project. Edit the project's home graph for timing, audio, effects, geometry, material maps, camera, lighting, and render settings. For each world, the default timing path is **Source Clips → world Clip Sequence → World Clip Time → Animation Scene**. Insert native TiXL float operators between the world sequence and World Clip Time, or between World Clip Time and Animation Scene. The latter point can also carry a complete user-built time path. The global clip sequence still controls camera mapping and world selection. Sync preserves modified timing wires and TimeClips. In each world, **Select mesh** feeds **Replace mesh** by default. Set the same zero-based `PrimitiveIndex` on both, then insert native TiXL mesh operators between their mesh ports. The selector's status shows the selected primitive's name and the total count. Operators such as `TransformMesh`, `DeformMesh`, and `SplitMeshVertices` can change vertex data or topology. **Select textures** exposes the chosen primitive's albedo, normal, roughness/metal/occlusion, and emissive maps as `Texture2D` outputs; route any map through TiXL image operators before its matching **Replace textures** input. Both selectors default to primitive zero, and their replacement nodes feed the rendered scene. The final `RenderTarget` and tone mapping texture chain is also in the home graph. These edits affect TiXL output; edit the `.blend` when the source asset itself should change. Sync preserves the home graph and replaces only the generated import symbol. If a Blender change adds or removes worlds, add or remove the corresponding scene branches in TiXL. When migrating an older project, the bridge backs up its former home symbol under `project_backups/` in the cache.

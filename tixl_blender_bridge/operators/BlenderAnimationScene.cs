@@ -90,7 +90,10 @@ public sealed class BlenderAnimationScene : Instance<BlenderAnimationScene>, ISt
         var seconds = TimeSeconds.HasInputConnections
                           ? TimeSeconds.GetValue(context)
                           : (float)(context.LocalTime * 240 / Math.Max(1, context.Playback.Bpm));
-        var frame = Math.Clamp((int)MathF.Round(seconds * 60) + 1, 1, _maxFrame);
+        // World selection uses half-open source-time ranges. Rounding forward
+        // can sample a hidden end frame before the camera selects the next
+        // world, blanking the outgoing mesh for half a frame at each cut.
+        var frame = Math.Clamp((int)MathF.Floor(seconds * 60 + 0.0001f) + 1, 1, _maxFrame);
         if (frame != _lastFrame)
         {
             Evaluate(frame);
@@ -599,7 +602,12 @@ public sealed class BlenderAnimationScene : Instance<BlenderAnimationScene>, ISt
             {
                 ref var vertex = ref _vertices[v];
                 vertex.Normal = SafeNormalize(vertex.Normal, Vector3.UnitY);
-                vertex.Tangent = SafeNormalize(vertex.Tangent - vertex.Normal * Vector3.Dot(vertex.Normal, vertex.Tangent), Vector3.UnitX);
+                var tangent = vertex.Tangent - vertex.Normal * Vector3.Dot(vertex.Normal, vertex.Tangent);
+                // Untextured GLBs have no tangent accessor. UnitX is parallel
+                // to the normals of a cube's side faces, so it cannot serve as
+                // the fallback after projection into the tangent plane.
+                var axis = MathF.Abs(vertex.Normal.X) < 0.9f ? Vector3.UnitX : Vector3.UnitY;
+                vertex.Tangent = SafeNormalize(tangent, Vector3.Normalize(Vector3.Cross(axis, vertex.Normal)));
                 var sign = Vector3.Dot(Vector3.Cross(_mesh.Base[v].Normal, _mesh.Base[v].Tangent), _mesh.Base[v].Bitangent) < 0 ? -1 : 1;
                 vertex.Bitangent = Vector3.Cross(vertex.Normal, vertex.Tangent) * sign;
             }
