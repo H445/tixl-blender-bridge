@@ -6,18 +6,56 @@ import sys
 import tempfile
 import time
 import unittest
+from unittest.mock import patch
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tixl_blender_bridge" / "source"))
 from blend_sync_graph import generate  # noqa: E402
-from blend_sync_project import _build_home, _link_world_clips, create_scaffold, populate  # noqa: E402
+from blend_sync_project import _build_home, _link_world_clips, create_scaffold, populate, project_name_for  # noqa: E402
 
 
 class SyncProjectTest(unittest.TestCase):
+    def test_saved_scene_name_creates_exact_project_and_rejects_collision(self):
+        import blend_sync
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            template = root / 'Operators'
+            template.mkdir()
+            (template / 'Operators.csproj').write_text(
+                '<Project><RootNamespace>X</RootNamespace><HomeGuid>X</HomeGuid>'
+                '<PackageId>X</PackageId></Project>')
+            for index in range(2):
+                blend = root / f'Source{index}.blend'
+                blend.write_bytes(b'scene')
+                cache = root / f'cache{index}'
+                cache.mkdir()
+                (cache / 'camera_timeline.json').write_text(json.dumps({
+                    'shots': [{'id': 1, 'start': 0, 'label': 'Cube'}], 'passages': []}))
+                files = generate(blend, cache, {'fps': 60, 'project_name': 'BlendShapeExample',
+                    'worlds': [{'world': 'cube', 'active_clip': [1, 241],
+                                'opaque_count': 1, 'glass_count': 0}]})
+                with patch.object(blend_sync, 'TIXL_PROJECT', template), patch.object(blend_sync, 'TIXL_EDITOR', root):
+                    if index:
+                        with self.assertRaises(FileExistsError):
+                            blend_sync.ensure_generic_project(blend, cache, files, build=False)
+                    else:
+                        blend_sync.ensure_generic_project(blend, cache, files, build=False)
+                        state = json.loads((cache / 'tixl_project.json').read_text())
+                        self.assertEqual(state['name'], 'BlendShapeExample')
+                        self.assertEqual(Path(state['path']), root / 'BlendShapeExample')
+
+    def test_explicit_project_name(self):
+        blend = Path('BlendShapeExample.blend')
+        self.assertEqual(project_name_for(blend, 'BlendShapeExample'), 'BlendShapeExample')
+        self.assertTrue(project_name_for(blend).startswith('Blend'))
+        for invalid in ('../Other', 'Two Words', '2Example', 'CON', 'aux', 'LPT1', 'class'):
+            with self.subTest(name=invalid), self.assertRaises(ValueError):
+                project_name_for(blend, invalid)
+
     def test_import_filename_does_not_remove_home(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
-            blend = root / 'ShapeCycle.blend'
+            blend = root / 'BlendShapeExample.blend'
             blend.write_bytes(b'scene')
             cache = root / 'cache'
             cache.mkdir()

@@ -9,6 +9,29 @@ import uuid
 from pathlib import Path
 
 
+def project_name_for(blend: Path, requested: str = "") -> str:
+    """Allow a saved scene to choose a stable project name without changing defaults."""
+    if requested:
+        if not isinstance(requested, str) or not re.fullmatch(r"[A-Za-z_][A-Za-z0-9_]*", requested):
+            raise ValueError("tixl_project_name must be a valid C# identifier")
+        keywords = set(("abstract as base bool break byte case catch char checked class const continue "
+                        "decimal default delegate do double else enum event explicit extern false finally "
+                        "fixed float for foreach goto if implicit in int interface internal is lock long "
+                        "namespace new null object operator out override params private protected public "
+                        "readonly ref return sbyte sealed short sizeof stackalloc static string struct "
+                        "switch this throw true try typeof uint ulong unchecked unsafe ushort using "
+                        "virtual void volatile while").split())
+        if requested in keywords:
+            raise ValueError("tixl_project_name cannot be a C# keyword")
+        if requested.lower() in {"con", "prn", "aux", "nul", *[f"com{i}" for i in range(1, 10)],
+                                *[f"lpt{i}" for i in range(1, 10)]}:
+            raise ValueError("tixl_project_name cannot be a reserved Windows filename")
+        return requested
+    label = "".join(c for c in blend.stem.title() if c.isalnum()) or "BlenderScene"
+    suffix = uuid.uuid5(uuid.NAMESPACE_URL, str(blend.resolve()).lower()).hex[:8]
+    return f"Blend{label}{suffix}"
+
+
 def create_scaffold(project: Path, name: str, template: Path, blend: Path) -> None:
     """Create a TiXL project from a TiXL-created project, without the editor API."""
     csproj = project / f"{name}.csproj"

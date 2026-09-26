@@ -9,8 +9,8 @@ with ZipFile(output, "w", ZIP_DEFLATED) as archive:
     for path in sorted(package.rglob("*")):
         if path.is_file() and "__pycache__" not in path.parts and path.suffix != ".pyc":
             archive.write(path, path.relative_to(root))
-    for name in ("shape_cycle.blend", "README.md", "build_shape_cycle.py",
-                 "validate_shape_cycle.py"):
+    for name in ("BlendShapeExample.blend", "README.md", "build_blend_shape_example.py",
+                 "validate_blend_shape_example.py"):
         archive.write(root / "examples" / name,
                       "tixl_blender_bridge/examples/" + name)
 print(output)

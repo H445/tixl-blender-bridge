@@ -1,6 +1,6 @@
-"""Check the open Shape Cycle's hold frames and subframe cuts via TiXL debug bridge.
+"""Check the open BlendShapeExample's hold frames and subframe cuts via TiXL debug bridge.
 
-Run with Python + Pillow while the generated Shape Cycle home is open and paused.
+Run with Python + Pillow while the generated BlendShapeExample home is open and paused.
 Captures stay in the example's ignored cache; restores the original playhead.
 """
 import argparse
@@ -17,9 +17,9 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--port', type=int, default=9042)
 args = parser.parse_args()
 context = call('getContext', args.port)
-assert 'ShapeCycle' in context.get('compositionName', ''), context
+assert 'BlendShapeExample' in context.get('compositionName', ''), context
 assert not context['time']['isPlaying'], 'Pause before running render validation'
-out = ROOT / 'examples' / '.tixl_cache' / 'shape_cycle' / 'validation' / 'render_smoke'
+out = ROOT / 'examples' / '.tixl_cache' / 'BlendShapeExample' / 'validation' / 'render_smoke'
 out.mkdir(parents=True, exist_ok=True)
 frames = {}
 
@@ -46,6 +46,6 @@ try:
     for cut in (4, 8, 12):
         error = sum(ImageStat.Stat(ImageChops.difference(frames[cut - 0.001], frames[cut])).mean) / 3
         assert error < 1, f'Discontinuous shading/geometry at {cut}s: {error}'
-    print(f'SHAPE_CYCLE_RENDER_OK: {len(times)} frames; stable holds and continuous subframe cuts')
+    print(f'BLEND_SHAPE_EXAMPLE_RENDER_OK: {len(times)} frames; stable holds and continuous subframe cuts')
 finally:
     call('setTime', args.port, timeInSecs=context['time']['timeInSecs'])

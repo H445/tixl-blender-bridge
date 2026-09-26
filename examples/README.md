@@ -1,8 +1,10 @@
-# Shape Cycle
+# BlendShapeExample
 
-Open `shape_cycle.blend` in Blender and run **Scene Properties → TiXL Bridge →
+Open `BlendShapeExample.blend` in Blender and run **Scene Properties → TiXL Bridge →
 Sync saved .blend to TiXL** after configuring the add-on. Use the generated
-TiXL project at its default **120 BPM**. Loop bars **0–8** (seconds **0–16**).
+**BlendShapeExample** TiXL project at its default **120 BPM**. Loop bars **0–8**
+(seconds **0–16**). The saved scene's `tixl_project_name` property supplies the
+project name on the first sync.
 
 | Source time | World | Transition |
 | --- | --- | --- |
@@ -21,8 +23,8 @@ The release ZIP includes this file and the `.blend` under
 `tixl_blender_bridge/examples/`. From a checkout, rebuild the source with:
 
 ```powershell
-& "<path-to-blender.exe>" --background --python examples/build_shape_cycle.py
-& "<path-to-blender.exe>" --background examples/shape_cycle.blend --python examples/validate_shape_cycle.py
+& "<path-to-blender.exe>" --background --python examples/build_blend_shape_example.py
+& "<path-to-blender.exe>" --background examples/BlendShapeExample.blend --python examples/validate_blend_shape_example.py
 ```
 
 Generated `.tixl_cache` files and local TiXL projects are rebuilt by the bridge

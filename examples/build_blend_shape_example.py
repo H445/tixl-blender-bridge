@@ -1,4 +1,4 @@
-"""Build the release example: blender --background --python examples/build_shape_cycle.py."""
+"""Build the release example: blender --background --python examples/build_blend_shape_example.py."""
 import json
 import math
 from pathlib import Path
@@ -9,7 +9,7 @@ from mathutils import Vector
 OUT = Path(__file__).resolve().parent
 bpy.ops.wm.read_factory_settings(use_empty=True)
 scene = bpy.context.scene
-scene.name = "Shape Cycle - 120 BPM"
+scene.name = "BlendShapeExample - 120 BPM"
 scene.render.fps = 60
 scene.frame_start, scene.frame_end = 1, 961
 scene.render.engine = ('BLENDER_EEVEE_NEXT' if bpy.app.version < (5, 0, 0)
@@ -20,6 +20,7 @@ scene.world = bpy.data.worlds.new('World')
 scene.world.use_nodes = True
 scene.world.node_tree.nodes['Background'].inputs[0].default_value = (0.025, 0.025, 0.025, 1)
 scene['bpm'] = 120
+scene['tixl_project_name'] = 'BlendShapeExample'
 scene['description'] = 'Four worlds; eight beats each: hold four, morph four. Loop 0-16 seconds.'
 
 # Rings align with both square and triangular corners, and with cap edges.
@@ -113,5 +114,5 @@ for index, name in enumerate(names):
     marker.camera = camera
 scene['tixl_worlds'] = json.dumps(worlds)
 scene.frame_set(1)
-bpy.ops.wm.save_as_mainfile(filepath=str(OUT / 'shape_cycle.blend'))
-print('SHAPE_CYCLE_BUILT', len(coords), 'vertices per world')
+bpy.ops.wm.save_as_mainfile(filepath=str(OUT / 'BlendShapeExample.blend'))
+print('BLEND_SHAPE_EXAMPLE_BUILT', len(coords), 'vertices per world')

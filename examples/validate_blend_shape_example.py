@@ -1,4 +1,4 @@
-"""Run with Blender --background examples/shape_cycle.blend --python this file."""
+"""Run with Blender --background examples/BlendShapeExample.blend --python this file."""
 from collections import Counter
 import json
 
@@ -9,6 +9,7 @@ scene = bpy.context.scene
 names = ('Cube', 'Sphere', 'Prism', 'Cylinder')
 assert scene.render.fps == 60 and scene.frame_end - scene.frame_start == 960
 assert scene['bpm'] == 120 and len(json.loads(scene['tixl_worlds'])) == 4
+assert scene['tixl_project_name'] == 'BlendShapeExample'
 for index, name in enumerate(names):
     obj = bpy.data.objects[name]
     assert obj.location.length < 1e-8
@@ -38,4 +39,4 @@ for frame in (1, 181, 241, 421, 481, 661, 721, 901, 961):
     scene.frame_set(frame)
     assert sum(not bpy.data.objects[name].hide_render for name in names) == 1, frame
 scene.frame_set(1)
-print('SHAPE_CYCLE_VALID: closed centered meshes, continuous boundaries, beat-aligned morphs')
+print('BLEND_SHAPE_EXAMPLE_VALID: closed centered meshes, continuous boundaries, beat-aligned morphs')

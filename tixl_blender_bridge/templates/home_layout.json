@@ -1,5 +1,5 @@
 {
-  "description": "Role-based layout adapted from the user-arranged Shape Cycle home. Coordinates are independent of scene names and IDs.",
+  "description": "Role-based layout adapted from the user-arranged BlendShapeExample home. Coordinates are independent of scene names and IDs.",
   "world_spacing": 420,
   "pass_spacing": 180,
   "clip_spacing": 95,

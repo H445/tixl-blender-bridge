@@ -332,6 +332,7 @@ def export_all(scene=None):
     source_path = Path(bpy.data.filepath).resolve()
     (OUT / "manifest.json").write_text(json.dumps({"source_scene": scene.name,
         "worlds": manifests, "fps": FPS,
+        "project_name": scene.get("tixl_project_name", ""),
         "source_blend": str(source_path).replace("\\", "/"),
         "source_sha256": hashlib.sha256(source_path.read_bytes()).hexdigest(),
         "runtime_contract": "identity GLB nodes; absolute converted row-major matrices"}, indent=2), encoding="utf-8")

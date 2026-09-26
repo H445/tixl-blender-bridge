@@ -57,11 +57,15 @@ sync preserves positions you rearrange in TiXL.
 
 ## Release example
 
-The add-on ZIP ships a small [Shape Cycle example](examples/README.md): cube →
-sphere → triangular prism → cylinder → cube. Open `examples/shape_cycle.blend`
-from this checkout, or `tixl_blender_bridge/examples/shape_cycle.blend` from the
+The add-on ZIP ships a small [BlendShapeExample example](examples/README.md): cube →
+sphere → triangular prism → cylinder → cube. Open `examples/BlendShapeExample.blend`
+from this checkout, or `tixl_blender_bridge/examples/BlendShapeExample.blend` from the
 extracted release ZIP, and sync it through the add-on. Its four centered worlds
 morph over a 16-second loop at the default 120 BPM.
+The scene requests the exact TiXL project name `BlendShapeExample` through its
+`tixl_project_name` custom property. Other scenes can use this property for an
+explicit project name; it must be a C# identifier and the destination must be
+unused on the first sync. Without it, the bridge keeps its automatic naming.
 
 ## Where things go
 

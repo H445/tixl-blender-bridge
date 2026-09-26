@@ -206,7 +206,8 @@ internal sealed class {class_name} : Instance<{class_name}>
                     "end": (world["active_clip"][1] - 1) / manifest["fps"]}
                    for world in worlds]
     _write_if_changed(files[3], json.dumps({"duration_seconds": duration, "clips": plan,
-                                             "worlds": plan_worlds}, indent=2))
+                                             "worlds": plan_worlds,
+                                             "project_name": manifest.get("project_name", "")}, indent=2))
     _write_if_changed(out / "graph_summary.json", json.dumps({"blend": str(blend), "symbol": t3["Id"],
         "class": namespace + "." + class_name, "operators": len(t3["Children"]),
         "connections": len(t3["Connections"])}, indent=2))

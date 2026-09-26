@@ -334,7 +334,7 @@ def generic_finish(blend: Path, cache: Path, manifest: dict, install: bool, refr
 
 
 def ensure_generic_project(blend: Path, cache: Path, files: list[Path], build: bool = True) -> None:
-    from blend_sync_project import create_scaffold, populate
+    from blend_sync_project import create_scaffold, populate, project_name_for
     marker = cache / "tixl_project.json"
     graph_sha = hashlib.sha256(("world-clip-lanes-v6|" + "|".join(digest(file) for file in files)).encode()).hexdigest()
     existing = None
@@ -344,10 +344,11 @@ def ensure_generic_project(blend: Path, cache: Path, files: list[Path], build: b
             if state.get("graph_sha256") == graph_sha:
                 return
             existing = state
-    label = "".join(c for c in blend.stem.title() if c.isalnum()) or "BlenderScene"
-    suffix = uuid.uuid5(uuid.NAMESPACE_URL, str(blend.resolve()).lower()).hex[:8]
-    name = existing["name"] if existing else f"Blend{label}{suffix}"
+    requested = json.loads(files[3].read_text(encoding="utf-8")).get("project_name", "")
+    name = existing["name"] if existing else project_name_for(blend, requested)
     path = Path(existing["path"]) if existing else TIXL_PROJECT.parent / name
+    if not existing and path.exists() and any(path.iterdir()):
+        raise FileExistsError(f"Requested TiXL project already exists: {path}")
     create_scaffold(path, name, TIXL_PROJECT, blend)
     probe = path / "Symbols" / (".blend_sync_probe_" + uuid.uuid4().hex)
     try:
