@@ -4,7 +4,7 @@
 
 Edit a scene in Blender, save its `.blend`, and let the bridge build the TiXL version in the background. The `.blend` owns the source scene; the TiXL project home exposes editable timing, mesh buffers, material textures, and rendering in one graph. GLB meshes, animation data, camera samples, lights, and the Blender import symbol are generated caches.
 
-This repository contains the Blender add-on and eleven reusable TiXL operators: **Blender Animation Scene**, **Blender Camera Timeline**, **Blender Export Lights**, **Blender World Preload**, **Blender Source Clip**, **Blender Clip Sequence**, **Blender World Clip Time**, **Blender Mesh Select**, **Blender Mesh Replace**, **Blender Texture Select**, and **Blender Texture Replace**. They are shared by every generated project; none is tied to a particular demo.
+This repository contains the Blender add-on and eleven reusable TiXL operators: **Blender Animation Scene**, **Blender Camera Timeline**, **Blender Export Lights**, **Blender World Preload**, **Blender Source Clip**, **Blender Clip Sequence**, **Blender World Clip Time**, **Blender Mesh Select**, **Blender Mesh Replace**, **Blender Texture Select**, and **Blender Texture Replace**. They are shared by every generated project; none is tied to a particular scene.
 
 ## Set up once (Windows)
 
@@ -49,27 +49,6 @@ By default the active Blender scene is one TiXL world. To use several worlds, ad
 
 The named collections must exist. Keep the time ranges contiguous; the generated graph switches branches at their boundaries. Camera markers can control the view independently.
 
-## See the bridge in action
-
-In Blender, open the **Scene Properties → TiXL Bridge** panel and run **Sync saved .blend to TiXL** (or enable **Sync after save**). The add-on reads the saved scene and builds its TiXL project. Open that project to edit the source clips in the home timeline. Pan right in the same graph for the mesh, material texture, and render branches.
-
-![TiXL home with ten editable breakdance clips and the rendered character](docs/screenshots/tixl-editable-clips.png)
-
-*TiXL: ten named source clips drive the Blender import while the project home remains editable.*
-
-![TiXL mesh and texture edit ports with colored wires](docs/screenshots/tixl-mesh-texture-taps.png)
-
-*TiXL: a world branch exposes a mesh buffer wire and four material `Texture2D` wires in the home graph.*
-
-The two-minute example also includes a nightclub set keyed to the 120 BPM
-composition: a raised stage, LED wall, lasers, moving projector pools, and
-animated lights. Its first beat is at timeline zero. An original two-minute
-soundtrack follows the ten dance sections and runs as an editable `AudioClip`
-through an `AudioBus` and `Execute` in the TiXL home graph. See
-[the example score and installation steps](examples/README.md#original-120-bpm-soundtrack).
-
-![Breakdance in the 120 BPM nightclub](docs/screenshots/tixl-nightclub-variation.png)
-
 ## Where things go
 
 The authored `.blend` stays where you saved it. Generated data, logs, and the TiXL project link live in `.tixl_cache/<blend name>/` beside it. A newly generated TiXL project is created beside the operator project. Edit the project's home graph for timing, audio, effects, geometry, material maps, camera, lighting, and render settings. For each world, the default timing path is **Source Clips → world Clip Sequence → World Clip Time → Animation Scene**. Insert native TiXL float operators between the world sequence and World Clip Time, or between World Clip Time and Animation Scene. The latter point can also carry a complete user-built time path. The global clip sequence still controls camera mapping and world selection. Sync preserves modified timing wires and TimeClips. In each world, **Select mesh** feeds **Replace mesh** by default. Set the same zero-based `PrimitiveIndex` on both, then insert native TiXL mesh operators between their mesh ports. The selector's status shows the selected primitive's name and the total count. Operators such as `TransformMesh`, `DeformMesh`, and `SplitMeshVertices` can change vertex data or topology. **Select textures** exposes the chosen primitive's albedo, normal, roughness/metal/occlusion, and emissive maps as `Texture2D` outputs; route any map through TiXL image operators before its matching **Replace textures** input. Both selectors default to primitive zero, and their replacement nodes feed the rendered scene. The final `RenderTarget` and tone mapping texture chain is also in the home graph. These edits affect TiXL output; edit the `.blend` when the source asset itself should change. Sync preserves the home graph and replaces only the generated import symbol. If a Blender change adds or removes worlds, add or remove the corresponding scene branches in TiXL. When migrating an older project, the bridge backs up its former home symbol under `project_backups/` in the cache.
@@ -108,7 +87,3 @@ If TiXL is open without the debug bridge, close it before publishing a changed c
 - `install_blender_addon.py` — copies, enables, and verifies this checkout in local Blender.
 
 The add-on currently targets Windows TiXL builds. Its background exporter does not run during TiXL render frames.
-
-## Example of what's possible
-- This would take my machine ~2 hours to render at 540p in blender. But realtime playback in TiXL: https://www.youtube.com/watch?v=vMnAAbqIr74
-- All animation is done in blender and exported to TiXL.
