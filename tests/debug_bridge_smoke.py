@@ -50,7 +50,7 @@ env.update(TIXL_BRIDGE_OPERATOR_PROJECT=args.operator_project, TIXL_BRIDGE_EDITO
            TIXL_BRIDGE_BLENDER=args.blender, TIXL_BRIDGE_MODE="auto",
            TIXL_BRIDGE_PORT=str(port), TIXL_BRIDGE_LAUNCH_EDITOR="0")
 try:
-    command = [sys.executable, str(Path(__file__).resolve().parents[1] / "tixl_blender_bridge" / "source" / "blend_sync.py"),
+    command = [sys.executable, str(Path(__file__).resolve().parents[1] / "blender_tixl_bridge" / "source" / "blend_sync.py"),
                "sync", "--blend", args.blend, "--cache-root", args.cache, "--force"]
     result = subprocess.run(command, env=env, text=True, capture_output=True, timeout=90)
     if result.returncode:

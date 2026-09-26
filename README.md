@@ -1,6 +1,6 @@
 ** WARNING: This is a very early experimental project. It is not yet ready for production use. Back up your current existing projects first. **
 
-# Blender → TiXL Bridge
+# blender-tixl-bridge
 
 Edit a scene in Blender, save its `.blend`, and let the bridge build the TiXL version in the background. The `.blend` owns the source scene; the TiXL project home exposes editable timing, mesh buffers, material textures, and rendering in one graph. GLB meshes, animation data, camera samples, lights, and the Blender import symbol are generated caches.
 
@@ -10,7 +10,7 @@ This repository contains the Blender add-on and eleven reusable TiXL operators: 
 
 You need Blender 4.3 or newer (tested with 5.2), a TiXL Editor build, a TiXL C# operator project, and the .NET SDK. Create the operator project once in TiXL so it has valid release metadata. You can then close TiXL; **the debug server is optional**.
 
-1. Download or clone this repository and run `python build_addon_zip.py` to build the local add-on package. In Blender, open **Edit → Preferences → Add-ons → Install from Disk**, choose **`tixl_blender_bridge.zip`**, and enable **Prismal Labs Blender → TiXL Bridge**. (In Blender versions that call it **Get Extensions**, use **Install from Disk** there.)
+1. Download or clone this repository and run `python build_addon_zip.py` to build the local add-on package. In Blender, open **Edit → Preferences → Add-ons → Install from Disk**, choose **`blender_tixl_bridge.zip`**, and enable **Prismal Labs Blender → TiXL Bridge**. (In Blender versions that call it **Get Extensions**, use **Install from Disk** there.)
 2. Open the add-on preferences and set **TiXL operator project** to the folder containing your TiXL `.csproj` and `Symbols` folder. Set **TiXL Editor folder** to the build folder containing `TiXL.exe`. Leave **TiXL connection** on **Auto** unless you want to force a mode.
 3. Open any Blender project with an active camera. In **Scene Properties → TiXL Bridge**, turn on **Sync after save**. Save the `.blend`.
 
@@ -52,14 +52,14 @@ The named collections must exist. Keep the time ranges contiguous; the generated
 New project homes use a compact layout: each world has a row from clips and
 source timing through mesh and texture edits to drawing. The world switch and
 render chain sit to the right. Rows expand for glass passes and additional
-clips. The defaults are defined in `tixl_blender_bridge/templates/home_layout.json`;
+clips. The defaults are defined in `blender_tixl_bridge/templates/home_layout.json`;
 sync preserves positions you rearrange in TiXL.
 
 ## Release example
 
 The add-on ZIP ships a small [BlendShapeExample example](examples/README.md): cube →
 sphere → triangular prism → cylinder → cube. Open `examples/BlendShapeExample.blend`
-from this checkout, or `tixl_blender_bridge/examples/BlendShapeExample.blend` from the
+from this checkout, or `blender_tixl_bridge/examples/BlendShapeExample.blend` from the
 extracted release ZIP, and sync it through the add-on. Its four centered worlds
 morph over a 16-second loop at the default 120 BPM.
 The scene requests the exact TiXL project name `BlendShapeExample` through its
@@ -81,12 +81,12 @@ When updating this add-on from a checkout, copy the updated plugin into Blender 
 & "<path-to-blender.exe>" --background --python install_blender_addon.py
 ```
 
-This copies the current `tixl_blender_bridge/` package, checks every copied file, and enables the add-on. It saves first-install settings and keeps existing TiXL paths and connection mode on later updates. On a first install, either set those paths in Blender's add-on preferences or pass `-- --operator-project "C:\path\to\OperatorProject" --editor-dir "C:\path\to\TiXL\Editor\build"` after the script name. Restart any Blender window that was already open. Rebuild the distributable ZIP with `python build_addon_zip.py` whenever package files change.
+This copies the current `blender_tixl_bridge/` package, checks every copied file, and enables the add-on. It saves first-install settings and keeps existing TiXL paths and connection mode on later updates. On a first install, either set those paths in Blender's add-on preferences or pass `-- --operator-project "C:\path\to\OperatorProject" --editor-dir "C:\path\to\TiXL\Editor\build"` after the script name. Restart any Blender window that was already open. Rebuild the distributable ZIP with `python build_addon_zip.py` whenever package files change.
 
-The Blender add-on runs `tixl_blender_bridge/source/blend_sync.py` using Blender's bundled Python. For a cache-only build, set `TIXL_BRIDGE_BLENDER` to your Blender executable and run:
+The Blender add-on runs `blender_tixl_bridge/source/blend_sync.py` using Blender's bundled Python. For a cache-only build, set `TIXL_BRIDGE_BLENDER` to your Blender executable and run:
 
 ```powershell
-python tixl_blender_bridge/source/blend_sync.py sync --blend C:\path\scene.blend --no-install
+python blender_tixl_bridge/source/blend_sync.py sync --blend C:\path\scene.blend --no-install
 ```
 
 `status --blend ...` checks whether the cache matches the saved file. `--force` rebuilds even when the source hash matches. A full command-line TiXL installation also needs `TIXL_BRIDGE_OPERATOR_PROJECT` and `TIXL_BRIDGE_EDITOR` set to the same folders used in the add-on preferences. `TIXL_BRIDGE_MODE` selects `auto`, `offline`, or `debug`; `TIXL_BRIDGE_PORT` changes the local port. Set `TIXL_BRIDGE_LAUNCH_EDITOR=0` if you want the bridge to build files without starting TiXL.
@@ -97,11 +97,13 @@ If TiXL is open without the debug bridge, close it before publishing a changed c
 
 ## Package layout
 
-- `tixl_blender_bridge/__init__.py` — Blender add-on and save handler.
-- `tixl_blender_bridge/operators/` — reusable TiXL `.cs`, `.t3`, `.t3ui` operators.
-- `tixl_blender_bridge/source/` — exporter, validation, graph generation, and TiXL installation.
-- `tixl_blender_bridge/templates/` — internal graph template; never install it as a TiXL project.
+- `blender_tixl_bridge/__init__.py` — Blender add-on and save handler.
+- `blender_tixl_bridge/operators/` — reusable TiXL `.cs`, `.t3`, `.t3ui` operators.
+- `blender_tixl_bridge/source/` — exporter, validation, graph generation, and TiXL installation.
+- `blender_tixl_bridge/templates/` — internal graph template; never install it as a TiXL project.
 - `build_addon_zip.py` — reproduces the installable ZIP.
 - `install_blender_addon.py` — copies, enables, and verifies this checkout in local Blender.
 
 The add-on currently targets Windows TiXL builds. Its background exporter does not run during TiXL render frames.
+
+Repository: [blender-tixl-bridge](https://github.com/H445/blender-tixl-bridge). The Python add-on and release archive are named `blender_tixl_bridge` and `blender_tixl_bridge.zip`. Run `install_blender_addon.py` to migrate settings from the former `tixl_blender_bridge` module, then restart Blender. When installing the ZIP manually, disable the former add-on first and transfer its preferences to the new one.

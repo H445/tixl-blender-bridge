@@ -6,7 +6,7 @@ import sys
 import tempfile
 import unittest
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'tixl_blender_bridge' / 'source'))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'blender_tixl_bridge' / 'source'))
 from blend_sync_graph import generate
 from blend_sync_project import create_scaffold, populate
 from blend_sync_layout import layout_home

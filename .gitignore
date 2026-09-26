@@ -5,4 +5,4 @@ __pycache__/
 *.blend2
 .agents/
 # Rebuilt locally from source; generated TiXL imports remain under .tixl_cache/.
-/tixl_blender_bridge.zip
+/blender_tixl_bridge.zip

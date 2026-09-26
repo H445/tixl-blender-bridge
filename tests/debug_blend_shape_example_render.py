@@ -10,7 +10,7 @@ import sys
 from PIL import Image, ImageChops, ImageStat
 
 ROOT = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(ROOT / 'tixl_blender_bridge' / 'source'))
+sys.path.insert(0, str(ROOT / 'blender_tixl_bridge' / 'source'))
 from tixl_bridge import call
 
 parser = argparse.ArgumentParser()

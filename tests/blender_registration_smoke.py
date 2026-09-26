@@ -5,13 +5,13 @@ from pathlib import Path
 import bpy
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
-import tixl_blender_bridge
+import blender_tixl_bridge
 
-already_enabled = "tixl_blender_bridge" in bpy.context.preferences.addons
+already_enabled = "blender_tixl_bridge" in bpy.context.preferences.addons
 if not already_enabled:
-    tixl_blender_bridge.register()
+    blender_tixl_bridge.register()
 assert hasattr(bpy.context.scene, "tixl_bridge_autosync")
-assert tixl_blender_bridge.bundled_python().is_file()
+assert blender_tixl_bridge.bundled_python().is_file()
 if not already_enabled:
-    tixl_blender_bridge.unregister()
+    blender_tixl_bridge.unregister()
 print("BLENDER_ADDON_REGISTRATION_OK")

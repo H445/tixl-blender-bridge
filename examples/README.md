@@ -20,7 +20,7 @@ There is no audio dependency; timing is authored at 60 FPS, with 30 frames per
 beat. The four collections become four TiXL worlds and four editable source clips.
 
 The release ZIP includes this file and the `.blend` under
-`tixl_blender_bridge/examples/`. From a checkout, rebuild the source with:
+`blender_tixl_bridge/examples/`. From a checkout, rebuild the source with:
 
 ```powershell
 & "<path-to-blender.exe>" --background --python examples/build_blend_shape_example.py

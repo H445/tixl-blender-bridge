@@ -5,7 +5,7 @@
 /contentModel.xml
 /projectSettingsUpdater.xml
 /modules.xml
-/.idea.tixl-blender-bridge.iml
+/.idea.blender-tixl-bridge.iml
 # Ignored default folder with query files
 /queries/
 # Datasource local storage ignored files

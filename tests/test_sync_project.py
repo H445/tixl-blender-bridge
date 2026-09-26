@@ -9,7 +9,7 @@ import unittest
 from unittest.mock import patch
 from pathlib import Path
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "tixl_blender_bridge" / "source"))
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "blender_tixl_bridge" / "source"))
 from blend_sync_graph import generate  # noqa: E402
 from blend_sync_project import _build_home, _link_world_clips, create_scaffold, populate, project_name_for  # noqa: E402
 

@@ -37,14 +37,23 @@ def digest(path):
 
 def main():
     args = arguments()
-    source = Path(__file__).resolve().parent / "tixl_blender_bridge"
+    source = Path(__file__).resolve().parent / "blender_tixl_bridge"
     if not (source / "__init__.py").is_file():
         raise RuntimeError(f"Add-on source missing: {source}")
 
     addons = Path(bpy.utils.user_resource("SCRIPTS", path="addons", create=True)).resolve()
     target = addons / source.name
-    if target.parent.resolve() != addons or target.name != "tixl_blender_bridge":
+    if target.parent.resolve() != addons or target.name != "blender_tixl_bridge":
         raise RuntimeError(f"Unexpected add-on destination: {target}")
+
+    # Migrate the former module name before disabling its save handlers.
+    legacy = bpy.context.preferences.addons.get("tixl_blender_bridge")
+    migrated = {}
+    if legacy is not None:
+        for prop in legacy.preferences.bl_rna.properties:
+            if prop.identifier != "rna_type" and not prop.is_readonly:
+                migrated[prop.identifier] = getattr(legacy.preferences, prop.identifier)
+        addon_utils.disable("tixl_blender_bridge", default_set=True)
 
     # Disable an older loaded copy before replacing its Python files.
     previously_enabled = source.name in bpy.context.preferences.addons
@@ -74,6 +83,10 @@ def main():
         raise RuntimeError("Blender did not enable the installed add-on")
 
     preferences = addon.preferences
+    if not previously_enabled:
+        for name, value in migrated.items():
+            if hasattr(preferences, name):
+                setattr(preferences, name, value)
     if args.operator_project:
         project = args.operator_project.resolve()
         if not any(project.glob("*.csproj")):
@@ -86,7 +99,7 @@ def main():
         preferences.editor_directory = str(editor)
     if args.connection_mode:
         preferences.connection_mode = args.connection_mode
-    if not previously_enabled or args.operator_project or args.editor_dir or args.connection_mode:
+    if migrated or not previously_enabled or args.operator_project or args.editor_dir or args.connection_mode:
         bpy.ops.wm.save_userpref()
 
     module = sys.modules[source.name]
