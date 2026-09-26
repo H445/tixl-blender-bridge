@@ -6,6 +6,20 @@ Sync saved .blend to TiXL** after configuring the add-on. Use the generated
 (seconds **0–16**). The saved scene's `tixl_project_name` property supplies the
 project name on the first sync.
 
+## Screenshots
+
+These screenshots show BlendShapeExample rendered in TiXL after syncing its Blender source. Four scenes morph in sequence—cube → sphere → triangular prism → cylinder → cube—over a 16-second loop at 120 BPM. All four meshes are centered at `(0, 0, 0)`.
+
+| Cube · 0 seconds | Sphere · 4 seconds |
+| --- | --- |
+| ![Blue cube rendered in TiXL](screenshots/cube.png) | ![Blue sphere rendered in TiXL](screenshots/sphere.png) |
+| **Triangular prism · 8 seconds** | **Cylinder · 12 seconds** |
+| ![Blue triangular prism rendered in TiXL](screenshots/prism.png) | ![Blue cylinder rendered in TiXL](screenshots/cylinder.png) |
+
+The geometry changes continuously between scenes. At 3 seconds, the cube is midway through its morph into the sphere:
+
+![Cube midway through its morph into a sphere in TiXL](screenshots/cube-to-sphere.png)
+
 | Source time | World | Transition |
 | --- | --- | --- |
 | 0–4 s | Cube | Cube → sphere |

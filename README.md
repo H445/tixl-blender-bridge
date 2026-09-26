@@ -6,19 +6,25 @@ Edit a scene in Blender, save its `.blend`, and let the bridge build the TiXL ve
 
 This repository contains the Blender add-on and eleven reusable TiXL operators: **Blender Animation Scene**, **Blender Camera Timeline**, **Blender Export Lights**, **Blender World Preload**, **Blender Source Clip**, **Blender Clip Sequence**, **Blender World Clip Time**, **Blender Mesh Select**, **Blender Mesh Replace**, **Blender Texture Select**, and **Blender Texture Replace**. They are shared by every generated project; none is tied to a particular scene.
 
-## See it in TiXL
+## Blender add-on and TiXL graph
 
-These screenshots show the bundled [BlendShapeExample](examples/README.md) rendered in TiXL after syncing its Blender source. Four scenes morph in sequence—cube → sphere → triangular prism → cylinder → cube—over a 16-second loop at 120 BPM. All four meshes are centered at `(0, 0, 0)`.
+In Blender's **Scene Properties → TiXL Bridge**, enable **Sync after save** or run a sync on demand:
 
-| Cube · 0 seconds | Sphere · 4 seconds |
-| --- | --- |
-| ![Blue cube rendered in TiXL](docs/screenshots/cube.png) | ![Blue sphere rendered in TiXL](docs/screenshots/sphere.png) |
-| **Triangular prism · 8 seconds** | **Cylinder · 12 seconds** |
-| ![Blue triangular prism rendered in TiXL](docs/screenshots/prism.png) | ![Blue cylinder rendered in TiXL](docs/screenshots/cylinder.png) |
+![Blender TiXL Bridge panel with Sync after save and Sync saved .blend to TiXL controls](docs/screenshots/blender-plugin.png)
 
-The geometry changes continuously between scenes. At 3 seconds, the cube is midway through its morph into the sphere:
+The add-on preferences configure the TiXL operator project, Editor folder, connection mode, and debug port:
 
-![Cube midway through its morph into a sphere in TiXL](docs/screenshots/cube-to-sphere.png)
+![Blender bridge add-on preferences showing TiXL paths and debug bridge settings](docs/screenshots/blender-preferences.png)
+
+After syncing, TiXL exposes an editable home graph. This overview shows four world branches feeding the shared world switch and render chain:
+
+![TiXL home graph with four world branches and a shared render chain](docs/screenshots/tixl-graph.png)
+
+A closer view shows the animation, mesh replacement, texture selection, and texture replacement nodes in one world branch:
+
+![TiXL graph detail showing animation and editable mesh and texture connections](docs/screenshots/tixl-graph-detail.png)
+
+See the [example README](examples/README.md#screenshots) for screenshots of the rendered shapes and morph.
 
 ## Set up once (Windows)
 

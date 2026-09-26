@@ -13,4 +13,6 @@ with ZipFile(output, "w", ZIP_DEFLATED) as archive:
                  "validate_blend_shape_example.py"):
         archive.write(root / "examples" / name,
                       "blender_tixl_bridge/examples/" + name)
+    for path in sorted((root / "examples" / "screenshots").glob("*.png")):
+        archive.write(path, "blender_tixl_bridge/examples/screenshots/" + path.name)
 print(output)
