@@ -26,12 +26,14 @@ def layout_home(home: dict, ui: dict, plan: dict, import_id: str) -> None:
             # A clip spanning several worlds is placed once, beside its first lane.
             clip_rows.setdefault(index, y + offset * template['clip_spacing'])
         y += max(template['world_spacing'] + (template['pass_spacing'] if has_glass else 0),
-                 len(clip_indices) * template['clip_spacing'] + 220)
+                 len(clip_indices) * template['clip_spacing'] + 210)
+        y = snap_position((0, y), template['grid'])[1]
     bottom = max((row + (template['pass_spacing'] if label in glass_rows else 0)
                   for label, row in rows.items()), default=0)
 
     def place(entry, xy, offset=0):
-        entry['Position'] = {'X': xy[0], 'Y': xy[1] + offset}
+        x, y = snap_position((xy[0], xy[1] + offset), template['grid'])
+        entry['Position'] = {'X': x, 'Y': y}
 
     clip_positions = {str(uuid.uuid5(uuid.NAMESPACE_URL, import_id + f'/clip/{i}')): row
                       for i, row in clip_rows.items()}
@@ -51,7 +53,11 @@ def layout_home(home: dict, ui: dict, plan: dict, import_id: str) -> None:
         elif kind in template['render_roles']:
             role = 'Output target' if child['Name'] == 'Output target' else kind
             place(entry, template['render_roles'][role], bottom)
-    for entry in ui.get('InputUis', []):
-        place(entry, template['input'])
-    for entry in ui.get('OutputUis', []):
-        place(entry, template['output'], bottom)
+        else:
+            position = entry['Position']
+            place(entry, (position['X'], position['Y']))
+
+
+def snap_position(xy, grid=(140, 35)):
+    """Align new home nodes to TiXL's node width and socket line height."""
+    return tuple(round(value / step) * step for value, step in zip(xy, grid))

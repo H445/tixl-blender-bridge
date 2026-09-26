@@ -233,11 +233,31 @@ def wait_for_editor_pause() -> None:
         time.sleep(0.5)
 
 
+def pin_home_output(name: str) -> None:
+    from blend_sync_project import _read_tixl_json
+    home_path = TIXL_PROJECT.parent / name / "Symbols" / f"{name}.t3"
+    if not home_path.is_file():
+        return
+    home = _read_tixl_json(home_path)
+    if home.get("Inputs") or home.get("Outputs"):
+        return
+    target = next((child for child in home["Children"]
+                   if child["Name"] == "Output target"
+                   and child["SymbolName"].endswith(".RenderTarget")), None)
+    if target:
+        bridge_call("pin", childId=target["Id"])
+
+
+def open_project(name: str) -> None:
+    bridge_call("openProject", name=name)
+    pin_home_output(name)
+
+
 def open_project_when_ready(name: str) -> None:
     last_error = None
     for _ in range(45):
         try:
-            bridge_call("openProject", name=name)
+            open_project(name)
             return
         except (OSError, ValueError, RuntimeError) as error:
             last_error = error
@@ -298,7 +318,9 @@ def generic_finish(blend: Path, cache: Path, manifest: dict, install: bool, refr
         if live and project_state.get("name"):
             context = bridge_call("getContext")
             if context.get("compositionName") != project_state["name"]:
-                bridge_call("openProject", name=project_state["name"])
+                open_project(project_state["name"])
+            elif context.get("outputView", {}).get("symbolName") == project_state["name"]:
+                pin_home_output(project_state["name"])
         return
     wait_for_editor_pause()
     # Probe the destination before interrupting an open TiXL session. In a
@@ -314,7 +336,7 @@ def generic_finish(blend: Path, cache: Path, manifest: dict, install: bool, refr
             bridge_call("reload", project=csproj.stem)
         ensure_generic_project(blend, cache, files, build=False)
         bridge_call("reload", project=project_state["name"])
-        bridge_call("openProject", name=project_state["name"])
+        open_project(project_state["name"])
         return
     was_running = stop_editor()
     success = False

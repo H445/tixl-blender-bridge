@@ -76,6 +76,11 @@ source timing through mesh and texture edits to drawing. The world switch and
 render chain sit to the right. Rows expand for glass passes and additional
 clips. The defaults are defined in `blender_tixl_bridge/templates/home_layout.json`;
 sync preserves positions you rearrange in TiXL.
+New homes follow the grid-aligned `BlendShapeExample` layout using TiXL's
+140 × 35 node grid. They have no symbol input or output ports: an internal
+**Resolution** node drives both render targets. In debug mode the bridge pins
+**Output target** for the preview; in offline mode, select and pin that node in
+TiXL. The generated import symbol retains its ports for use inside other graphs.
 
 ## Release example
 

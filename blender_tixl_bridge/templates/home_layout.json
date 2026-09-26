@@ -1,36 +1,36 @@
 {
   "description": "Role-based layout adapted from the user-arranged BlendShapeExample home. Coordinates are independent of scene names and IDs.",
   "world_spacing": 420,
-  "pass_spacing": 180,
-  "clip_spacing": 95,
+  "pass_spacing": 210,
+  "clip_spacing": 105,
   "world_roles": {
-    "BlenderClipSequence": [0, 20],
-    "BlenderWorldClipTime": [420, -190],
+    "BlenderClipSequence": [140, 105],
+    "BlenderWorldClipTime": [420, 35],
     "LoadGltfScene": [420, 0],
-    "BlenderAnimationScene": [640, 0],
-    "BlenderMeshSelect": [640, 70],
-    "BlenderMeshReplace": [810, 28],
-    "BlenderTextureSelect": [1030, 28],
-    "BlenderTextureReplace": [1250, 28],
-    "DrawScene": [1415, 28],
-    "Group": [1415, 63]
+    "BlenderAnimationScene": [700, 0],
+    "BlenderMeshSelect": [700, 70],
+    "BlenderMeshReplace": [840, 35],
+    "BlenderTextureSelect": [980, 70],
+    "BlenderTextureReplace": [1120, 35],
+    "DrawScene": [1260, 35],
+    "Group": [1260, 70]
   },
   "global_roles": {
-    "BlenderClipSequence": [0, -280],
-    "BlenderCameraTimeline": [200, -600]
+    "BlenderClipSequence": [-140, -175],
+    "BlenderCameraTimeline": [140, -455]
   },
   "render_roles": {
-    "Switch": [1680, 117],
-    "BlenderWorldPreload": [1870, -104],
-    "BlenderExportLights": [2010, -104],
-    "SetEnvironment": [2010, 1],
-    "Camera": [2230, -104],
-    "RenderTarget": [2370, -104],
-    "ToneMapping": [2370, -69],
-    "DrawScreenQuad": [2370, -34],
-    "Output target": [2550, -34]
+    "Switch": [1540, 105],
+    "BlenderWorldPreload": [1680, -35],
+    "BlenderExportLights": [1820, -35],
+    "SetEnvironment": [1820, 70],
+    "Camera": [2100, 70],
+    "RenderTarget": [2240, 70],
+    "ToneMapping": [2240, 140],
+    "DrawScreenQuad": [2240, 175],
+    "Output target": [2520, 140],
+    "Int2": [2100, 420]
   },
-  "source_clip": [-320, 0],
-  "input": [-520, -670],
-  "output": [2740, -30]
+  "source_clip": [-280, 0],
+  "grid": [140, 35]
 }

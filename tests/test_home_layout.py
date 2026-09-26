@@ -5,6 +5,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+from unittest.mock import patch, call
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'blender_tixl_bridge' / 'source'))
 from blend_sync_graph import generate
@@ -13,6 +14,21 @@ from blend_sync_layout import layout_home
 
 
 class HomeLayoutTest(unittest.TestCase):
+    def test_portless_project_opens_its_internal_output(self):
+        import blend_sync
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            symbols = root / 'PortlessHome' / 'Symbols'
+            symbols.mkdir(parents=True)
+            (symbols / 'PortlessHome.t3').write_text(json.dumps({
+                'Inputs': [], 'Children': [{'Id': 'internal-output', 'Name': 'Output target',
+                                           'SymbolName': 'Lib.image.generate.basic.RenderTarget'}]}))
+            with patch.object(blend_sync, 'TIXL_PROJECT', root / 'Operators'), \
+                    patch.object(blend_sync, 'bridge_call') as bridge:
+                blend_sync.open_project('PortlessHome')
+                self.assertEqual(bridge.call_args_list, [
+                    call('openProject', name='PortlessHome'), call('pin', childId='internal-output')])
+
     def test_dynamic_lanes_and_saved_layout(self):
         for count, glass, clips_per_world in ((1, False, 1), (4, False, 1), (7, True, 6)):
             with self.subTest(worlds=count, glass=glass), tempfile.TemporaryDirectory() as directory:
@@ -52,9 +68,26 @@ class HomeLayoutTest(unittest.TestCase):
                     self.assertEqual(load['Y'], motion['Y'])
                     if i:
                         self.assertGreaterEqual(load['Y'] - named[f'World {i-1} / opaque load']['Y'],
-                                                420 + (180 if glass else 0))
+                                                420 + (210 if glass else 0))
                     if glass:
-                        self.assertEqual(named[prefix + 'glass load']['Y'] - load['Y'], 180)
+                        self.assertEqual(named[prefix + 'glass load']['Y'] - load['Y'], 210)
+                self.assertEqual(home['Inputs'], [])
+                self.assertFalse(home.get('Outputs'))
+                self.assertEqual(ui['InputUis'], [])
+                self.assertEqual(ui['OutputUis'], [])
+                zero = '00000000-0000-0000-0000-000000000000'
+                self.assertFalse(any(zero in (edge['SourceParentOrChildId'],
+                                              edge['TargetParentOrChildId'])
+                                     for edge in home['Connections']))
+                resolution = next(child for child in home['Children'] if child['Name'] == 'Resolution')
+                self.assertEqual(sum(edge['SourceParentOrChildId'] == resolution['Id']
+                                     for edge in home['Connections']), 2)
+                for position in positions.values():
+                    self.assertEqual(position['X'] % 140, 0)
+                    self.assertEqual(position['Y'] % 35, 0)
+                source = path.with_suffix('.cs').read_text()
+                self.assertNotIn('[Input(', source)
+                self.assertNotIn('[Output(', source)
                 original = copy.deepcopy(home)
                 layout_home(home, ui, json.loads(files[3].read_text()),
                             json.loads(files[0].read_text())['Id'])

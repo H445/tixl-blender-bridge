@@ -595,6 +595,44 @@ def _editable_scene(graph: dict, ui: dict, source: str, name: str) -> tuple[dict
     return scene, scene_ui, scene_source
 
 
+def _make_portless_home(home: dict, ui: dict) -> None:
+    """Keep resolution inside the home; only generated import symbols expose ports."""
+    zero = "00000000-0000-0000-0000-000000000000"
+    template = json.loads((Path(__file__).resolve().parents[1] / "templates"
+                           / "home_resolution.json").read_text(encoding="utf-8"))
+    child = copy.deepcopy(template["child"])
+    child["Id"] = str(uuid.uuid5(uuid.NAMESPACE_URL, home["Id"] + "/resolution"))
+    width, height = template["default_resolution"]
+    for value in child["InputValues"]:
+        value["Value"] = width if value["Id"] == "579e72d6-638e-4b17-bb4e-88a55e3a1d4d" else height
+    input_ids = {item["Id"] for item in home.get("Inputs", [])}
+    connections = []
+    for edge in home["Connections"]:
+        if edge["TargetParentOrChildId"] == zero:
+            continue
+        if edge["SourceParentOrChildId"] == zero:
+            if edge["SourceSlotId"] not in input_ids:
+                raise ValueError("Unknown home input while creating portless home")
+            edge = {**edge, "SourceParentOrChildId": child["Id"],
+                    "SourceSlotId": template["output_slot"]}
+        connections.append(edge)
+    resolution_slot = "03749b41-cc3c-4f38-aea6-d7cea19fc073"
+    for target in home["Children"]:
+        if not target["SymbolName"].endswith(".RenderTarget"):
+            continue
+        if not any(edge["TargetParentOrChildId"] == target["Id"]
+                   and edge["TargetSlotId"] == resolution_slot for edge in connections):
+            connections.append(_connection(child["Id"], template["output_slot"],
+                                           target["Id"], resolution_slot))
+    home["Children"].append(child)
+    home["Connections"] = connections
+    home["Inputs"] = []
+    home.pop("Outputs", None)
+    ui["InputUis"] = []
+    ui["OutputUis"] = []
+    ui["SymbolChildUis"].append({"ChildId": child["Id"], "Position": {"X": 0, "Y": 0}})
+
+
 def populate(project: Path, graph_files: list[Path], backup_root: Path, editor: Path,
              build: bool = True) -> None:
     project = project.resolve()
@@ -682,6 +720,7 @@ def populate(project: Path, graph_files: list[Path], backup_root: Path, editor: 
                                     scene["Id"], scene_class, input_id, output_id)
         _flatten_scene(home, home_ui, scene_for_home, scene_ui_for_home)
         _link_world_clips(home, home_ui, plan, graph["Id"])
+        _make_portless_home(home, home_ui)
         from blend_sync_layout import layout_home
         layout_home(home, home_ui, plan, graph["Id"])
         source = f'''using T3.Core.Operator;
@@ -695,8 +734,6 @@ namespace PrismalLabs.{name};
 [Guid("{home_id}")]
 internal sealed class {name} : Instance<{name}>
 {{
-    [Input(Guid="{input_id}")] public readonly InputSlot<Int2> OutputResolution = new(new Int2(960, 540));
-    [Output(Guid="{output_id}")] public readonly Slot<Texture2D> Output = new();
 }}
 public sealed class ShareDefinition : IShareResources
 {{ public bool ShouldShareResources => true; }}

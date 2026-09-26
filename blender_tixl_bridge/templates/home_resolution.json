@@ -1,0 +1,25 @@
+{
+  "child": {
+    "SymbolId": "f1218934-f874-4f70-a077-0ebe7d12104d",
+    "SymbolName": "Types.Values.Int2",
+    "Name": "Resolution",
+    "InputValues": [
+      {
+        "Id": "53602af2-48d9-42ab-80c3-ae1f1e600d28",
+        "Type": "System.Int32",
+        "Value": 540
+      },
+      {
+        "Id": "579e72d6-638e-4b17-bb4e-88a55e3a1d4d",
+        "Type": "System.Int32",
+        "Value": 960
+      }
+    ],
+    "Outputs": []
+  },
+  "output_slot": "3265ff5f-9d8d-48d5-a6f8-9085b4f19a78",
+  "default_resolution": [
+    960,
+    540
+  ]
+}
