@@ -6,6 +6,20 @@ Edit a scene in Blender, save its `.blend`, and let the bridge build the TiXL ve
 
 This repository contains the Blender add-on and eleven reusable TiXL operators: **Blender Animation Scene**, **Blender Camera Timeline**, **Blender Export Lights**, **Blender World Preload**, **Blender Source Clip**, **Blender Clip Sequence**, **Blender World Clip Time**, **Blender Mesh Select**, **Blender Mesh Replace**, **Blender Texture Select**, and **Blender Texture Replace**. They are shared by every generated project; none is tied to a particular scene.
 
+## See it in TiXL
+
+These screenshots show the bundled [BlendShapeExample](examples/README.md) rendered in TiXL after syncing its Blender source. Four scenes morph in sequence—cube → sphere → triangular prism → cylinder → cube—over a 16-second loop at 120 BPM. All four meshes are centered at `(0, 0, 0)`.
+
+| Cube · 0 seconds | Sphere · 4 seconds |
+| --- | --- |
+| ![Blue cube rendered in TiXL](docs/screenshots/cube.png) | ![Blue sphere rendered in TiXL](docs/screenshots/sphere.png) |
+| **Triangular prism · 8 seconds** | **Cylinder · 12 seconds** |
+| ![Blue triangular prism rendered in TiXL](docs/screenshots/prism.png) | ![Blue cylinder rendered in TiXL](docs/screenshots/cylinder.png) |
+
+The geometry changes continuously between scenes. At 3 seconds, the cube is midway through its morph into the sphere:
+
+![Cube midway through its morph into a sphere in TiXL](docs/screenshots/cube-to-sphere.png)
+
 ## Set up once (Windows)
 
 You need Blender 4.3 or newer (tested with 5.2), a TiXL Editor build, a TiXL C# operator project, and the .NET SDK. Create the operator project once in TiXL so it has valid release metadata. You can then close TiXL; **the debug server is optional**.
