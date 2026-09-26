@@ -1,0 +1,36 @@
+{
+  "description": "Role-based layout adapted from the user-arranged Shape Cycle home. Coordinates are independent of scene names and IDs.",
+  "world_spacing": 420,
+  "pass_spacing": 180,
+  "clip_spacing": 95,
+  "world_roles": {
+    "BlenderClipSequence": [0, 20],
+    "BlenderWorldClipTime": [420, -190],
+    "LoadGltfScene": [420, 0],
+    "BlenderAnimationScene": [640, 0],
+    "BlenderMeshSelect": [640, 70],
+    "BlenderMeshReplace": [810, 28],
+    "BlenderTextureSelect": [1030, 28],
+    "BlenderTextureReplace": [1250, 28],
+    "DrawScene": [1415, 28],
+    "Group": [1415, 63]
+  },
+  "global_roles": {
+    "BlenderClipSequence": [0, -280],
+    "BlenderCameraTimeline": [200, -600]
+  },
+  "render_roles": {
+    "Switch": [1680, 117],
+    "BlenderWorldPreload": [1870, -104],
+    "BlenderExportLights": [2010, -104],
+    "SetEnvironment": [2010, 1],
+    "Camera": [2230, -104],
+    "RenderTarget": [2370, -104],
+    "ToneMapping": [2370, -69],
+    "DrawScreenQuad": [2370, -34],
+    "Output target": [2550, -34]
+  },
+  "source_clip": [-320, 0],
+  "input": [-520, -670],
+  "output": [2740, -30]
+}

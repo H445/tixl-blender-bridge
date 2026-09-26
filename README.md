@@ -49,6 +49,12 @@ By default the active Blender scene is one TiXL world. To use several worlds, ad
 
 The named collections must exist. Keep the time ranges contiguous; the generated graph switches branches at their boundaries. Camera markers can control the view independently.
 
+New project homes use a compact layout: each world has a row from clips and
+source timing through mesh and texture edits to drawing. The world switch and
+render chain sit to the right. Rows expand for glass passes and additional
+clips. The defaults are defined in `tixl_blender_bridge/templates/home_layout.json`;
+sync preserves positions you rearrange in TiXL.
+
 ## Release example
 
 The add-on ZIP ships a small [Shape Cycle example](examples/README.md): cube →

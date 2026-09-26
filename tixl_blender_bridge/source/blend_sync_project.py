@@ -659,6 +659,8 @@ def populate(project: Path, graph_files: list[Path], backup_root: Path, editor: 
                                     scene["Id"], scene_class, input_id, output_id)
         _flatten_scene(home, home_ui, scene_for_home, scene_ui_for_home)
         _link_world_clips(home, home_ui, plan, graph["Id"])
+        from blend_sync_layout import layout_home
+        layout_home(home, home_ui, plan, graph["Id"])
         source = f'''using T3.Core.Operator;
 using T3.Core.Operator.Attributes;
 using T3.Core.Operator.Interfaces;
