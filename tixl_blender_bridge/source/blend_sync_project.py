@@ -682,9 +682,12 @@ public sealed class ShareDefinition : IShareResources
     # This import is refreshed; home and scene are user-owned after their initial creation.
     generated_dir = symbols / "PrismalLabs" / "BlenderExport" / "Generated"
     generated_dir.mkdir(parents=True, exist_ok=True)
+    legacy_graph = symbols / graph_files[0].name
+    legacy_is_import = (legacy_graph.is_file()
+                        and _read_tixl_json(legacy_graph).get("Id") == graph["Id"])
     for path in graph_files[:3]:
         legacy = symbols / path.name
-        if legacy.is_file():
+        if legacy_is_import and legacy.is_file():
             backup = backup_root / ("generated_root_duplicate_" + uuid.uuid4().hex[:8])
             backup.mkdir(parents=True, exist_ok=True)
             shutil.copy2(legacy, backup / path.name)

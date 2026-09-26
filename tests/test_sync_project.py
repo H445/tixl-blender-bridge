@@ -14,6 +14,32 @@ from blend_sync_project import _build_home, _link_world_clips, create_scaffold, 
 
 
 class SyncProjectTest(unittest.TestCase):
+    def test_import_filename_does_not_remove_home(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root = Path(directory)
+            blend = root / 'ShapeCycle.blend'
+            blend.write_bytes(b'scene')
+            cache = root / 'cache'
+            cache.mkdir()
+            (cache / 'camera_timeline.json').write_text(json.dumps({
+                'shots': [{'id': 1, 'start': 0, 'label': 'Cube'}], 'passages': []}))
+            files = generate(blend, cache, {'fps': 60, 'worlds': [
+                {'world': 'cube', 'active_clip': [1, 241],
+                 'opaque_count': 1, 'glass_count': 0}]})
+            name = files[0].stem
+            template = root / 'template'
+            template.mkdir()
+            (template / 'Template.csproj').write_text(
+                '<Project><RootNamespace>X</RootNamespace><HomeGuid>X</HomeGuid>'
+                '<PackageId>X</PackageId></Project>')
+            project = root / 'project'
+            create_scaffold(project, name, template, blend)
+            for _ in range(2):
+                populate(project, files, root / 'backups', root, build=False)
+                home = json.loads((project / 'Symbols' / (name + '.t3')).read_text())
+                self.assertNotEqual(home['Id'], json.loads(files[0].read_text())['Id'])
+                self.assertTrue((project / 'Symbols' / (name + '.cs')).is_file())
+
     def test_home_clips_survive_resync(self):
         with tempfile.TemporaryDirectory() as directory:
             root = Path(directory)
